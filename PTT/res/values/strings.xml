@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PTT Mobile</string>
+    <string name="title_section1">Message</string>
+    <string name="title_section2">Explore</string>
+    <string name="title_section3">Contact</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="action_new">New</string>
+    <string name="default_user_name">Theo Wang</string>
+    <string name="default_message">Hello World!</string>
+    <string name="title_activity_display_message">DisplayMessageActivity</string>
+    <string name="action_chating_information">Chating information</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="voice_message">Voice Message</string>
+    <string name="please_input_message">Please input message here</string>
+    <string name="more_features">More Features</string>
+    <string name="send_now">Send Now</string>
+</resources>

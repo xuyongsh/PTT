@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"  
+    android:layout_height="fill_parent"
+    android:layout_marginTop="5dip">
+    <LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:baselineAligned="false"
+        >
+        <ListView  
+	        android:id="@+id/list_view_contacts"
+	        android:layout_width="0dip"  
+	        android:layout_height="wrap_content"  
+	        android:fadingEdge="none"  
+	        android:scrollbars="none" 
+	        android:layout_weight="1"
+	        android:divider="@null"
+	        > 
+    	</ListView>
+        <LinearLayout  
+	        android:id="@+id/contact_index_list"  
+	        android:layout_width="wrap_content"  
+	        android:layout_height="fill_parent"  
+	        android:layout_gravity="right"  
+	        android:gravity="center"  
+	        android:orientation="vertical"
+	        android:alpha="0.7" >  
+	    </LinearLayout>
+    </LinearLayout>
+    <TextView  
+        android:id="@+id/contact_index_display"  
+        android:layout_width="80dp"  
+        android:layout_height="80dp"  
+        android:layout_gravity="center"  
+        android:background="#f0606060"  
+        android:gravity="center"   
+        android:textColor="#ffffff"  
+        android:textSize="50sp" 
+        android:alpha="0.7"
+        />    
+</FrameLayout> 

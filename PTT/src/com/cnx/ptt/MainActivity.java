@@ -1,7 +1,5 @@
 package com.cnx.ptt;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -20,8 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
@@ -193,51 +189,39 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			ListView messageList = (ListView) rootView.findViewById(R.id.message_list);
 			
-			//prepare data
-			ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>(); 
+			Bundle args = super.getArguments();
 			
-			for(int i=0; i < 10; i++)
+			switch(args.getInt(ARG_SECTION_NUMBER))
 			{
-				HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("ItemImage", R.drawable.ic_launcher);
-				map.put("ItemTitle", messageList.getContext().getString(R.string.default_user_name));
-				map.put("ItemText", messageList.getContext().getString(R.string.default_message));
-				map.put("ItemTime", "17:30 PM");
-				listItem.add(map); 
-			}
-			
-			//Generate adapter
-			SimpleAdapter listItemAdapter = new SimpleAdapter(
-					messageList.getContext(), 
-					listItem,
-					R.layout.message_items,
-					new String[] {"ItemImage","ItemTitle", "ItemText","ItemTime"}, 
-					new int[] {R.id.display_avatar_image,R.id.display_user_name,R.id.display_user_message,R.id.display_message_time} 
-			);
-			
-			//Set adapter
-			messageList.setAdapter(listItemAdapter);
-			
-			//Set on click event
-			messageList.setOnItemClickListener(new OnItemClickListener() {
-				// Do something here
-				@Override  
-	            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
-	                    long arg3) { 
-					
-					Intent intent = new Intent(arg1.getContext(), DisplayMessageActivity.class);
-			    	//intent.putExtra(EXTRA_MESSAGE, message);
-			    	startActivity(intent); 
-					return;
-	            }  
-			});
-			
-			return rootView;
-		}
+			case 2:
+				ExploreTab et = new ExploreTab();
+				et.init(inflater, container, R.layout.fragment_explore);
+				return et.getRoot_view();
+			case 3:
+				ContactTab cct = new ContactTab();
+				cct.init(inflater, container, R.layout.fragment_contact);
+				return cct.getRoot_view();
+			default:
+				MessageTab ct = new MessageTab();
+				ct.init(inflater, container, R.layout.fragment_main);
+				
+				//set on click event
+				ct.getMessageList().setOnItemClickListener(new OnItemClickListener(){
+					// Do something here
+					@Override  
+		            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,  
+		                    long arg3) { 
+						
+						Intent intent = new Intent(arg1.getContext(), DisplayMessageActivity.class);
+				    	//intent.putExtra(EXTRA_MESSAGE, message);
+				    	startActivity(intent); 
+						return;
+					}
+				});
+				return ct.getRoot_view();
+			}	
 	}
 
+	}
 }

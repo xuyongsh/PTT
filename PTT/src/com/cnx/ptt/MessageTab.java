@@ -36,7 +36,7 @@ public class MessageTab extends ContentTab{
 		for(int i=0; i < 10; i++)
 		{
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("ItemImage", R.drawable.ic_launcher);
+			map.put("ItemImage", R.drawable.ic_android);
 			map.put("ItemTitle", messageList.getContext().getString(R.string.default_user_name));
 			map.put("ItemText", messageList.getContext().getString(R.string.default_message));
 			map.put("ItemTime", "17:30 PM");

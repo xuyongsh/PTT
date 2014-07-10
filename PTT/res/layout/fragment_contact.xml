@@ -17,6 +17,8 @@
 	        android:scrollbars="none" 
 	        android:layout_weight="1"
 	        android:divider="@null"
+	        android:layout_marginLeft="5dip"
+	        android:layout_marginRight="5dip"
 	        > 
     	</ListView>
         <LinearLayout  

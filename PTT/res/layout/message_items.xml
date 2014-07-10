@@ -18,7 +18,6 @@
 	<TextView   
     android:text="@string/default_user_name"   
     android:layout_height="wrap_content"   
-    android:textSize="20sp"   
     android:layout_width="fill_parent"   
     android:id="@+id/display_user_name"  
     android:layout_toRightOf="@id/display_avatar_image"

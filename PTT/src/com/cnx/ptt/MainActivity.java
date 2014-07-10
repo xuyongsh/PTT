@@ -197,6 +197,29 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			case 2:
 				ExploreTab et = new ExploreTab();
 				et.init(inflater, container, R.layout.fragment_explore);
+				et.getListView().setOnItemClickListener(new OnItemClickListener(){
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						
+						switch(position)
+						{
+						case ExploreTab.POSITION_TIMETRACK:
+							Intent intent = new Intent(parent.getContext(), TrackTimeActivity.class);
+							startActivity(intent);
+							return;
+						case ExploreTab.POSITION_TIMESHEETTODAY:
+							return;
+						case ExploreTab.POSITION_TASKMORNITOR:
+							return;
+						default:
+							return;
+						}
+						
+					}
+					
+				});
 				return et.getRoot_view();
 			case 3:
 				ContactTab cct = new ContactTab();

@@ -22,7 +22,8 @@ public class ViewfinderView extends View {
 
 	private static final int[] SCANNER_ALPHA = { 0, 64, 128, 192, 255, 192,
 			128, 64 };
-	private static final long ANIMATION_DELAY = 80L;
+	private static final int[] LASER_SPEED = {10, 20, 40, 80, 40, 20, 10};
+	private static final long ANIMATION_DELAY = 100L;
 	private static final int CURRENT_POINT_OPACITY = 0xA0;
 	private static final int MAX_RESULT_POINTS = 20;
 	private static final int POINT_SIZE = 6;
@@ -33,8 +34,10 @@ public class ViewfinderView extends View {
 	private final int maskColor;
 	private final int resultColor;
 	private final int laserColor;
+	private final int squareColor;
 	private final int resultPointColor;
 	private int scannerAlpha;
+	private int scannerPosition;
 	private List<ResultPoint> possibleResultPoints;
 	private List<ResultPoint> lastPossibleResultPoints;
 
@@ -49,8 +52,10 @@ public class ViewfinderView extends View {
 		maskColor = resources.getColor(R.color.viewfinder_mask);
 		resultColor = resources.getColor(R.color.result_view);
 		laserColor = resources.getColor(R.color.viewfinder_laser);
+		squareColor = resources.getColor(R.color.viewfinder_scaner_square);
 		resultPointColor = resources.getColor(R.color.possible_result_points);
 		scannerAlpha = 0;
+		scannerPosition = 0;
 		possibleResultPoints = new ArrayList<>(5);
 		lastPossibleResultPoints = null;
 	}
@@ -97,6 +102,21 @@ public class ViewfinderView extends View {
 		canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1,
 				paint);
 		canvas.drawRect(0, frame.bottom + 1, width, height, paint);
+		
+		// Draw square
+		paint.setColor(squareColor);
+		paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
+		canvas.drawRect(frame.left, frame.top, frame.left + 100, frame.top + 10, paint);
+		canvas.drawRect(frame.left, frame.top + 10, frame.left + 10, frame.top + 100, paint);
+		
+		canvas.drawRect(frame.right - 100, frame.top, frame.right, frame.top + 10, paint);
+		canvas.drawRect(frame.right - 10, frame.top + 10, frame.right, frame.top + 100, paint);
+		
+		canvas.drawRect(frame.left, frame.bottom - 10, frame.left + 100, frame.bottom, paint);
+		canvas.drawRect(frame.left, frame.bottom - 100, frame.left + 10, frame.bottom - 10, paint);
+		
+		canvas.drawRect(frame.right - 100, frame.bottom - 10, frame.right, frame.bottom, paint);
+		canvas.drawRect(frame.right - 10, frame.bottom - 100, frame.right, frame.bottom - 10, paint);
 
 		if (resultBitmap != null) {
 			// Draw the opaque result bitmap over the scanning rectangle
@@ -109,9 +129,34 @@ public class ViewfinderView extends View {
 			paint.setColor(laserColor);
 			paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
 			scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
-			int middle = frame.height() / 2 + frame.top;
-			canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1,
-					middle + 2, paint);
+//			int middle = frame.height() / 2 + frame.top;
+			
+			int scannerTop = frame.top + 2 + scannerPosition;
+			int scannerBottom = frame.top + 12 + scannerPosition;
+			int scannerMiddle = frame.top + 7 + scannerPosition;
+			
+			canvas.drawRect(frame.left + 14, scannerTop, frame.right - 14,
+					scannerBottom, paint);
+			
+			int now_where = scannerMiddle - frame.top;
+			int frame_height = frame.height();
+			float how_far = now_where/frame_height;
+
+			
+			int i = Math.round(how_far * LASER_SPEED.length);
+			
+			if(i < LASER_SPEED.length){
+				scannerPosition += LASER_SPEED[i];
+			}
+			else
+			{
+				scannerPosition = 0;
+			}
+
+			
+			if(scannerBottom >= frame.bottom - 10){
+				scannerPosition = 0;
+			}
 
 			float scaleX = frame.width() / (float) previewFrame.width();
 			float scaleY = frame.height() / (float) previewFrame.height();

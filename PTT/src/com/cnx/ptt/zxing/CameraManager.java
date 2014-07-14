@@ -2,16 +2,17 @@ package com.cnx.ptt.zxing;
 
 import java.io.IOException;
 
-import com.google.zxing.PlanarYUVLuminanceSource;
-
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import com.google.zxing.PlanarYUVLuminanceSource;
 
 public class CameraManager {
 
@@ -307,5 +308,29 @@ public class CameraManager {
 			return hardMax;
 		}
 		return dim;
+	}
+
+	public void LightOn() {
+		if (this.camera == null) {
+			return;
+		}
+
+		Parameters params = camera.getParameters();
+
+		params.setFlashMode(Parameters.FLASH_MODE_TORCH);
+
+		camera.setParameters(params);
+
+	}
+
+	public void LightOff() {
+		if (this.camera == null) {
+			return;
+		}
+		Parameters params = camera.getParameters();
+
+		params.setFlashMode(Parameters.FLASH_MODE_OFF);
+
+		camera.setParameters(params);
 	}
 }

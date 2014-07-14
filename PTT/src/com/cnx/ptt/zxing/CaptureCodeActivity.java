@@ -1,18 +1,24 @@
 package com.cnx.ptt.zxing;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.Vector;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,18 +26,25 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 
 import com.cnx.ptt.R;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 
 public class CaptureCodeActivity extends Activity implements
 		SurfaceHolder.Callback {
 
 	private static final String TAG = CaptureCodeActivity.class.getSimpleName();
+
 	private boolean hasSurface;
 	private CameraManager cameraManager;
 	private CaptureActivityHandler handler;
@@ -48,6 +61,11 @@ public class CaptureCodeActivity extends Activity implements
 	private MediaPlayer mediaPlayer;
 	private static final float BEEP_VOLUME = 0.10f;
 
+	private final int FlashLight_ICON[] = { R.drawable.ic_action_flash_off,
+			R.drawable.ic_action_flash_on };
+
+	private int flash_light_position;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,6 +80,8 @@ public class CaptureCodeActivity extends Activity implements
 		inactivityTimer = new InactivityTimer(this); // complete this activity
 														// in 5 mins inactive
 														// status.
+
+		flash_light_position = 0;
 	}
 
 	@Override
@@ -219,7 +239,7 @@ public class CaptureCodeActivity extends Activity implements
 				handler = new CaptureActivityHandler(this, decodeFormats,
 						decodeHints, characterSet, cameraManager);
 			}
-			
+
 			decodeOrStoreSavedBitmap(null, null);
 		} catch (IOException ioe) {
 			Log.w(TAG, ioe);
@@ -298,19 +318,20 @@ public class CaptureCodeActivity extends Activity implements
 	public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
 		inactivityTimer.onActivity();
 		lastResult = rawResult;
-//		ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this, rawResult);
+		// ResultHandler resultHandler =
+		// ResultHandlerFactory.makeResultHandler(this, rawResult);
 		boolean fromLiveScan = barcode != null;
-		
+
 		if (fromLiveScan) {
 			playBeepSoundAndVibrate();
 			viewfinderView.drawResultBitmap(barcode, scaleFactor, rawResult);
 		}
-		
+
 		handleDecodeInternally(rawResult, barcode);
 	}
 
 	private void handleDecodeInternally(Result rawResult, Bitmap barcode) {
-		
+
 		this.getIntent().putExtra("SCAN_RESULT", rawResult.getText());
 		this.setResult(RESULT_OK, getIntent());
 		Log.i(TAG,
@@ -361,6 +382,90 @@ public class CaptureCodeActivity extends Activity implements
 
 	public void setVibrate(boolean vibrate) {
 		this.vibrate = vibrate;
+	}
+
+	public void BackOnClick(View view) {
+		this.finish();
+	}
+
+	public final int AT_TAG_LI = 1;
+
+	public void LoadImageOnClick(View view) {
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		intent.setType("image/*");
+		startActivityForResult(intent, AT_TAG_LI);
+	}
+
+	public void SwitchFlashOnClick(View view) {
+
+		ImageButton ib = (ImageButton) this.findViewById(R.id.ib_acc_flash);
+
+		// Switch Icon...
+		if (++flash_light_position > 1) {
+			flash_light_position = 0;
+		}
+		ib.setImageDrawable(this.getResources().getDrawable(
+				this.FlashLight_ICON[flash_light_position]));
+
+		switch (flash_light_position) {
+		case 0:
+			this.cameraManager.LightOff();
+			break;
+		case 1:
+			this.cameraManager.LightOn();
+			break;
+		}
+
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.i(TAG, "Image load result");
+		if (requestCode == AT_TAG_LI) {
+			if (resultCode == RESULT_OK) {
+				if (data != null) {
+					// TODO: decode image..
+					Uri uri = data.getData();
+					ContentResolver cr = this.getContentResolver();
+
+					Result rawResult = null;
+
+					Map<DecodeHintType, Object> hints = new EnumMap<>(
+							DecodeHintType.class);
+
+					Collection<BarcodeFormat> decodeFormats = EnumSet
+							.noneOf(BarcodeFormat.class);
+					decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
+					decodeFormats.addAll(DecodeFormatManager.PRODUCT_FORMATS);
+
+					hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
+
+					MultiFormatReader multiFormatReader = new MultiFormatReader();
+
+					try {
+						Bitmap bmp = BitmapFactory.decodeStream(cr
+								.openInputStream(uri));
+
+						rawResult = multiFormatReader
+								.decodeWithState(new BinaryBitmap(
+										new HybridBinarizer(
+												new BitmapLuminanceSource(bmp))));
+						
+						if (rawResult != null) {
+							handleDecode(rawResult, null, 0);
+						}
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
 	}
 
 }

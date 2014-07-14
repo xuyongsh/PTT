@@ -90,6 +90,7 @@
   <string name="msg_share_text">Or type some text and press Enter</string>
   <string name="msg_sure">Are you sure?</string>
   <string name="msg_unmount_usb">Sorry, the SD card is not accessible.</string>
+  <string name="msg_capture_qr_code">Please scan QR code of a PTT task</string>
   <string name="button_add_calendar">Add to calendar</string>
   <string name="button_add_contact">Add contact</string>
   <string name="button_book_search">Book Search</string>
@@ -113,6 +114,10 @@
   <string name="button_sms">Send SMS</string>
   <string name="button_web_search">Web search</string>
   <string name="button_wifi">Connect to Network</string>
+  <string name="button_scan_image">Scan Image</string>
+  <string name="button_back">Back</string>
+  <string name="button_flash_off">Flash Off</string>
+  <string name="button_flash_On">Flash On</string>
     <string name="result_address_book">Found contact info</string>
   <string name="result_calendar">Found calendar event</string>
   <string name="result_email_address">Found email address</string>

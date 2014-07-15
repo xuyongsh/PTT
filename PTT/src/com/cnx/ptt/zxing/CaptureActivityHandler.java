@@ -119,6 +119,15 @@ public class CaptureActivityHandler extends Handler {
 				Log.w(TAG, "Can't find anything to handle VIEW of URI " + url);
 			}
 			break;
+		case R.id.decode_bmp_succeeded:
+			state = State.SUCCESS;
+			activity.handleDecode((Result) message.obj, null, 0);
+			break;
+		case R.id.decode_bmp_failed:
+//			state = State.PREVIEW;
+//			cameraManager.requestPreviewFrame(decodeThread.getHandler(),
+//					R.id.decode);
+			break;
 		}
 	}
 
@@ -156,6 +165,10 @@ public class CaptureActivityHandler extends Handler {
 
 	public static String getTag() {
 		return TAG;
+	}
+	
+	public DecodeThread getDecodeThread(){
+		return this.decodeThread;
 	}
 
 }

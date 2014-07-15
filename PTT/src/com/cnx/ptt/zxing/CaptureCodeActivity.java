@@ -3,8 +3,6 @@ package com.cnx.ptt.zxing;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.Map;
 import java.util.Vector;
 
@@ -20,7 +18,6 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
@@ -33,12 +30,8 @@ import android.widget.ImageButton;
 
 import com.cnx.ptt.R;
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
-import com.google.zxing.common.HybridBinarizer;
 
 public class CaptureCodeActivity extends Activity implements
 		SurfaceHolder.Callback {
@@ -65,6 +58,8 @@ public class CaptureCodeActivity extends Activity implements
 			R.drawable.ic_action_flash_on };
 
 	private int flash_light_position;
+	
+	private BitmapDecodeThread bmp_dc_th;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +109,7 @@ public class CaptureCodeActivity extends Activity implements
 			// exists. Therefore
 			// surfaceCreated() won't be called, so init the camera here.
 			initCamera(surfaceHolder);
+			
 		} else {
 			// Install the callback and wait for surfaceCreated() to init the
 			// camera.
@@ -148,7 +144,6 @@ public class CaptureCodeActivity extends Activity implements
 				}
 			}
 		}
-
 	}
 
 	private final OnCompletionListener beepListener = new OnCompletionListener() {
@@ -199,6 +194,18 @@ public class CaptureCodeActivity extends Activity implements
 
 	@Override
 	protected void onDestroy() {
+		
+		//Stop thread when activity destroy...
+		Message quite = Message.obtain(bmp_dc_th.getHandler(),R.id.quit);
+		quite.sendToTarget();
+		
+		try{
+			bmp_dc_th.join(500L);
+		}
+		catch(InterruptedException e){
+			//continue?
+		}
+		
 		inactivityTimer.shutdown();
 		super.onDestroy();
 	}
@@ -238,6 +245,8 @@ public class CaptureCodeActivity extends Activity implements
 			if (handler == null) {
 				handler = new CaptureActivityHandler(this, decodeFormats,
 						decodeHints, characterSet, cameraManager);
+				bmp_dc_th = new BitmapDecodeThread(this);
+				bmp_dc_th.start();
 			}
 
 			decodeOrStoreSavedBitmap(null, null);
@@ -311,7 +320,7 @@ public class CaptureCodeActivity extends Activity implements
 		return cameraManager;
 	}
 
-	public Handler getHandler() {
+	public CaptureActivityHandler getHandler() {
 		return this.handler;
 	}
 
@@ -321,16 +330,16 @@ public class CaptureCodeActivity extends Activity implements
 		// ResultHandler resultHandler =
 		// ResultHandlerFactory.makeResultHandler(this, rawResult);
 		boolean fromLiveScan = barcode != null;
+		playBeepSoundAndVibrate();
 
 		if (fromLiveScan) {
-			playBeepSoundAndVibrate();
 			viewfinderView.drawResultBitmap(barcode, scaleFactor, rawResult);
 		}
 
-		handleDecodeInternally(rawResult, barcode);
+		handleDecodeInternally(rawResult);
 	}
 
-	private void handleDecodeInternally(Result rawResult, Bitmap barcode) {
+	private void handleDecodeInternally(Result rawResult) {
 
 		this.getIntent().putExtra("SCAN_RESULT", rawResult.getText());
 		this.setResult(RESULT_OK, getIntent());
@@ -424,41 +433,22 @@ public class CaptureCodeActivity extends Activity implements
 		if (requestCode == AT_TAG_LI) {
 			if (resultCode == RESULT_OK) {
 				if (data != null) {
-					// TODO: decode image..
+
 					Uri uri = data.getData();
 					ContentResolver cr = this.getContentResolver();
-
-					Result rawResult = null;
-
-					Map<DecodeHintType, Object> hints = new EnumMap<>(
-							DecodeHintType.class);
-
-					Collection<BarcodeFormat> decodeFormats = EnumSet
-							.noneOf(BarcodeFormat.class);
-					decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
-					decodeFormats.addAll(DecodeFormatManager.PRODUCT_FORMATS);
-
-					hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
-
-					MultiFormatReader multiFormatReader = new MultiFormatReader();
 
 					try {
 						Bitmap bmp = BitmapFactory.decodeStream(cr
 								.openInputStream(uri));
-
-						rawResult = multiFormatReader
-								.decodeWithState(new BinaryBitmap(
-										new HybridBinarizer(
-												new BitmapLuminanceSource(bmp))));
+						// TODO: handler might be null here...
+						// need to find another way to send message to decode
+						// thread
 						
-						if (rawResult != null) {
-							handleDecode(rawResult, null, 0);
-						}
+						Message msag = Message.obtain(bmp_dc_th.getHandler(), R.id.decode,
+								bmp);
+						msag.sendToTarget();
 
 					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (NotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}

@@ -73,6 +73,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		
+//		WampThread.obtain();
 	}
 
 	@Override
@@ -98,7 +100,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			//do something for new button
 			return true;
 		case R.id.action_settings:
-			//do something for settings button
+			Intent i = new Intent(this.getBaseContext(),
+					SettingsActivity.class);
+			this.startActivity(i);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -22,7 +22,18 @@
   <item type="id" name="decode_bmp_succeeded"/>
   <item type="id" name="decode_bmp_failed"/>
   <item type="id" name="launch_product_query"/>
+  <item type="id" name="tt_start"/>
+  <item type="id" name="tt_stop"/>
+  <item type="id" name="tt_ui_update"/>
   <item type="id" name="quit"/>
   <item type="id" name="restart_preview"/>
   <item type="id" name="return_scan_result"/>
+  <item type="id" name="websorcket_displaymessageactivity_text_rec"/>
+  <item type="id" name="wamp_subscribe_ooc"/>
+  <item type="id" name="wamp_publish_ooc"/>
+  <item type="id" name="wamp_rpc_ooc_unread"/>
+  <item type="id" name="displaymessage_new_txt_message"/>
+  <item type="id" name="displaymessage_send_txt_message"/>
+  <item name="displaymessage_scroll_to_bottom" type="id"/>
+
 </resources>

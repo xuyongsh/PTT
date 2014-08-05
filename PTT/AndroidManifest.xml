@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -33,7 +34,8 @@
         <activity
             android:name="com.cnx.ptt.DisplayMessageActivity"
             android:label="@string/title_activity_display_message"
-            android:parentActivityName="com.cnx.ptt.MainActivity" >
+            android:parentActivityName="com.cnx.ptt.MainActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />
@@ -41,20 +43,28 @@
         <activity
             android:name="com.cnx.ptt.TrackTimeActivity"
             android:label="@string/title_activity_track_time"
-            android:parentActivityName="com.cnx.ptt.MainActivity"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:parentActivityName="com.cnx.ptt.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />
         </activity>
         <activity
             android:name="com.cnx.ptt.zxing.CaptureCodeActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_capture_code"
             android:parentActivityName="com.cnx.ptt.TrackTimeActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cnx.ptt.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.cnx.ptt.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="com.cnx.ptt.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />

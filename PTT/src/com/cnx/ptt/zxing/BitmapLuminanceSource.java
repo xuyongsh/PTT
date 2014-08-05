@@ -19,6 +19,8 @@ public class BitmapLuminanceSource extends LuminanceSource {
 		for (int i = 0; i < data.length; i++) {  
             this.bitmapPixels[i] = (byte) data[i];  
         }
+		
+		data = null;
 	}
 
 	@Override

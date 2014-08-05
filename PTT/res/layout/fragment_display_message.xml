@@ -4,13 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.cnx.ptt.DisplayMessageActivity$PlaceholderFragment" >
-
-    <ListView 
+    <ScrollView 
+        android:id="@+id/sv_display_message_scroll"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_height="0dip">
+    <LinearLayout 
+        android:id="@+id/lv_display_message"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dip"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
         >
-    </ListView>
+    </LinearLayout>
+    </ScrollView>
 	<View 
 	    android:layout_width="fill_parent"
 	    android:layout_height="1px"
@@ -44,6 +53,7 @@
 	        android:contentDescription="@string/send_now"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:onClick="SendNowOnClick"
 	        />
 	</LinearLayout>
 	

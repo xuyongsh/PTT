@@ -440,9 +440,6 @@ public class CaptureCodeActivity extends Activity implements
 					try {
 						Bitmap bmp = BitmapFactory.decodeStream(cr
 								.openInputStream(uri));
-						// TODO: handler might be null here...
-						// need to find another way to send message to decode
-						// thread
 						
 						Message msag = Message.obtain(bmp_dc_th.getHandler(), R.id.decode,
 								bmp);

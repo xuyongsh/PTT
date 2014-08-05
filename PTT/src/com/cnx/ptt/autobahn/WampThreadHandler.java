@@ -35,6 +35,10 @@ public class WampThreadHandler extends Handler {
 		if (!running) {
 			return;
 		}
+		
+		if(!mConnection.isConnected()){
+			return;
+		}
 
 		switch (msg.what) {
 		case R.id.wamp_publish_ooc:

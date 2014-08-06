@@ -7,13 +7,17 @@ public class Receiver {
 	private int m_sender_id;
 	private int m_receiver_id;
 	private OneOneChatEvent ooc;
+	private OneOneChatEventHandler ooch;
+	private ChatEventOSMessage com;
 	
-	public Receiver(WampActivityAbstract activity){
+	public Receiver(WampActivityAbstract a){
 		m_sender_id = DefaultConfig.DEBUG_CLIENT_ID;
 		m_receiver_id = DefaultConfig.DEBUG_TARGET_ID;
-		ooc = new OneOneChatEvent(activity);
+		ooc = new OneOneChatEvent();
 		ooc.m_sender_id = m_sender_id;
 		ooc.m_receiver_id = m_receiver_id;
+		ooch = new OneOneChatEventHandler(a);
+		com = new ChatEventOSMessage(ooc, ooch);
 	}
 	
 	public void set_text_message(String txt){
@@ -22,5 +26,9 @@ public class Receiver {
 	
 	public OneOneChatEvent get_ooc(){
 		return ooc;
+	}
+	
+	public ChatEventOSMessage get_com(){
+		return com;
 	}
 }

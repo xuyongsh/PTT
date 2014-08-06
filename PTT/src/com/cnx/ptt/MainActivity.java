@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.cnx.ptt.autobahn.WampThread;
+
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	/**
@@ -74,7 +76,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					.setTabListener(this));
 		}
 		
-//		WampThread.obtain();
+		WampThread.obtain();
 	}
 
 	@Override

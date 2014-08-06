@@ -7,7 +7,9 @@ import android.util.Log;
 
 import com.cnx.ptt.DefaultConfig;
 import com.cnx.ptt.R;
+import com.cnx.ptt.chat.ChatEventOSMessage;
 import com.cnx.ptt.chat.OneOneChatEvent;
+import com.cnx.ptt.chat.OneOneChatEventHandler;
 
 import de.tavendo.autobahn.WampConnection;
 
@@ -23,8 +25,9 @@ public class WampThreadHandler extends Handler {
 	private WampConnection mConnection;
 	private boolean running = true;
 	private OneOneChatEvent ooc;
+	private OneOneChatEventHandler ooch;
 	private String topic;
-	private String event_prefix = DefaultConfig.WAMP_EVENT_PREFIX+":";
+	private String event_prefix = DefaultConfig.WAMP_EVENT_HTTP_URI+"/";
 
 	public WampThreadHandler(WampConnection c) {
 		mConnection = c;
@@ -64,7 +67,7 @@ public class WampThreadHandler extends Handler {
 	
 	private void subscribe_ooc(String topic, OneOneChatEvent event){
 		
-		this.mConnection.subscribe(event_prefix+topic, OneOneChatEvent.class, event.getHandler());
+		this.mConnection.subscribe(event_prefix+topic, OneOneChatEvent.class, ooch);
 	}
 	
 	private void publish_ooc(String topic, Object event){
@@ -72,23 +75,26 @@ public class WampThreadHandler extends Handler {
 	}
 	
 	private void getooc(Object o){
-		if(o instanceof OneOneChatEvent){
-			this.ooc = (OneOneChatEvent) o;
+		if(o instanceof ChatEventOSMessage){
+			ChatEventOSMessage osm = (ChatEventOSMessage) o;
+			this.ooc = osm.getOoc();
+			this.ooch = osm.getOoch();
+			return;
 		}
 		this.ooc = null;
 	}
 	
 	private void gettopic(Object o){
-		if(o instanceof OneOneChatEvent){
+		if(o instanceof ChatEventOSMessage){
 			this.getooc(o);
 			this.topic = ooc.m_sender_id + "_" + ooc.m_receiver_id;
 		}
 	}
 	
 	private void gettopic_subscribe(Object o){
-		if(o instanceof OneOneChatEvent){
+		if(o instanceof ChatEventOSMessage){
 			this.getooc(o);
-			this.topic = ooc.m_receiver_id + "_" + ooc.m_sender_id;
+			this.topic = this.ooc.m_receiver_id + "_" + this.ooc.m_sender_id;
 		}
 	}
 }

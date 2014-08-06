@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.cnx.ptt.autobahn.WampActivityAbstract;
 import com.cnx.ptt.autobahn.WampThread;
+import com.cnx.ptt.chat.ChatEventOSMessage;
 import com.cnx.ptt.chat.OneOneChatEvent;
+import com.cnx.ptt.chat.OneOneChatEventHandler;
 import com.cnx.ptt.chat.Receiver;
 
 public class DisplayMessageActivity extends WampActivityAbstract {
@@ -54,11 +56,15 @@ public class DisplayMessageActivity extends WampActivityAbstract {
 		super.onResume();
 		lo = (LinearLayout) findViewById(R.id.lv_display_message);
 		scroll = (ScrollView) findViewById(R.id.sv_display_message_scroll);
-		WampThread.obtain();
-		OneOneChatEvent ooc = new OneOneChatEvent(this);
+		OneOneChatEvent ooc = new OneOneChatEvent();
 		ooc.m_sender_id = DefaultConfig.DEBUG_CLIENT_ID;
 		ooc.m_receiver_id = DefaultConfig.DEBUG_TARGET_ID;
-		Message m = Message.obtain(WampThread.obtain().getHandler(), R.id.wamp_subscribe_ooc, ooc);
+		
+		OneOneChatEventHandler ooch = new OneOneChatEventHandler(this);
+		
+		ChatEventOSMessage com = new ChatEventOSMessage(ooc, ooch);
+		
+		Message m = Message.obtain(WampThread.obtain().getHandler(), R.id.wamp_subscribe_ooc, com);
 		m.sendToTarget();
 	}
 	
@@ -152,7 +158,7 @@ public class DisplayMessageActivity extends WampActivityAbstract {
 		WampThread wt = WampThread.obtain();
 
 		Message ms = Message.obtain(wt.getHandler(), R.id.wamp_publish_ooc,
-				rec.get_ooc());
+				rec.get_com());
 		ms.sendToTarget();
 
 		addTextMessage(content, true);

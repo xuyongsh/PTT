@@ -8,4 +8,5 @@ public abstract class WampActivityAbstract extends Activity {
 	public abstract Handler get_handler();
 	
 	public abstract void addTextMessage(String text, boolean isSend);
+	
 }

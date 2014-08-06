@@ -1,17 +1,17 @@
 package com.cnx.ptt.chat;
 
-import com.cnx.ptt.autobahn.WampActivityAbstract;
-
-import de.tavendo.autobahn.Wamp.EventHandler;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 public class OneOneChatEvent extends ChatEvent {
+	@JsonProperty
 	public int m_sender_id;
+	@JsonProperty
 	public int m_receiver_id;
+	@JsonProperty
 	public String m_text_message;
-	private EventHandler handler;
 	
-	public OneOneChatEvent(WampActivityAbstract activity){
-		handler = new OneOneChatEventHandler(activity);
+	public OneOneChatEvent(){
+		
 	}
 
 	@Override
@@ -22,11 +22,6 @@ public class OneOneChatEvent extends ChatEvent {
 				+ ", created: " + created + ", num: " + num + ", rand: " + rand
 				+ ", flag:" + flag + "}";
 
-	}
-
-	@Override
-	public EventHandler getHandler() {
-		return handler;
 	}
 
 }

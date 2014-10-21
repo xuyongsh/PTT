@@ -25,7 +25,7 @@ import com.cnx.ptt.chat.Receiver;
 
 public class DisplayMessageActivity extends WampActivityAbstract {
 
-//	private static final String TAG = DisplayMessageActivity.class.getName();
+	// private static final String TAG = DisplayMessageActivity.class.getName();
 	private LinearLayout lo;
 	private ScrollView scroll;
 	private Handler handler;
@@ -35,7 +35,11 @@ public class DisplayMessageActivity extends WampActivityAbstract {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_display_message);
-		super.setTitle("Theo Wang");
+
+		String[] TITLE = { "WPC PTT Team", "Theo Wang", "Lois Teo" };
+		int id = (int) getIntent().getLongExtra("c_item_id", 1);
+
+		super.setTitle(TITLE[id]);
 
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -54,22 +58,24 @@ public class DisplayMessageActivity extends WampActivityAbstract {
 	@Override
 	protected void onResume() {
 		super.onResume();
+
 		lo = (LinearLayout) findViewById(R.id.lv_display_message);
 		scroll = (ScrollView) findViewById(R.id.sv_display_message_scroll);
 		OneOneChatEvent ooc = new OneOneChatEvent();
 		ooc.m_sender_id = DefaultConfig.DEBUG_CLIENT_ID;
 		ooc.m_receiver_id = DefaultConfig.DEBUG_TARGET_ID;
-		
+
 		OneOneChatEventHandler ooch = new OneOneChatEventHandler(this);
-		
+
 		ChatEventOSMessage com = new ChatEventOSMessage(ooc, ooch);
-		
-		Message m = Message.obtain(WampThread.obtain().getHandler(), R.id.wamp_subscribe_ooc, com);
+
+		Message m = Message.obtain(WampThread.obtain().getHandler(),
+				R.id.wamp_subscribe_ooc, com);
 		m.sendToTarget();
 	}
-	
+
 	@Override
-	protected void onDestroy(){
+	protected void onDestroy() {
 		Message.obtain(this.get_handler(), R.id.quit);
 		super.onDestroy();
 	}
@@ -150,10 +156,9 @@ public class DisplayMessageActivity extends WampActivityAbstract {
 		if (content.length() == 0) {
 			return;
 		}
-		
+
 		Receiver rec = new Receiver(this);
 		rec.set_text_message(content);
-	
 
 		WampThread wt = WampThread.obtain();
 

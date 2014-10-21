@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="2dip" >
+
+    <TextView
+        android:id="@+id/task_list_item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_warning"
+        android:drawablePadding="2dip"
+        android:paddingBottom="2dip"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/task_list_item_news"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dip"/>
+    
+    <TextView 
+        android:id="@+id/task_list_item_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dip"
+        android:alpha="0.5"
+        android:gravity="right"
+        />
+
+</LinearLayout>

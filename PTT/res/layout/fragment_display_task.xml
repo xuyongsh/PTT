@@ -1,0 +1,205 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.cnx.ptt.DisplayTaskActivity$PlaceholderFragment" >
+
+    <TextView
+        android:id="@+id/task_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tmp_task_title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/task_work_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_title"
+        android:text="@string/tmp_task_work_type" />
+
+    <TextView
+        android:id="@+id/task_job_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_work_type"
+        android:text="@string/tmp_task_job_id" />
+    
+    <TextView
+        android:id="@+id/task_preview_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_job_id"
+        android:text="@string/tmp_task_preview_link" />
+
+    <TextView
+        android:id="@+id/task_attachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_preview_link"
+        android:drawableLeft="@drawable/ic_action_attachment"
+        android:gravity="center_vertical"
+        android:text="@string/tmp_attachement_name" />
+
+    <LinearLayout
+        android:id="@+id/progress_holder"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_attachment"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ProgressBar
+            android:id="@+id/task_att_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:progress="0"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/task_att_pec"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dip"
+            android:layout_weight="1"
+            android:text="@string/progress_text"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progress_holder"
+        android:orientation="vertical"
+        android:paddingTop="4dip" >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/msg_task_comments"
+            android:inputType="textMultiLine" >
+        </EditText>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_task_reject" />
+
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_task_approve" />
+            
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/button_task_preview" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/task_log"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/contents_text"
+            android:paddingBottom="2dip"
+            android:paddingTop="2dip" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/task_log_comment5"
+            android:paddingTop="4dip" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:paddingBottom="2dip"
+            android:text="@string/task_log_time5" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/task_log_comment4" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:paddingBottom="2dip"
+            android:text="@string/task_log_time4" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/task_log_comment3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:paddingBottom="2dip"
+            android:text="@string/task_log_time3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/task_log_comment2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:paddingBottom="2dip"
+            android:text="@string/task_log_time2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/task_log_comment1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:paddingBottom="2dip"
+            android:text="@string/task_log_time1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/task_log_comment" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:paddingBottom="2dip"
+            android:text="@string/task_log_time" />
+    </LinearLayout>
+
+</RelativeLayout>

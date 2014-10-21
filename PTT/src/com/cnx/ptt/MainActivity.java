@@ -212,12 +212,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 						switch(position)
 						{
 						case ExploreTab.POSITION_TIMETRACK:
-							Intent intent = new Intent(parent.getContext(), TrackTimeActivity.class);
-							startActivity(intent);
+							Intent intent_tta = new Intent(parent.getContext(), TrackTimeActivity.class);
+							startActivity(intent_tta);
 							return;
 						case ExploreTab.POSITION_TIMESHEETTODAY:
 							return;
 						case ExploreTab.POSITION_TASKMORNITOR:
+							Intent intent_tma = new Intent(parent.getContext(), TaskMornitorActivity.class);
+							startActivity(intent_tma);
 							return;
 						default:
 							return;
@@ -243,7 +245,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		                    long arg3) { 
 						
 						Intent intent = new Intent(arg1.getContext(), DisplayMessageActivity.class);
-				    	//intent.putExtra(EXTRA_MESSAGE, message);
+				    	intent.putExtra("c_item_id", arg3);
 				    	startActivity(intent); 
 						return;
 					}

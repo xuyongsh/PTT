@@ -69,6 +69,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />
         </activity>
+        <activity
+            android:name="com.cnx.ptt.TaskMornitorActivity"
+            android:label="@string/title_activity_task_mornitor"
+            android:parentActivityName="com.cnx.ptt.MainActivity"
+            android:launchMode="singleTask" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cnx.ptt.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.cnx.ptt.DisplayTaskActivity"
+            android:label="@string/title_activity_display_task"
+            android:parentActivityName="com.cnx.ptt.TaskMornitorActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cnx.ptt.TaskMornitorActivity" />
+        </activity>
     </application>
 
 </manifest>

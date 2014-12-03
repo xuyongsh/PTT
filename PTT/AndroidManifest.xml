@@ -11,10 +11,13 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,20 +25,14 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.cnx.ptt.MainActivity"
+            android:name="com.cnx.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.cnx.ptt.DisplayMessageActivity"
             android:label="@string/title_activity_display_message"
-            android:parentActivityName="com.cnx.ptt.MainActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            android:parentActivityName="com.cnx.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />
@@ -44,7 +41,7 @@
             android:name="com.cnx.ptt.TrackTimeActivity"
             android:label="@string/title_activity_track_time"
             android:launchMode="singleTask"
-            android:parentActivityName="com.cnx.ptt.MainActivity" >
+            android:parentActivityName="com.cnx.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />
@@ -64,27 +61,41 @@
         <activity
             android:name="com.cnx.ptt.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.cnx.ptt.MainActivity" >
+            android:parentActivityName="com.cnx.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />
         </activity>
         <activity
-            android:name="com.cnx.ptt.TaskMornitorActivity"
+            android:name="com.cnx.activity.TaskMonitorActivity"
             android:label="@string/title_activity_task_mornitor"
-            android:parentActivityName="com.cnx.ptt.MainActivity"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:parentActivityName="com.cnx.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.MainActivity" />
         </activity>
         <activity
-            android:name="com.cnx.ptt.DisplayTaskActivity"
+            android:name="com.cnx.activity.DisplayTaskActivity"
             android:label="@string/title_activity_display_task"
-            android:parentActivityName="com.cnx.ptt.TaskMornitorActivity" >
+            android:parentActivityName="com.cnx.activity.TaskMonitorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cnx.ptt.TaskMornitorActivity" />
+        </activity>
+        <activity
+            android:name="com.cnx.activity.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cnx.ptt.DemoMainActivity"
+            android:label="@string/title_activity_demo_main" >
         </activity>
     </application>
 

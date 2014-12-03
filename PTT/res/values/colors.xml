@@ -27,4 +27,8 @@
   <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
   <color name="viewfinder_mask">#60000000</color>
   <color name="viewfinder_scaner_square">#00CC00</color>
+  <color name="login_background_color">#30587C</color><!-- Android login page background color -->
+  <color name="login_input_background">#fff</color>
+  <color name="login_button_white">#fff</color>
+  <color name="login_button_black">#525252</color>
 </resources>

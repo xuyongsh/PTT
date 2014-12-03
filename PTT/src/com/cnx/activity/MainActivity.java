@@ -1,4 +1,4 @@
-package com.cnx.ptt;
+package com.cnx.activity;
 
 import java.util.Locale;
 
@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.cnx.activity.LoginActivity.UserSession;
+import com.cnx.ptt.ContactTab;
+import com.cnx.ptt.DisplayMessageActivity;
+import com.cnx.ptt.ExploreTab;
+import com.cnx.ptt.MessageTab;
+import com.cnx.ptt.R;
+import com.cnx.ptt.SettingsActivity;
+import com.cnx.ptt.TrackTimeActivity;
+import com.cnx.ptt.R.id;
+import com.cnx.ptt.R.layout;
+import com.cnx.ptt.R.menu;
+import com.cnx.ptt.R.string;
 import com.cnx.ptt.autobahn.WampThread;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -53,7 +66,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-
+		
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
@@ -218,7 +231,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 						case ExploreTab.POSITION_TIMESHEETTODAY:
 							return;
 						case ExploreTab.POSITION_TASKMORNITOR:
-							Intent intent_tma = new Intent(parent.getContext(), TaskMornitorActivity.class);
+							Intent intent_tma = new Intent(parent.getContext(), TaskMonitorActivity.class);
 							startActivity(intent_tma);
 							return;
 						default:

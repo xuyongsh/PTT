@@ -2,6 +2,10 @@ package com.cnx.ptt;
 
 import java.util.ArrayList;
 
+import com.cnx.ptt.R;
+import com.cnx.ptt.R.id;
+import com.cnx.ptt.R.layout;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

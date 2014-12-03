@@ -1,4 +1,6 @@
-package com.cnx.ptt;
+package com.cnx.activity;
+
+import com.cnx.ptt.R;
 
 import android.app.Activity;
 import android.app.Fragment;

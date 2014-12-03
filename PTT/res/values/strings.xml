@@ -138,7 +138,6 @@
     <string name="title_activity_task_mornitor">TaskMornitor</string>
     <string name="button_remove_task">Remove task</string>
     <string name="title_activity_display_task">DisplayTask</string>
-
     <string name="tmp_task_title">TV/Audio/Video > Home Theatre > Home Theatre System > HW-H7501 (Primary) </string>
     <string name="tmp_task_work_type">Work Type : Insert </string>
     <string name="tmp_task_job_id">Job ID : 15962752 </string>
@@ -162,4 +161,23 @@
     <string name="button_task_approve">Approve</string>
     <string name="button_task_preview">Preview</string>
     <string name="msg_task_comments">Comments?</string>
+    <string name="title_activity_login">PTT</string>
+    <!-- Strings related to login -->
+    <string name="login_label_email">Email:</string>
+    <string name="login_label_pwd">Password:</string>
+    <string name="prompt_email">xuyongsh@cn.ibm.com</string>
+    <string name="prompt_password">hello123</string>
+    <string name="action_sign_in"><b>Sign in</b></string>
+    <string name="action_forget_pwd"><b>Forget</b></string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_forgot_password">Recover lost password</string>
+    <string name="login_progress_signing_in">Signing in&#8230;</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="login_copyright">©Copyright Concentrix Corporation 2014.</string>
+    <string name="title_activity_demo_main">DemoMainActivity</string>
+    <string name="httpError">connection error, please try again later.</string>
+
 </resources>

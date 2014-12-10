@@ -31,14 +31,11 @@ public class LoginJson extends JsonPacket {
                 return user;
             }
             JSONObject jsonObject = new JSONObject(res);
-            if (jsonObject.has(TAG.LOGIN_FLAG) && jsonObject.getString(TAG.LOGIN_FLAG).equals(TAG.LOGIN_SUCCESS)) {
+            if (jsonObject.has(TAG.RESPONSE_FLAG) && jsonObject.getString(TAG.RESPONSE_FLAG).equals(TAG.RESPONSE_SUC)) {
             	user = new User();
             	user.setUser_id(jsonObject.getString("userid"));
             	user.setUser_email(jsonObject.getString("email"));
             	user.setUser_name(jsonObject.getString("name"));
-            	
-//            	user.setUser_desc(jsonObject.getString(""));
-//            	user.setUser_session();
             	
             	return user;
             }

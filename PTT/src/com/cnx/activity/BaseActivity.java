@@ -1,11 +1,11 @@
 package com.cnx.activity;
 
 
-import com.cnx.http.HttpUtil;
-
-
 import android.app.Activity;
 import android.app.Dialog;
+
+import com.cnx.http.HttpUtil;
+import com.cnx.utils.DialogUtil;
 
 public class BaseActivity extends Activity {
 	private Dialog progressDialog;
@@ -18,7 +18,25 @@ public class BaseActivity extends Activity {
         return HttpUtil.isNetworkAvailable(this);
     }
     /**
+     * Display progress Dialog
      * 
+     * 
+     */
+    public void showProgressDialog() {
+        try {
+
+            if (progressDialog == null) {
+                progressDialog = DialogUtil.createLoadingDialog(this);
+
+            }
+            progressDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    /**
+     * dismiss ProgressDialog
      */
     public void dismissProgressDialog() {
         try {

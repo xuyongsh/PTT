@@ -2,14 +2,45 @@ package com.cnx.pojo;
 
 public class TaskListItem {
 
+	private Integer t_id;
 	private String t_reqnum;
 	private String t_title;
 	private String t_subdate;
+	private Integer t_priority;
+	private Integer t_isFollowed = 0;
 
-	public TaskListItem(String na, String ne, String tm) {
-		this.setT_reqnum(na);
-		this.setT_title(ne);
-		this.setT_subdate(tm);
+	public TaskListItem(Integer taskid, String reqnum, String title,
+			String subdate, Integer priority, Integer followed) {
+		this.setT_id(taskid);
+		this.setT_reqnum(reqnum);
+		this.setT_title(title);
+		this.setT_subdate(subdate);
+		this.setT_priority(priority);
+		this.setT_isFollowed(followed);
+	}
+
+	public Integer getT_id() {
+		return t_id;
+	}
+
+	public void setT_id(Integer t_id) {
+		this.t_id = t_id;
+	}
+
+	public Integer getT_isFollowed() {
+		return t_isFollowed;
+	}
+
+	public void setT_isFollowed(Integer t_isFollowed) {
+		this.t_isFollowed = t_isFollowed;
+	}
+
+	public Integer getT_priority() {
+		return t_priority;
+	}
+
+	public void setT_priority(Integer t_priority) {
+		this.t_priority = t_priority;
 	}
 
 	public String getT_reqnum() {

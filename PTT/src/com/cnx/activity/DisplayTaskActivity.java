@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class DisplayTaskActivity extends Activity {
+public class DisplayTaskActivity extends BaseActivity {
 
 	protected static final int GUI_STOP_NOTIFIER = 0x108;
 	protected static final int GUI_THREADING_NOTIFIER = 0x109;
@@ -29,7 +29,7 @@ public class DisplayTaskActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_task);
-
+		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();

@@ -1,6 +1,6 @@
 package com.cnx.tag;
 
 public class TAG {
-	public final static String LOGIN_FLAG = "flag";
-	public final static String LOGIN_SUCCESS = "success";
+	public final static String RESPONSE_FLAG = "flag";
+	public final static String RESPONSE_SUC = "success";
 }

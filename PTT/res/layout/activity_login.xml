@@ -81,6 +81,7 @@
                         android:layout_marginLeft="10dp"
                         android:background="@null"
                         android:hint="@string/prompt_email"
+                        android:text="wangxinh@cn.ibm.com"
                         android:inputType="textEmailAddress"
                         android:singleLine="true"
                         android:textSize="15sp" />
@@ -111,6 +112,7 @@
                         android:drawableRight="@drawable/login_password"
                         android:hint="@string/prompt_password"
                         android:imeActionId="@+id/login"
+                        android:text="12345"
                         android:inputType="textPassword"
                         android:singleLine="true"
                         android:textSize="15sp" />

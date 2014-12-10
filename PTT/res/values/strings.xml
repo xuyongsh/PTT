@@ -165,8 +165,8 @@
     <!-- Strings related to login -->
     <string name="login_label_email">Email:</string>
     <string name="login_label_pwd">Password:</string>
-    <string name="prompt_email">xuyongsh@cn.ibm.com</string>
-    <string name="prompt_password">hello123</string>
+    <string name="prompt_email">wangxinh@cn.ibm.com</string>
+    <string name="prompt_password">12345</string>
     <string name="action_sign_in"><b>Sign in</b></string>
     <string name="action_forget_pwd"><b>Forget</b></string>
     <string name="action_sign_in_short">Sign in</string>
@@ -179,5 +179,11 @@
     <string name="login_copyright">©Copyright Concentrix Corporation 2014.</string>
     <string name="title_activity_demo_main">DemoMainActivity</string>
     <string name="httpError">connection error, please try again later.</string>
+    <!-- Task list item layout -->
+    <string name="task_item_priority_text">Task priority</string>
+    <string name="task_item_reqnum_text">Task requst number</string>
+    <string name="task_item_title_text">Task title</string>
+    <string name="task_item_subdate_text">2012&#8211;10&#8211;28 18:35</string>
+    <string name="item_follow_text">Follow task</string>
 
 </resources>

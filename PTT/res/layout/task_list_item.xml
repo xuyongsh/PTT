@@ -1,33 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="2dip" >
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:padding="3dip" >
+
+        <ImageView
+            android:id="@+id/task_list_item_priority"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:contentDescription="@string/task_item_priority_text"
+             />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/task_list_item_name"
-        android:layout_width="fill_parent"
+        android:id="@+id/task_list_item_reqnum"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_action_warning"
-        android:drawablePadding="2dip"
-        android:paddingBottom="2dip"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="@string/task_item_reqnum_text"
+        android:textColor="#040404"
+        android:textSize="15sp"
         android:textStyle="bold"
-        />
+        android:typeface="sans" />
 
     <TextView
-        android:id="@+id/task_list_item_news"
-        android:layout_width="fill_parent"
+        android:id="@+id/task_list_item_title"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dip"/>
-    
-    <TextView 
-        android:id="@+id/task_list_item_time"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="2dip"
-        android:alpha="0.5"
-        android:gravity="right"
-        />
+        android:layout_alignBottom="@+id/thumbnail"
+        android:layout_alignRight="@+id/task_list_item_subdate"
+        android:layout_below="@id/task_list_item_reqnum"
+        android:layout_marginTop="2dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="@string/task_item_title_text"
+        android:textColor="#343434"
+        android:textSize="12sp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/task_list_item_subdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/task_list_item_reqnum"
+        android:layout_alignBottom="@+id/task_list_item_reqnum"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:text="@string/task_item_subdate_text"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- ImageView
+        android:id="@+id/task_list_item_follow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignRight="@+id/task_list_item_subdate"
+        android:layout_below="@+id/task_list_item_reqnum"
+        android:src="@drawable/ic_action_important"
+        android:contentDescription="@string/item_follow_text" /-->
+
+</RelativeLayout>

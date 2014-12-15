@@ -1,6 +1,5 @@
 package com.cnx.activity;
 
-import java.net.CookieStore;
 import java.net.URLEncoder;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -8,7 +7,6 @@ import org.apache.http.message.BasicNameValuePair;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -21,21 +19,19 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.cnx.dao.UserDao;
-import com.cnx.http.CustomHttpClient;
 import com.cnx.http.HttpUtil;
 import com.cnx.http.NetWorkHelper;
 import com.cnx.http.Url;
 import com.cnx.http.json.LoginJson;
 import com.cnx.pojo.User;
+
 import com.cnx.ptt.R;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 	/**
 	 * The default email to populate the email field with.
 	 */
@@ -63,6 +59,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
+		
 		NetWorkHelper.checkNetwork(LoginActivity.this);
 		initView();
 	}

@@ -1,8 +1,9 @@
 package com.cnx.activity;
 
+
+
 import com.cnx.ptt.R;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;

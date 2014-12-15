@@ -1,13 +1,8 @@
 package com.cnx.http.json;
 
-import java.util.ArrayList;
 
 import org.json.JSONObject;
-
 import android.content.Context;
-
-import com.cnx.pojo.TaskListItem;
-import com.cnx.pojo.User;
 import com.cnx.tag.TAG;
 
 public class FollowTaskJson extends JsonPacket {

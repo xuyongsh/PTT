@@ -68,12 +68,11 @@
         </activity>
         <activity
             android:name="com.cnx.activity.TaskMonitorActivity"
-            android:label="@string/title_activity_task_mornitor"
-            android:launchMode="singleTask"
-            android:parentActivityName="com.cnx.activity.MainActivity" >
+            android:label="@string/title_activity_task_mornitor">
+            
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cnx.ptt.MainActivity" />
+                android:name="android.app.default_searchable"
+                android:value="com.cnx.activity.SearchableActivity" />
         </activity>
         <activity
             android:name="com.cnx.activity.DisplayTaskActivity"
@@ -94,8 +93,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cnx.ptt.DemoMainActivity"
-            android:label="@string/title_activity_demo_main" >
+            android:name="com.cnx.activity.TaskSearchActivity"
+            android:label="@string/title_activity_follow_task" >
+        </activity>
+        <activity android:name="com.cnx.activity.SearchableActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
     </application>
 

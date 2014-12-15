@@ -185,5 +185,8 @@
     <string name="task_item_title_text">Task title</string>
     <string name="task_item_subdate_text">2012&#8211;10&#8211;28 18:35</string>
     <string name="item_follow_text">Follow task</string>
+    <!-- Follow task -->
+    <string name="title_activity_follow_task">FollowTask</string>
+	<string name="search_hint">Search task number</string>
 
 </resources>

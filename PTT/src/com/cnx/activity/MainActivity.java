@@ -3,7 +3,6 @@ package com.cnx.activity;
 import java.util.Locale;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,21 +18,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.cnx.activity.LoginActivity.UserSession;
 import com.cnx.ptt.ContactTab;
 import com.cnx.ptt.DisplayMessageActivity;
 import com.cnx.ptt.ExploreTab;
 import com.cnx.ptt.MessageTab;
 import com.cnx.ptt.R;
-import com.cnx.ptt.SettingsActivity;
 import com.cnx.ptt.TrackTimeActivity;
-import com.cnx.ptt.R.id;
-import com.cnx.ptt.R.layout;
-import com.cnx.ptt.R.menu;
-import com.cnx.ptt.R.string;
 import com.cnx.ptt.autobahn.WampThread;
 
-public class MainActivity extends Activity implements ActionBar.TabListener {
+public class MainActivity extends BaseActivity implements ActionBar.TabListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -91,7 +83,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		
 		WampThread.obtain();
 	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -109,19 +100,19 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		
 		switch(id){
 		case R.id.action_search:
-			//do something for search button
-			return true;
+			//do something for new button
+			break;
 		case R.id.action_new:
 			//do something for new button
-			return true;
+			break;
 		case R.id.action_settings:
 			Intent i = new Intent(this.getBaseContext(),
 					SettingsActivity.class);
 			this.startActivity(i);
-			return true;
+			break;
 		default:
-			return super.onOptionsItemSelected(item);
-		}	
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

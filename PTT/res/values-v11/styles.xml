@@ -6,6 +6,8 @@
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
         <!-- API 11 theme customizations can go here. -->
+        <!-- I want to change the task monitor home back icon, But it will replace all of the back icon -->
+        <!-- item name="android:homeAsUpIndicator">@drawable/ic_action_back_white</item-->
     </style>
 
 </resources>

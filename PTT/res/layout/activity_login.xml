@@ -152,5 +152,4 @@
                 android:textColor="@color/login_input_background" />
         </LinearLayout>
     </ScrollView>
-
 </merge>

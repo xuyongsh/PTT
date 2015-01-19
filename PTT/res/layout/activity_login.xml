@@ -1,155 +1,111 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.cnx.activity.LoginActivity" >
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
 
-    <!-- Login progress -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_login_header_background" />
 
     <LinearLayout
-        android:id="@+id/login_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone" >
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/ic_login_user" />
 
-        <TextView
-            android:id="@+id/login_status_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/login_progress_signing_in"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <com.cnx.ptt.ui.WithClearIconEditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:paddingRight="20dp"
+            android:drawableRight="@drawable/ic_edit_clear"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textSize="15sp" />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/login_form"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/ic_login_pasword" />
+
+        <com.cnx.ptt.ui.WithClearIconEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:paddingRight="20dp"
+            android:drawableRight="@drawable/ic_edit_clear"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/login_background_img" >
+        android:background="#AEE8DC"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            style="@style/LoginFormContainer"
-            android:orientation="vertical" >
+        <CheckBox
+            android:id="@+id/cb_rememberme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="Save password"
+            android:textColor="#999999" />
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="25dp"
-                android:layout_weight="0.70"
-                android:contentDescription="@string/login_progress_signing_in"
-                android:padding="3dip"
-                android:src="@drawable/head_portrait" />
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_login_selector"
+            android:text="Login"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
 
-            <LinearLayout
-                android:id="@+id/linear1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical" >
+        <Button
+            android:id="@+id/bt_forget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_login_selector"
+            android:clickable="true"
+            android:text="Forget"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/login_top_background" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
-                        android:text="@string/login_label_email"
-                        android:textColor="@color/login_button_black"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:id="@+id/email"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:background="@null"
-                        android:hint="@string/prompt_email"
-                        android:text="wangxinh@cn.ibm.com"
-                        android:inputType="textEmailAddress"
-                        android:singleLine="true"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/login_bottom_background" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
-                        android:text="@string/login_label_pwd"
-                        android:textColor="@color/login_button_black"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:id="@+id/password"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@null"
-                        android:drawableRight="@drawable/login_password"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="@+id/login"
-                        android:text="12345"
-                        android:inputType="textPassword"
-                        android:singleLine="true"
-                        android:textSize="15sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/sign_in_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/btn_login_selector"
-                android:text="@string/action_sign_in"
-                android:textColor="@color/login_button_white" />
-
-            <Button
-                android:id="@+id/forget_pwd_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/btn_login_selector"
-                android:text="@string/action_forget_pwd"
-                android:textColor="@color/login_button_white" />
-
-            <TextView
-                android:id="@+id/login_copyright"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="50dp"
-                android:layout_weight="0.70"
-                android:gravity="center"
-                android:text="@string/login_copyright"
-                android:textColor="@color/login_input_background" />
-        </LinearLayout>
-    </ScrollView>
-</merge>
+</LinearLayout>

@@ -14,23 +14,26 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:windowAnimationStyle">@style/default_animation</item>
     </style>
 
     <style name="default_animation" mce_bogus="1" parent="@android:style/Animation.Activity">
-	    <item name="android:activityOpenEnterAnimation">@anim/default_anim_in</item>
-	    <item name="android:activityOpenExitAnimation">@anim/anim_stay</item>
-	    <item name="android:activityCloseEnterAnimation">@anim/anim_stay</item>
-	    <item name="android:activityCloseExitAnimation">@anim/default_anim_out</item>
-	</style>
-	<style name="LoginFormContainer">
+        <item name="android:activityOpenEnterAnimation">@anim/default_anim_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/anim_stay</item>
+        <item name="android:activityCloseEnterAnimation">@anim/anim_stay</item>
+        <item name="android:activityCloseExitAnimation">@anim/default_anim_out</item>
+    </style>
+
+    <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
     </style>
+
     <style name="myProgressBarStyleLarge">
-　　        <item name="android:indeterminateDrawable">@drawable/progress_large_white</item>
+　　                        <item name="android:indeterminateDrawable">@drawable/progress_large_white</item>
     </style>
     <!-- 自定义loading dialog -->
     <style name="loading_dialog_tran" parent="android:style/Theme.Dialog">
@@ -42,4 +45,5 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
 </resources>

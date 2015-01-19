@@ -29,7 +29,7 @@ public class DisplayMessageHandler extends Handler {
 			SendMessage((String) msg.obj);
 			break;
 		case R.id.displaymessage_scroll_to_bottom:
-			this.activity.mScrollToBottom();
+			//this.activity.mScrollToBottom();
 			break;
 		case R.id.quit:
 			Looper.myLooper().quit();
@@ -39,12 +39,12 @@ public class DisplayMessageHandler extends Handler {
 	}
 	
 	private void NewMessage(String text){
-		this.activity.addTextMessage(text, false);
+		//this.activity.addTextMessage(text, false);
 		Log.d(TAG, "New message coming:"+text);
 	}
 	
 	private void SendMessage(String text){
-		this.activity.addTextMessage(text, true);
+		//this.activity.addTextMessage(text, true);
 		Log.d(TAG, "New message send"+text);
 	}
 }

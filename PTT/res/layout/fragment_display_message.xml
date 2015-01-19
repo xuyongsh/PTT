@@ -4,22 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.cnx.ptt.DisplayMessageActivity$PlaceholderFragment" >
-    <ScrollView 
-        android:id="@+id/sv_display_message_scroll"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="0dip">
-    <LinearLayout 
+        android:layout_height="wrap_content" >
+
+        <ProgressBar
+            android:id="@+id/client_pb"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="10.0dip"
+            android:max="100"
+            android:visibility="gone" />
+    </LinearLayout>
+    <ListView
         android:id="@+id/lv_display_message"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dip"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="insideInset"
-        >
-    </LinearLayout>
-    </ScrollView>
+        android:layout_weight="1.0"
+        android:background="#FFFFFFFF"
+        android:cacheColorHint="@null"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:stackFromBottom="true" />
 	<View 
 	    android:layout_width="fill_parent"
 	    android:layout_height="1px"

@@ -165,8 +165,8 @@
     <!-- Strings related to login -->
     <string name="login_label_email">Email:</string>
     <string name="login_label_pwd">Password:</string>
-    <string name="prompt_email">wangxinh@cn.ibm.com</string>
-    <string name="prompt_password">12345</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in"><b>Sign in</b></string>
     <string name="action_forget_pwd"><b>Forget</b></string>
     <string name="action_sign_in_short">Sign in</string>
@@ -186,7 +186,7 @@
     <string name="task_item_subdate_text">2012&#8211;10&#8211;28 18:35</string>
     <string name="item_follow_text">Follow task</string>
     <!-- Follow task -->
-    <string name="title_activity_follow_task">FollowTask</string>
+    <string name="title_activity_follow_task"> Results</string>
 	<string name="search_hint">Search task number</string>
-
+	<string name="title_search_task">Search task number</string>
 </resources>

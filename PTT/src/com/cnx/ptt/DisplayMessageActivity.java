@@ -1,174 +1,157 @@
 package com.cnx.ptt;
 
-import android.app.Fragment;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
+import org.jivesoftware.smack.ChatManagerListener;
+import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.XMPPException;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cnx.ptt.autobahn.WampActivityAbstract;
-import com.cnx.ptt.autobahn.WampThread;
-import com.cnx.ptt.chat.ChatEventOSMessage;
-import com.cnx.ptt.chat.OneOneChatEvent;
-import com.cnx.ptt.chat.OneOneChatEventHandler;
-import com.cnx.ptt.chat.Receiver;
+import com.cnx.ptt.activity.BaseActivity;
+import com.cnx.ptt.pojo.ChatMsg;
+import com.cnx.ptt.utils.TimeRender;
+import com.cnx.ptt.xmpp.XmppConnectionManager;
 
-public class DisplayMessageActivity extends WampActivityAbstract {
+public class DisplayMessageActivity extends BaseActivity {
 
-	// private static final String TAG = DisplayMessageActivity.class.getName();
-	private LinearLayout lo;
-	private ScrollView scroll;
-	private Handler handler;
-
+	private List<ChatMsg> chatMsgList = new ArrayList<ChatMsg>();
+	private MyAdapter adapter;
+	private EditText sendMessageTxt;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_display_message);
+		Bundle extras = getIntent().getExtras();
+		final String userJID = extras.getString("c_item_id");
+		final CharSequence userName = extras.getCharSequence("c_item_name");
+		super.setTitle(userName);
 
-		String[] TITLE = { "WPC PTT Team", "Theo Wang", "Lois Teo" };
-		int id = (int) getIntent().getLongExtra("c_item_id", 1);
+		ListView lv_display_message = (ListView) findViewById(R.id.lv_display_message);
+		lv_display_message.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+		
+		sendMessageTxt = (EditText) findViewById(R.id.input_message);
+		adapter = new MyAdapter(this);
+		lv_display_message.setAdapter(adapter);
+		//message listener
+		ChatManager cm = XmppConnectionManager.getConnection().getChatManager();
+		
+		final Chat newchat = cm.createChat(userJID, null);
+		cm.addChatListener(new ChatManagerListener() {
 
-		super.setTitle(TITLE[id]);
-
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-		handler = new DisplayMessageHandler(this);
-		// Get the message from the intent
-		// Intent intent = getIntent();
-
-		// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		// setContentView(R.layout.custom_title);
-		// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-		// "Theo Wang");
+			@Override
+			public void chatCreated(Chat chat, boolean able) {
+				chat.addMessageListener(new MessageListener() {
+					
+					@Override
+					public void processMessage(Chat chat2,
+							org.jivesoftware.smack.packet.Message message) {
+						System.out.println(message.getFrom());
+						if(message.getFrom().contains(userJID)){
+							String[] args = new String[] { (String) userName, message.getBody(), TimeRender.getDate(), "IN" };
+							android.os.Message msg = mHandler.obtainMessage();
+							msg.what = 1;
+							msg.obj = args;
+							msg.sendToTarget();
+						}else{
+							// orther user / group / admin of the openfire
+							// do work...
+						}
+						
+					}
+				});
+			}
+		});
+		//send message button
+		findViewById(R.id.button_send_now).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String msg = sendMessageTxt.getText().toString().trim();
+				if(msg.length() > 0){
+					
+					chatMsgList.add(new ChatMsg(UserSession.user.getUser_name(), msg, TimeRender.getDate(), "OUT"));
+					adapter.notifyDataSetChanged();
+					try {
+						newchat.sendMessage(msg);
+					} catch (XMPPException e) {
+						e.printStackTrace();
+					}
+				}
+				sendMessageTxt.setText("");
+			}
+		});
+		
 	}
+	private Handler mHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 1:
+				String[] args = (String[]) msg.obj;
+				chatMsgList.add(new ChatMsg(args[0], args[1], args[2], args[3]));
+				adapter.notifyDataSetChanged();
+				break;			
+			
+			default:
+				break;
+			}
+		};
+	};
+	class MyAdapter extends BaseAdapter {
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+		private Context cxt;
+		private LayoutInflater inflater;
 
-		lo = (LinearLayout) findViewById(R.id.lv_display_message);
-		scroll = (ScrollView) findViewById(R.id.sv_display_message_scroll);
-		OneOneChatEvent ooc = new OneOneChatEvent();
-		ooc.m_sender_id = DefaultConfig.DEBUG_CLIENT_ID;
-		ooc.m_receiver_id = DefaultConfig.DEBUG_TARGET_ID;
-
-		OneOneChatEventHandler ooch = new OneOneChatEventHandler(this);
-
-		ChatEventOSMessage com = new ChatEventOSMessage(ooc, ooch);
-
-		Message m = Message.obtain(WampThread.obtain().getHandler(),
-				R.id.wamp_subscribe_ooc, com);
-		m.sendToTarget();
-	}
-
-	@Override
-	protected void onDestroy() {
-		Message.obtain(this.get_handler(), R.id.quit);
-		super.onDestroy();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.display_message, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
+		public MyAdapter(DisplayMessageActivity formClient) {
+			this.cxt = formClient;
 		}
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_display_message,
-					container, false);
-			return rootView;
-		}
-	}
-
-	@Override
-	public Handler get_handler() {
-		return handler;
-	}
-
-	public void addTextMessage(String text, boolean isSend) {
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		TextView tv = (TextView) inflater.inflate(
-				R.layout.display_message_item, null);
-		tv.setText(text);
-		lo.addView(tv);
-		if (!isSend) {
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
-			lp.gravity = Gravity.RIGHT;
-			tv.setLayoutParams(lp);
+		public int getCount() {
+			return chatMsgList.size();
 		}
 
-		Message.obtain(this.handler, R.id.displaymessage_scroll_to_bottom)
-				.sendToTarget();
-	}
-
-	public void mScrollToBottom() {
-		int off = lo.getMeasuredHeight() - scroll.getHeight();
-		if (off > 0) {
-			scroll.scrollTo(0, off);
+		@Override
+		public Object getItem(int position) {
+			return chatMsgList.get(position);
 		}
 
-	}
-
-	public void SendNowOnClick(View v) {
-		EditText et = (EditText) findViewById(R.id.input_message);
-
-		String content = et.getText().toString();
-
-		if (content.length() == 0) {
-			return;
+		@Override
+		public long getItemId(int position) {
+			return position;
 		}
 
-		Receiver rec = new Receiver(this);
-		rec.set_text_message(content);
-
-		WampThread wt = WampThread.obtain();
-
-		Message ms = Message.obtain(wt.getHandler(), R.id.wamp_publish_ooc,
-				rec.get_com());
-		ms.sendToTarget();
-
-		addTextMessage(content, true);
-
-		et.setText("");
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			this.inflater = (LayoutInflater) this.cxt.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			if(chatMsgList.get(position).getFrom().equals("IN")){
+				convertView = this.inflater.inflate(R.layout.formclient_chat_in, null);
+			}else{
+				convertView = this.inflater.inflate(R.layout.formclient_chat_out, null);
+			}
+			TextView useridView = (TextView) convertView.findViewById(R.id.formclient_row_userid);
+			TextView dateView = (TextView) convertView.findViewById(R.id.formclient_row_date);
+			TextView msgView = (TextView) convertView.findViewById(R.id.formclient_row_msg);
+			
+			useridView.setText(chatMsgList.get(position).getUserid());
+			dateView.setText(chatMsgList.get(position).getDate());
+			msgView.setText(chatMsgList.get(position).getMsg());
+			return convertView;
+		}
 	}
-
 }

@@ -3,5 +3,5 @@
     android:id="@+id/pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cnx.activity.MainActivity" />
+    tools:context="com.cnx.ptt.activity.MainActivity" />
 

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cnx.ptt"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -37,7 +37,7 @@
             android:launchMode="singleTask" >
         </activity>
         <activity
-            android:name="com.cnx.ptt.DisplayMessageActivity"
+            android:name="com.cnx.ptt.activity.DisplayMessageActivity"
             android:label="@string/title_activity_display_message"
             android:parentActivityName="com.cnx.ptt.activity.MainActivity" >
             <meta-data
@@ -83,17 +83,16 @@
             android:label="@string/title_activity_display_task"
             android:parentActivityName="com.cnx.ptt.activity.TaskMonitorActivity" >
         </activity>
-        <activity android:name="com.cnx.ptt.activity.LoginActivity" />
+        <activity android:name="com.cnx.ptt.activity.LoginActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         
-        <activity android:name="com.cnx.ptt.activity.SplashActivity">
+        <activity android:name="com.cnx.ptt.activity.SplashActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.cnx.ptt.activity.SearchActivity" >
-        </activity>
+        <activity android:name="com.cnx.ptt.activity.SearchActivity" />
         <activity
             android:name="com.cnx.ptt.activity.TaskSearchActivity"
             android:label="@string/title_activity_follow_task"
@@ -105,6 +104,9 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity android:name="com.cnx.ptt.activity.MessageTabActivity" />
+        <activity android:name="com.cnx.ptt.activity.ExploreTabActivity" />
+        <activity android:name="com.cnx.ptt.activity.ContactTabActivity" />
         <service android:name="com.cnx.ptt.chat.service.MucService" />
     </application>
 

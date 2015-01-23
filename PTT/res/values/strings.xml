@@ -23,7 +23,7 @@
     <string name="send_now">Send Now</string>
     <string name="track_time">Track Time</string>
     <string name="time_sheet_today">Time Sheet Today</string>
-    <string name="task_mornitor">Task Mornitor</string>
+    <string name="task_monitor">Task Monitor</string>
     <string name="title_activity_track_time">Track Time</string>
     <string name="scan_qr_bar_code">Scan QR or Bar Code</string>
     <string name="title_activity_capture_code">CaptureCodeActivity</string>
@@ -176,7 +176,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="login_copyright">©Copyright Concentrix Corporation 2014.</string>
+    <string name="login_copyright">©Copyright Concentrix Corporation 2015.</string>
     <string name="title_activity_demo_main">DemoMainActivity</string>
     <string name="httpError">connection error, please try again later.</string>
     <!-- Task list item layout -->

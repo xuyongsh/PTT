@@ -1,6 +1,13 @@
 package com.cnx.ptt.activity;
 
+import java.net.URLEncoder;
+
+import org.apache.http.message.BasicNameValuePair;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.Presence;
+
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,12 +18,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cnx.ptt.R;
+import com.cnx.ptt.http.HttpUtil;
 import com.cnx.ptt.http.Url;
 import com.cnx.ptt.http.json.LoginJson;
 import com.cnx.ptt.pojo.User;
-import com.cnx.ptt.utils.MD5Utils;
+import com.cnx.ptt.utils.LogUtils;
+import com.cnx.ptt.xmpp.XmppConnectionManager;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
+	
+	private View mLoginStatusView;
+	private View mLoginFormView;
+	
 	private EditText et_email;
 	private EditText et_password;
 	private CheckBox cb_rememberme;
@@ -38,6 +51,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		et_email = (EditText) findViewById(R.id.et_email);
 		et_password = (EditText) findViewById(R.id.et_password);
 		cb_rememberme = (CheckBox) findViewById(R.id.cb_rememberme);
+		
+		mLoginStatusView = findViewById(R.id.login_status);
+		mLoginFormView = findViewById(R.id.login_form);
 		initView();
 	}
 
@@ -62,7 +78,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		String password = sp.getString("password", null);
 		Boolean rememberme = sp.getBoolean("rememberme", false);
 
-		if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+		if (rememberme && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 			et_email.setText(email);
 			et_password.setText(password);
 			cb_rememberme.setChecked(rememberme);
@@ -73,6 +89,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bt_login:
+			showProgress(true, mLoginStatusView, mLoginFormView);
 			attemptLogin();
 			break;
 		case R.id.bt_forget:
@@ -82,7 +99,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			break;
 		}
 	}
-
+	/**
+	 * 用户登录，获取用户名密码，并判断有效性
+	 */
 	private void attemptLogin() {
 		// get the values at the time of the login attempt.
 		mEmail = et_email.getText().toString().trim();
@@ -150,11 +169,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			String result;
 			try {
 				String urlString = Url.LOGIN_URL;
-				/*result = HttpUtil.getByHttpClient(LoginActivity.this,
+				result = HttpUtil.getByHttpClient(LoginActivity.this,
 						urlString, new BasicNameValuePair("username",
 								URLEncoder.encode(mEmail, "utf-8")),
-						new BasicNameValuePair("password", mPassword));*/
-				result = "{\"flag\":\"success\",\"name\":\"Yong Sheng Xu\",\"userid\":\"20\",\"email\":\"xuyongsh@cn.ibm.com\"}";
+						new BasicNameValuePair("password", mPassword));
+				
 
 				user = getResult(result);
 				// login xmpp server
@@ -165,14 +184,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					return false;
 				} else {
 					UserSession.user = user;
-					sp.edit().putString("email", mEmail).commit();
+					Editor editor = sp.edit();
+					
+					editor.putString("email", mEmail);
 					/**
-					 *一开始用MD5Utils.md5(mPassword) 加密， 当用户登录成功并且保存密码之后, 在下一次登录， 会将保存的用户名密码取出来，
-					 *此时会有个问题，会将之前保存的MD5密码放进去，然后再登录，又将MD5一次
+					 * 用MD5Utils.md5(mPassword) 加密， 当用户登录成功并且保存密码之后, 在下一次登录，
+					 * 会将保存的用户名密码取出来， 此时会有个问题，会将之前保存的MD5密码放进去，然后再登录，又将MD5一次
 					 */
-					sp.edit().putString("password", mPassword).commit();
-					sp.edit().putBoolean("rememberme", mRememberMe).commit();
-					//Do we need to save user info into SQLite database?????
+					editor.putString("password", mPassword);
+					editor.putBoolean("rememberme", mRememberMe);
+					editor.commit();
+					// Do we need to save user info into SQLite database?????
 					// saveUserToLocal(user);
 				}
 			} catch (Exception e) {
@@ -193,7 +215,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			mAuthTask = null;
 
 			if (success) {
-
+				showProgress(false, mLoginStatusView, mLoginFormView);
 				Intent intent = new Intent(LoginActivity.this,
 						MainActivity.class);
 				startActivity(intent);
@@ -211,9 +233,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * 用户登录到xmpp服务器， 登录的逻辑重新改进
+	 * 1. 登录
+	 * 2. 注册监听
+	 * @return boolean
+	 */
 	private boolean loginXmppServer() {
-		return true;
-		/*try {
+		try {
 			// TODO: Can not login with @cn.ibm.com prefix, will be lost
 			// connection
 			// 1. connection to xmpp server
@@ -224,14 +251,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			Presence presence = new Presence(Presence.Type.available);
 			presence.setPriority(1);
 			XmppConnectionManager.getConnection().sendPacket(presence);
-
+			
 			return true;
 		} catch (XMPPException e) {
-			LogUtils.i("loginXmppServer exception",
-					"login XMPP server is disconnected.");
+			LogUtils.i("loginXmppServer exception",	"login XMPP server is disconnected.");
 			XmppConnectionManager.closeConnection();
 			e.printStackTrace();
 		}
-		return false;*/
+		return false;
 	}
 }

@@ -38,9 +38,9 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/thumbnail"
-        android:layout_alignRight="@+id/task_list_item_subdate"
         android:layout_below="@id/task_list_item_reqnum"
         android:layout_marginTop="2dip"
+        android:layout_toLeftOf="@+id/task_list_item_follow"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="@string/task_item_title_text"
         android:textColor="@android:color/darker_gray"
@@ -59,13 +59,13 @@
         android:textColor="#343434"
          />
 
-    <!-- ImageView
-        android:id="@+id/task_list_item_follow"
+    <ImageView
+        android:id="@+id/task_list_item_followIcon"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignRight="@+id/task_list_item_subdate"
         android:layout_below="@+id/task_list_item_reqnum"
-        android:src="@drawable/ic_action_important"
-        android:contentDescription="@string/item_follow_text" /-->
+        android:src="@drawable/ic_follow_add"
+        android:contentDescription="@string/item_follow_text" />
 
 </RelativeLayout>

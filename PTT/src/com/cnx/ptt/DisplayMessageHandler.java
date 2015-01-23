@@ -1,5 +1,7 @@
 package com.cnx.ptt;
 
+import com.cnx.ptt.activity.DisplayMessageActivity;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;

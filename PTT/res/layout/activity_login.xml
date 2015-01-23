@@ -1,111 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#ffffff"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
 
-    <ImageView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/login_status"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_login_header_background" />
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal" >
-
-        <ImageView
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="25dp"
-            android:src="@drawable/ic_login_user" />
+            android:layout_marginBottom="8dp" />
 
-        <com.cnx.ptt.ui.WithClearIconEditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@null"
-            android:paddingRight="20dp"
-            android:drawableRight="@drawable/ic_edit_clear"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:singleLine="true"
-            android:textColor="#999999"
-            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/login_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/login_progress_signing_in"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="25dp"
-            android:src="@drawable/ic_login_pasword" />
-
-        <com.cnx.ptt.ui.WithClearIconEditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@null"
-            android:paddingRight="20dp"
-            android:drawableRight="@drawable/ic_edit_clear"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:textColor="#999999"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#AEE8DC"
         android:orientation="vertical" >
 
-        <CheckBox
-            android:id="@+id/cb_rememberme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:text="Save password"
-            android:textColor="#999999" />
-
-        <Button
-            android:id="@+id/bt_login"
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_login_selector"
-            android:text="Login"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_login_header_background" />
 
-        <Button
-            android:id="@+id/bt_forget"
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal" 
+            android:background="#ffffff" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/ic_login_user" />
+
+            <com.cnx.ptt.ui.WithClearIconEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:drawableRight="@drawable/ic_edit_clear"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:text="xinhui.wang@concentrix.com"
+                android:paddingRight="20dp"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_login_selector"
-            android:clickable="true"
-            android:text="Forget"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:layout_height="0.2dp"
+            android:background="#44000000" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="#ffffff"  >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/ic_login_pasword" />
+
+            <com.cnx.ptt.ui.WithClearIconEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:drawableRight="@drawable/ic_edit_clear"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword"
+                android:text="12345qwer"
+                android:paddingRight="20dp"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#AEE8DC"
+            android:orientation="vertical" >
+
+            <CheckBox
+                android:id="@+id/cb_rememberme"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="40dp"
+                android:text="Save password"
+                android:textColor="#999999" />
+
+            <Button
+                android:id="@+id/bt_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_login_selector"
+                android:text="Login"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/bt_forget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_login_selector"
+                android:clickable="true"
+                android:text="Forget"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/login_copyright"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.70"
+                android:gravity="center"
+                android:text="@string/login_copyright"
+                android:textColor="#999999" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</merge>

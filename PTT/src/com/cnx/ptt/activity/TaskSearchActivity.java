@@ -80,7 +80,7 @@ public class TaskSearchActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(ArrayList<TaskListItem> result) {
 			dismissProgressDialog();
-			taskListAdapter = new TaskListAdapter(TaskSearchActivity.this, result);
+			taskListAdapter = new TaskListAdapter(TaskSearchActivity.this, result, true);
 			listView.setAdapter(taskListAdapter);
 			listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override

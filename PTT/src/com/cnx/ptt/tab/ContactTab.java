@@ -1,9 +1,14 @@
-package com.cnx.ptt;
+package com.cnx.ptt.tab;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+
+import com.cnx.ptt.ContactListAdapter;
+import com.cnx.ptt.Person;
+import com.cnx.ptt.R;
+import com.cnx.ptt.R.id;
 
 import android.content.Context;
 import android.graphics.Color;

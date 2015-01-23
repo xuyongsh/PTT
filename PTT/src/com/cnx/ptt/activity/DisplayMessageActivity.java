@@ -1,4 +1,4 @@
-package com.cnx.ptt;
+package com.cnx.ptt.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cnx.ptt.activity.BaseActivity;
+import com.cnx.ptt.R;
 import com.cnx.ptt.pojo.ChatMsg;
 import com.cnx.ptt.utils.TimeRender;
 import com.cnx.ptt.xmpp.XmppConnectionManager;
@@ -36,7 +36,7 @@ public class DisplayMessageActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_display_message);
+		setContentView(R.layout.activity_chat_dialog);
 		Bundle extras = getIntent().getExtras();
 		final String userJID = extras.getString("c_item_id");
 		final CharSequence userName = extras.getCharSequence("c_item_name");

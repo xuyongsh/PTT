@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:background="#CCC"
         android:contentDescription="@string/default_user_name"
-        android:src="@drawable/iv_avatar_2" />
+        android:src="@drawable/iv_avatar_1" />
 
     <TextView
         android:id="@+id/display_user_name"

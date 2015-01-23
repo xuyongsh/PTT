@@ -33,7 +33,8 @@
     </style>
 
     <style name="myProgressBarStyleLarge">
-　　                        <item name="android:indeterminateDrawable">@drawable/progress_large_white</item>
+
+　　                                <item name="android:indeterminateDrawable">@drawable/progress_large_white</item>
     </style>
     <!-- 自定义loading dialog -->
     <style name="loading_dialog_tran" parent="android:style/Theme.Dialog">

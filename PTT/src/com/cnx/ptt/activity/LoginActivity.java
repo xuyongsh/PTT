@@ -25,8 +25,11 @@ import com.cnx.ptt.pojo.User;
 import com.cnx.ptt.utils.LogUtils;
 import com.cnx.ptt.xmpp.XmppConnectionManager;
 
-public class LoginActivity extends BaseActivity implements OnClickListener {
+public class LoginActivity extends BaseActivity implements OnClickListener{
 	
+	private String TAG = "LoginActivity";
+	
+	public static final String LOGIN_ACTION = "com.cnx.ptt.action.LOGIN";
 	private View mLoginStatusView;
 	private View mLoginFormView;
 	
@@ -54,6 +57,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginFormView = findViewById(R.id.login_form);
+
 		initView();
 	}
 
@@ -176,6 +180,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				
 
 				user = getResult(result);
+				
 				// login xmpp server
 				if (loginXmppServer()) {
 					System.out.println("XMPP init error");
@@ -187,10 +192,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					Editor editor = sp.edit();
 					
 					editor.putString("email", mEmail);
-					/**
-					 * 用MD5Utils.md5(mPassword) 加密， 当用户登录成功并且保存密码之后, 在下一次登录，
-					 * 会将保存的用户名密码取出来， 此时会有个问题，会将之前保存的MD5密码放进去，然后再登录，又将MD5一次
-					 */
 					editor.putString("password", mPassword);
 					editor.putBoolean("rememberme", mRememberMe);
 					editor.commit();
@@ -258,6 +259,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			XmppConnectionManager.closeConnection();
 			e.printStackTrace();
 		}
+		
+		
 		return false;
 	}
+	
+	
 }

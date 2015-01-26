@@ -107,7 +107,8 @@
         <activity android:name="com.cnx.ptt.activity.MessageTabActivity" />
         <activity android:name="com.cnx.ptt.activity.ExploreTabActivity" />
         <activity android:name="com.cnx.ptt.activity.ContactTabActivity" />
-        <service android:name="com.cnx.ptt.chat.service.MucService" />
+       
+        
     </application>
 
 </manifest>

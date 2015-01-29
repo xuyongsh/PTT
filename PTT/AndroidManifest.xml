@@ -107,8 +107,6 @@
         <activity android:name="com.cnx.ptt.activity.MessageTabActivity" />
         <activity android:name="com.cnx.ptt.activity.ExploreTabActivity" />
         <activity android:name="com.cnx.ptt.activity.ContactTabActivity" />
-       
-        
     </application>
 
 </manifest>

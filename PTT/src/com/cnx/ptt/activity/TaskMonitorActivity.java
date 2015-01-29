@@ -54,7 +54,7 @@ public class TaskMonitorActivity extends BaseActivity {
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
-		showProgressDialog();
+		
 		TaskListAsynTask task = new TaskListAsynTask();
 		task.execute();
 	}

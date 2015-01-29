@@ -26,13 +26,12 @@ import com.cnx.ptt.utils.LogUtils;
 import com.cnx.ptt.xmpp.XmppConnectionManager;
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
-	
+
 	private String TAG = "LoginActivity";
-	
-	public static final String LOGIN_ACTION = "com.cnx.ptt.action.LOGIN";
+
 	private View mLoginStatusView;
 	private View mLoginFormView;
-	
+
 	private EditText et_email;
 	private EditText et_password;
 	private CheckBox cb_rememberme;
@@ -54,10 +53,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		et_email = (EditText) findViewById(R.id.et_email);
 		et_password = (EditText) findViewById(R.id.et_password);
 		cb_rememberme = (CheckBox) findViewById(R.id.cb_rememberme);
-		
+
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginFormView = findViewById(R.id.login_form);
-
+		
 		initView();
 	}
 
@@ -82,7 +81,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		String password = sp.getString("password", null);
 		Boolean rememberme = sp.getBoolean("rememberme", false);
 
-		if (rememberme && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+		if (rememberme && !TextUtils.isEmpty(email)
+				&& !TextUtils.isEmpty(password)) {
 			et_email.setText(email);
 			et_password.setText(password);
 			cb_rememberme.setChecked(rememberme);
@@ -103,6 +103,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 	}
+
 	/**
 	 * 用户登录，获取用户名密码，并判断有效性
 	 */
@@ -142,8 +143,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mAuthTask = new UserLoginTask();
-			mAuthTask.execute();
+			 mAuthTask = new UserLoginTask();
+			 mAuthTask.execute();
+			
 		}
 	}
 
@@ -177,20 +179,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 						urlString, new BasicNameValuePair("username",
 								URLEncoder.encode(mEmail, "utf-8")),
 						new BasicNameValuePair("password", mPassword));
-				
 
 				user = getResult(result);
-				
+
 				// login xmpp server
-				if (loginXmppServer()) {
-					System.out.println("XMPP init error");
-				}
+				 if (loginXmppServer()) {
+					 System.out.println("XMPP init error");
+				 }
 				if (user == null) {
 					return false;
 				} else {
 					UserSession.user = user;
 					Editor editor = sp.edit();
-					
+
 					editor.putString("email", mEmail);
 					editor.putString("password", mPassword);
 					editor.putBoolean("rememberme", mRememberMe);
@@ -235,34 +236,29 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	}
 
 	/**
-	 * 用户登录到xmpp服务器， 登录的逻辑重新改进
-	 * 1. 登录
-	 * 2. 注册监听
+	 * 用户登录到xmpp服务器， 登录的逻辑重新改进 1. 登录 2. 注册监听
+	 * 
 	 * @return boolean
 	 */
 	private boolean loginXmppServer() {
-		try {
-			// TODO: Can not login with @cn.ibm.com prefix, will be lost
-			// connection
-			// 1. connection to xmpp server
-			String userString = mEmail.substring(0, mEmail.indexOf("@"));
-			XmppConnectionManager.getConnection().login(userString, mPassword);
 
-			// tell server user status
+		try {
+			// TODO: Can not login with @cn.ibm.com prefix, will be lost //
+			// 1. connection to xmpp server
+			String userAccount = mEmail.substring(0, mEmail.indexOf("@"));
+			XmppConnectionManager.getConnection().login(userAccount, mPassword);
+
+			// tell server user status Presence presence = new
 			Presence presence = new Presence(Presence.Type.available);
 			presence.setPriority(1);
 			XmppConnectionManager.getConnection().sendPacket(presence);
-			
+
 			return true;
 		} catch (XMPPException e) {
-			LogUtils.i("loginXmppServer exception",	"login XMPP server is disconnected.");
+			LogUtils.i("loginXmppServer exception", "login XMPP server is disconnected.");
 			XmppConnectionManager.closeConnection();
 			e.printStackTrace();
 		}
-		
-		
 		return false;
 	}
-	
-	
 }

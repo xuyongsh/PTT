@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.cnx.ptt.TaskMornitor" >
+
+    <item
+        android:id="@+id/search_task_btn"
+        android:showAsAction="always"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_action_search"
+        />
+</menu>

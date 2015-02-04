@@ -30,6 +30,7 @@ public class MainActivity extends TabActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		//1. 载入main布局文件
 		setContentView(R.layout.activity_main);
 		//2. 获取tabhost

@@ -28,7 +28,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.cnx.ptt.R;
-import com.cnx.ptt.utils.LogUtils;
+import com.cnx.ptt.utils.L;
 
 public class CustomHttpClient {
     private static String TAG = "CustomHttpClient";
@@ -111,7 +111,7 @@ public class CustomHttpClient {
                 
             }
         }
-       LogUtils.d("retuest url",sb.toString());
+       L.d("retuest url",sb.toString());
         // HttpGet
         HttpGet httpRequest = new HttpGet(sb.toString());
         // HttpClient

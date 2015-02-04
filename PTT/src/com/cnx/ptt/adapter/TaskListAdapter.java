@@ -28,7 +28,7 @@ import com.cnx.ptt.http.Url;
 import com.cnx.ptt.http.json.FollowTaskJson;
 import com.cnx.ptt.pojo.TaskListItem;
 import com.cnx.ptt.utils.DialogUtil;
-import com.cnx.ptt.utils.LogUtils;
+import com.cnx.ptt.utils.L;
 
 public class TaskListAdapter extends BaseAdapter{
 	private Integer[] priorityIcon = {R.drawable.ic_taskitem_priority_0,R.drawable.ic_taskitem_priority_1, R.drawable.ic_taskitem_priority_2, 
@@ -152,7 +152,7 @@ public class TaskListAdapter extends BaseAdapter{
 						new BasicNameValuePair("taskid", params[0]),
 						new BasicNameValuePair("action", params[1]));
 			} catch (Exception e) {
-				LogUtils.d("TaskSearchActivity", e.getMessage());
+				L.d("TaskSearchActivity", e.getMessage());
 				e.printStackTrace();
 			}
 
@@ -161,7 +161,7 @@ public class TaskListAdapter extends BaseAdapter{
 						.readJsonFollowTask(result);
 
 			} catch (Exception e) {
-				LogUtils.d("TaskSearchActivity", e.getMessage());
+				L.d("TaskSearchActivity", e.getMessage());
 				e.printStackTrace();
 			}
 			return isFollowed;

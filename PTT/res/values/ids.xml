@@ -35,5 +35,8 @@
   <item type="id" name="displaymessage_new_txt_message"/>
   <item type="id" name="displaymessage_send_txt_message"/>
   <item name="displaymessage_scroll_to_bottom" type="id"/>
+  <item name="inputArea" type="id">false</item>
+  <item name="selected_view" type="id"/>
+  <item name="scrollview" type="id"/>
 
 </resources>

@@ -27,7 +27,7 @@ import com.cnx.ptt.http.Url;
 import com.cnx.ptt.http.json.FollowTaskJson;
 import com.cnx.ptt.http.json.TaskSearchJson;
 import com.cnx.ptt.pojo.TaskListItem;
-import com.cnx.ptt.utils.LogUtils;
+import com.cnx.ptt.utils.L;
 
 public class TaskSearchActivity extends BaseActivity {
 	private ListView listView;
@@ -47,7 +47,7 @@ public class TaskSearchActivity extends BaseActivity {
 	}
 	
 	private void showinfo(String s) {
-		LogUtils.i("---TaskSearchActivity---", s);
+		L.i("---TaskSearchActivity---", s);
 	}
 	private void doSearchQuery(Intent intent){
 		if(intent == null)
@@ -70,7 +70,7 @@ public class TaskSearchActivity extends BaseActivity {
 						new BasicNameValuePair("userid", String.valueOf(UserSession.user.getUser_id())),
 						new BasicNameValuePair("query", params[0]));
 			} catch (Exception e) {
-				LogUtils.d("TaskSearchActivity", e.getMessage());
+				L.d("TaskSearchActivity", e.getMessage());
 				e.printStackTrace();
 			}
 			item_list = TaskSearchJson.instance(TaskSearchActivity.this).readJsonTaskSearch(result);
@@ -133,7 +133,7 @@ public class TaskSearchActivity extends BaseActivity {
 						new BasicNameValuePair("taskid", params[0]),
 						new BasicNameValuePair("action", params[1]));
 			} catch (Exception e) {
-				LogUtils.d("TaskSearchActivity", e.getMessage());
+				L.d("TaskSearchActivity", e.getMessage());
 				e.printStackTrace();
 			}
 
@@ -142,7 +142,7 @@ public class TaskSearchActivity extends BaseActivity {
 						.readJsonFollowTask(result);
 
 			} catch (Exception e) {
-				LogUtils.d("TaskSearchActivity", e.getMessage());
+				L.d("TaskSearchActivity", e.getMessage());
 				e.printStackTrace();
 			}
 			return isFollowed;

@@ -33,7 +33,7 @@ import com.cnx.ptt.http.Url;
 import com.cnx.ptt.http.json.FollowTaskJson;
 import com.cnx.ptt.http.json.TaskListItemJson;
 import com.cnx.ptt.pojo.TaskListItem;
-import com.cnx.ptt.utils.LogUtils;
+import com.cnx.ptt.utils.L;
 /**
  * 当点击followIcon 关注或者取消task，  需要动态刷新列表，用taskListAdapter.notifyDataSetChanged(); 
  * 通知tasklist 刷新， 而不是跳转， 需要重新处理一下
@@ -78,14 +78,14 @@ public class TaskMonitorActivity extends BaseActivity {
 			@Override
 			public boolean onQueryTextChange(String newText) {
 				if(TextUtils.isEmpty(newText)){
-					LogUtils.i("searching", "Please input task number!");
+					L.i("searching", "Please input task number!");
 				}
 				return false;
 			}
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				LogUtils.i("searching", "Search task:"+query);
+				L.i("searching", "Search task:"+query);
 				Intent intent = new Intent(TaskMonitorActivity.this, TaskSearchActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("query", query);
@@ -117,7 +117,7 @@ public class TaskMonitorActivity extends BaseActivity {
 						urlString, new BasicNameValuePair("userid",
 								String.valueOf(UserSession.user.getUser_id())));
 			} catch (Exception e) {
-				LogUtils.i("TaskMonitorActivity:result", e.getMessage());
+				L.i("TaskMonitorActivity:result", e.getMessage());
 				e.printStackTrace();
 			}
 
@@ -126,7 +126,7 @@ public class TaskMonitorActivity extends BaseActivity {
 						.readJsonTasklistItem(result);
 
 			} catch (Exception e) {
-				LogUtils.i("TaskMonitorActivity:item_list", e.getMessage());
+				L.i("TaskMonitorActivity:item_list", e.getMessage());
 				e.printStackTrace();
 			}
 			return item_list;
@@ -164,7 +164,7 @@ public class TaskMonitorActivity extends BaseActivity {
 						View view, int position, long id) {
 					final TaskListItem item = (TaskListItem) listView
 							.getItemAtPosition(position);
-					LogUtils.i(
+					L.i(
 							"TaskMonitorActivity:listView.setOnItemLongClickListene",
 							item.getT_id().toString());
 					AlertDialog.Builder builder = new Builder(
@@ -205,7 +205,7 @@ public class TaskMonitorActivity extends BaseActivity {
 						new BasicNameValuePair("taskid", params[0]),
 						new BasicNameValuePair("action", params[1]));
 			} catch (Exception e) {
-				LogUtils.i("TaskMonitorActivity:followTask", e.getMessage());
+				L.i("TaskMonitorActivity:followTask", e.getMessage());
 				e.printStackTrace();
 			}
 
@@ -214,7 +214,7 @@ public class TaskMonitorActivity extends BaseActivity {
 						.readJsonFollowTask(result);
 
 			} catch (Exception e) {
-				LogUtils.i("TaskMonitorActivity:item_list", e.getMessage());
+				L.i("TaskMonitorActivity:item_list", e.getMessage());
 				e.printStackTrace();
 			}
 			return isFollowed;

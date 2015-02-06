@@ -176,7 +176,8 @@ public class SmackImpl implements Smack {
 			SmackConfiguration.setPacketReplyTimeout(PACKET_TIMEOUT);
 			SmackConfiguration.setKeepAliveInterval(-1);
 			SmackConfiguration.setDefaultPingInterval(0);
-			registerRosterListener();// 监听联系人动态变化
+			// 注册联系人动态变化，并保存到本地
+			registerRosterListener();
 			mXMPPConnection.connect();
 			if (!mXMPPConnection.isConnected()) {
 				throw new XmppException("SMACK connect failed without exception!");
@@ -511,6 +512,7 @@ public class SmackImpl implements Smack {
 	}
 
 	/***************** end 发送离线消息 ***********************/
+	
 	/******************************* start 联系人数据库事件处理 **********************************/
 	private void registerRosterListener() {
 		mRoster = mXMPPConnection.getRoster();
@@ -581,6 +583,7 @@ public class SmackImpl implements Smack {
 	private void addRosterEntryToDB(final RosterEntry entry) {
 		ContentValues values = getContentValuesForRosterEntry(entry);
 		Uri uri = mContentResolver.insert(RosterProvider.CONTENT_URI, values);
+		
 		L.i("addRosterEntryToDB: Inserted " + uri);
 	}
 

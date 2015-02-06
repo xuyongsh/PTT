@@ -6,9 +6,9 @@
     android:clickable="true"
     android:orientation="vertical" >
 
-    <include
+    <!--include
         layout="@layout/c_custom_commen_title"
-        android:focusable="true" />
+        android:focusable="true" /-->
 
     <include
         layout="@layout/c_net_status_bar_info_top"

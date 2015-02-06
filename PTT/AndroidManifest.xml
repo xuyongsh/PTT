@@ -34,7 +34,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Default.NoTitleBar" >
+        android:theme="@style/AppTheme" >
         <uses-library android:name="android.test.runner" />
 
         <activity
@@ -110,7 +110,7 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name="com.cnx.ptt.activity.MessageTabActivity" />
+        <activity android:name="com.cnx.ptt.activity.MessageTabActivity"/>
         <activity android:name="com.cnx.ptt.activity.ExploreTabActivity" />
         <activity android:name="com.cnx.ptt.activity.ContactTabActivity" />
         <!-- 定义XMPP 服务, 广播接收者 -->
@@ -118,9 +118,9 @@
         <service android:name="com.cnx.ptt.chat.service.BaseService" />
         <receiver android:name="com.cnx.ptt.chat.app.XmppBroadcastReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" /><!-- 监听开机广播 -->
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" /><!-- 监听关机广播 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /><!-- 网络状态发生改变的广播 -->
             </intent-filter>
         </receiver>
          <provider

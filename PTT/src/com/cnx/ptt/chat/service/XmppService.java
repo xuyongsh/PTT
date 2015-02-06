@@ -19,6 +19,7 @@ import android.os.IBinder;
 import android.text.TextUtils;
 
 import com.cnx.ptt.R;
+import com.cnx.ptt.activity.BaseActivity.UserSession;
 import com.cnx.ptt.activity.LoginActivity;
 import com.cnx.ptt.activity.MainActivity;
 import com.cnx.ptt.chat.BaseChatActivity;
@@ -29,6 +30,7 @@ import com.cnx.ptt.chat.exception.XmppException;
 import com.cnx.ptt.chat.smack.SmackImpl;
 import com.cnx.ptt.chat.utils.PreferenceConstants;
 import com.cnx.ptt.chat.utils.PreferenceUtils;
+import com.cnx.ptt.pojo.User;
 import com.cnx.ptt.utils.L;
 import com.cnx.ptt.utils.NetUtil;
 import com.cnx.ptt.utils.T;
@@ -140,10 +142,7 @@ public class XmppService extends BaseService implements EventHandler, BackPressH
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		if (intent != null
-				&& intent.getAction() != null
-				&& TextUtils.equals(intent.getAction(),
-						XmppBroadcastReceiver.BOOT_COMPLETED_ACTION)) {
+		if (intent != null && intent.getAction() != null && TextUtils.equals(intent.getAction(), XmppBroadcastReceiver.BOOT_COMPLETED_ACTION)) {
 			String account = PreferenceUtils.getPrefString(XmppService.this,
 					PreferenceConstants.ACCOUNT, "");
 			String password = PreferenceUtils.getPrefString(XmppService.this,
@@ -186,6 +185,8 @@ public class XmppService extends BaseService implements EventHandler, BackPressH
 					if (mSmackable.login(account, password)) {
 						// 登陆成功
 						postConnectionScuessed();
+						//将用户信息保存到session
+						UserSession.user = new User(198, account, password);
 					} else {
 						// 登陆失败
 						postConnectionFailed(LOGIN_FAILED);

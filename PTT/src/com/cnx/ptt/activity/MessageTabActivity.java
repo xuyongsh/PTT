@@ -16,10 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,9 +25,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -42,8 +37,6 @@ import com.cnx.ptt.chat.app.XmppBroadcastReceiver.EventHandler;
 import com.cnx.ptt.chat.db.ChatProvider;
 import com.cnx.ptt.chat.db.RosterProvider;
 import com.cnx.ptt.chat.db.RosterProvider.RosterConstants;
-import com.cnx.ptt.chat.fragment.RecentChatFragment;
-import com.cnx.ptt.chat.fragment.SettingsFragment;
 import com.cnx.ptt.chat.iphonetreeview.IphoneTreeView;
 import com.cnx.ptt.chat.pulltorefresh.PullToRefreshBase;
 import com.cnx.ptt.chat.pulltorefresh.PullToRefreshBase.OnRefreshListener;
@@ -64,7 +57,6 @@ import com.cnx.ptt.utils.L;
 import com.cnx.ptt.utils.NetUtil;
 import com.cnx.ptt.utils.StatusMode;
 import com.cnx.ptt.utils.T;
-import com.cnx.ptt.utils.XMPPHelper;
 
 public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 		OnClickListener, IConnectionStatusCallback, EventHandler,
@@ -88,9 +80,9 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 	private XmppService mXxService;
 	private SlidingMenu mSlidingMenu;
 	private View mNetErrorView;
-	private TextView mTitleNameView;
-	private ImageView mTitleStatusView;
-	private ProgressBar mTitleProgressBar;
+//	private TextView mTitleNameView;
+//	private ImageView mTitleStatusView;
+//	private ProgressBar mTitleProgressBar;
 	private PullToRefreshScrollView mPullRefreshScrollView;
 	private IphoneTreeView mIphoneTreeView;
 	private RosterAdapter mRosterAdapter;
@@ -110,16 +102,16 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 				String password = PreferenceUtils.getPrefString(
 						MessageTabActivity.this, PreferenceConstants.PASSWORD, "");
 				mXxService.Login(usr, password);
-				 mTitleNameView.setText(R.string.login_prompt_msg);
-				 setStatusImage(false);
-				 mTitleProgressBar.setVisibility(View.VISIBLE);
+//				 mTitleNameView.setText(R.string.login_prompt_msg);
+//				 setStatusImage(false);
+//				 mTitleProgressBar.setVisibility(View.VISIBLE);
 			} else {
-				mTitleNameView.setText(XMPPHelper
-						.splitJidAndServer(PreferenceUtils.getPrefString(
-								MessageTabActivity.this, PreferenceConstants.ACCOUNT,
-								"")));
-				setStatusImage(true);
-				mTitleProgressBar.setVisibility(View.GONE);
+//				mTitleNameView.setText(XMPPHelper
+//						.splitJidAndServer(PreferenceUtils.getPrefString(
+//								MessageTabActivity.this, PreferenceConstants.ACCOUNT,
+//								"")));
+//				setStatusImage(true);
+//				mTitleProgressBar.setVisibility(View.GONE);
 			}
 		}
 
@@ -136,7 +128,7 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		startService(new Intent(MessageTabActivity.this, XmppService.class));
 		
-		initSlidingMenu();
+//		initSlidingMenu();
 		setContentView(R.layout.c_main_center_layout);
 		initViews();
 		registerListAdapter();
@@ -159,17 +151,22 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 
 	@Override
 	protected void onResume() {
+		System.out.println("onResume =============bind");
 		super.onResume();
 		bindXMPPService();
-		getContentResolver().registerContentObserver(
-				RosterProvider.CONTENT_URI, true, mRosterObserver);
-		setStatusImage(isConnected());
+		//监听内容提供者(数据库)变化
+		System.out.println("onResume =============bindafter");
+		getContentResolver().registerContentObserver(RosterProvider.CONTENT_URI, true, mRosterObserver);
+		//设置状态
+//		setStatusImage(isConnected());
 		mRosterAdapter.requery();
+		System.out.println("onResume =============s");
 		XmppBroadcastReceiver.mListeners.add(this);
 		if (NetUtil.getNetworkState(this) == NetUtil.NETWORN_NONE)
 			mNetErrorView.setVisibility(View.VISIBLE);
 		else
 			mNetErrorView.setVisibility(View.GONE);
+		System.out.println("onResume =============end");
 	}
 
 	@Override
@@ -187,8 +184,7 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 	}
 
 	private void registerListAdapter() {
-		mRosterAdapter = new RosterAdapter(this, mIphoneTreeView,
-				mPullRefreshScrollView);
+		mRosterAdapter = new RosterAdapter(this, mIphoneTreeView, mPullRefreshScrollView);
 		mIphoneTreeView.setAdapter(mRosterAdapter);
 		mRosterAdapter.requery();
 	}
@@ -211,25 +207,26 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 
 	private void initViews() {
 		mNetErrorView = findViewById(R.id.net_status_bar_top);
-		mSlidingMenu.setSecondaryMenu(R.layout.c_main_right_layout);
-		FragmentTransaction mFragementTransaction = getSupportFragmentManager()
-				.beginTransaction();
-		Fragment mFrag = new SettingsFragment();
-		mFragementTransaction.replace(R.id.main_right_fragment, mFrag);
-		mFragementTransaction.commit();
+//		mSlidingMenu.setSecondaryMenu(R.layout.c_main_right_layout);
+//		FragmentTransaction mFragementTransaction = getSupportFragmentManager()
+//				.beginTransaction();
+//		Fragment mFrag = new SettingsFragment();
+//		mFragementTransaction.replace(R.id.main_right_fragment, mFrag);
+//		mFragementTransaction.commit();
 
-		ImageButton mLeftBtn = ((ImageButton) findViewById(R.id.show_left_fragment_btn));
-		mLeftBtn.setVisibility(View.VISIBLE);
-		mLeftBtn.setOnClickListener(this);
-		ImageButton mRightBtn = ((ImageButton) findViewById(R.id.show_right_fragment_btn));
-		mRightBtn.setVisibility(View.VISIBLE);
-		mRightBtn.setOnClickListener(this);
-		mTitleNameView = (TextView) findViewById(R.id.ivTitleName);
-		mTitleProgressBar = (ProgressBar) findViewById(R.id.ivTitleProgress);
-		mTitleStatusView = (ImageView) findViewById(R.id.ivTitleStatus);
-		mTitleNameView.setText(XMPPHelper.splitJidAndServer(PreferenceUtils
-				.getPrefString(this, PreferenceConstants.ACCOUNT, "")));
-		mTitleNameView.setOnClickListener(this);
+//		ImageButton mLeftBtn = ((ImageButton) findViewById(R.id.show_left_fragment_btn));
+//		mLeftBtn.setVisibility(View.VISIBLE);
+//		mLeftBtn.setOnClickListener(this);
+//		ImageButton mRightBtn = ((ImageButton) findViewById(R.id.show_right_fragment_btn));
+//		mRightBtn.setVisibility(View.VISIBLE);
+//		mRightBtn.setOnClickListener(this);
+		//David remove
+//		mTitleNameView = (TextView) findViewById(R.id.ivTitleName);
+//		mTitleProgressBar = (ProgressBar) findViewById(R.id.ivTitleProgress);
+//		mTitleStatusView = (ImageView) findViewById(R.id.ivTitleStatus);
+//		mTitleNameView.setText(XMPPHelper.splitJidAndServer(PreferenceUtils
+//				.getPrefString(this, PreferenceConstants.ACCOUNT, "")));
+//		mTitleNameView.setOnClickListener(this);
 		mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.pull_refresh_scrollview);
 		// mPullRefreshScrollView.setMode(Mode.DISABLED);
 		// mPullRefreshScrollView.getLoadingLayoutProxy().setLastUpdatedLabel(
@@ -244,9 +241,9 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 					}
 				});
 		mIphoneTreeView = (IphoneTreeView) findViewById(R.id.iphone_tree_view);
-		mIphoneTreeView.setHeaderView(getLayoutInflater().inflate(
-				R.layout.c_contact_buddy_list_group, mIphoneTreeView, false));
+		mIphoneTreeView.setHeaderView(getLayoutInflater().inflate(R.layout.c_contact_buddy_list_group, mIphoneTreeView, false));
 		mIphoneTreeView.setEmptyView(findViewById(R.id.empty));
+		
 		mIphoneTreeView
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -259,8 +256,7 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 						mLongPressChildId = childPos;
 						if (childPos == -1) {// 长按的是父项
 							// 根据groupPos判断你长按的是哪个父项，做相应处理（弹框等）
-							showGroupQuickActionBar(view
-									.findViewById(R.id.group_name));
+							showGroupQuickActionBar(view.findViewById(R.id.group_name));
 							// T.showShort(MessageTabActivity.this,
 							// "LongPress group position = " + groupPos);
 						} else {
@@ -402,26 +398,26 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 	}
 
 	private void initSlidingMenu() {
-		DisplayMetrics dm = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		int mScreenWidth = dm.widthPixels;// 获取屏幕分辨率宽度
-		setBehindContentView(R.layout.c_main_left_layout);// 设置左菜单
-		FragmentTransaction mFragementTransaction = getSupportFragmentManager()
-				.beginTransaction();
-		Fragment mFrag = new RecentChatFragment();
-		mFragementTransaction.replace(R.id.main_left_fragment, mFrag);
-		mFragementTransaction.commit();
+//		DisplayMetrics dm = new DisplayMetrics();
+//		getWindowManager().getDefaultDisplay().getMetrics(dm);
+//		int mScreenWidth = dm.widthPixels;// 获取屏幕分辨率宽度
+//		setBehindContentView(R.layout.c_main_left_layout);// 设置左菜单
+//		FragmentTransaction mFragementTransaction = getSupportFragmentManager()
+//				.beginTransaction();
+//		Fragment mFrag = new RecentChatFragment();
+//		mFragementTransaction.replace(R.id.main_left_fragment, mFrag);
+//		mFragementTransaction.commit();
 		// customize the SlidingMenu
-		mSlidingMenu = getSlidingMenu();
-		mSlidingMenu.setMode(SlidingMenu.LEFT_RIGHT);// 设置是左滑还是右滑，还是左右都可以滑，我这里左右都可以滑
-		mSlidingMenu.setShadowWidth(mScreenWidth / 40);// 设置阴影宽度
-		mSlidingMenu.setBehindOffset(mScreenWidth / 8);// 设置菜单宽度
-		mSlidingMenu.setFadeDegree(0.35f);// 设置淡入淡出的比例
-		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		mSlidingMenu.setShadowDrawable(R.drawable.shadow_left);// 设置左菜单阴影图片
-		mSlidingMenu.setSecondaryShadowDrawable(R.drawable.shadow_right);// 设置右菜单阴影图片
-		mSlidingMenu.setFadeEnabled(true);// 设置滑动时菜单的是否淡入淡出
-		mSlidingMenu.setBehindScrollScale(0.333f);// 设置滑动时拖拽效果
+//		mSlidingMenu = getSlidingMenu();
+//		mSlidingMenu.setMode(SlidingMenu.LEFT_RIGHT);// 设置是左滑还是右滑，还是左右都可以滑，我这里左右都可以滑
+//		mSlidingMenu.setShadowWidth(mScreenWidth / 40);// 设置阴影宽度
+//		mSlidingMenu.setBehindOffset(mScreenWidth / 8);// 设置菜单宽度
+//		mSlidingMenu.setFadeDegree(0.35f);// 设置淡入淡出的比例
+//		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+//		mSlidingMenu.setShadowDrawable(R.drawable.shadow_left);// 设置左菜单阴影图片
+//		mSlidingMenu.setSecondaryShadowDrawable(R.drawable.shadow_right);// 设置右菜单阴影图片
+//		mSlidingMenu.setFadeEnabled(true);// 设置滑动时菜单的是否淡入淡出
+//		mSlidingMenu.setBehindScrollScale(0.333f);// 设置滑动时拖拽效果
 	}
 
 	private static final String[] GROUPS_QUERY = new String[] {
@@ -466,11 +462,11 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 	}
 
 	protected void setViewImage(ImageView v, String value) {
-		int presenceMode = Integer.parseInt(value);
+		/*int presenceMode = Integer.parseInt(value);
 		int statusDrawable = getIconForPresenceMode(presenceMode);
 		v.setImageResource(statusDrawable);
 		if (statusDrawable == R.drawable.status_busy)
-			v.setVisibility(View.INVISIBLE);
+			v.setVisibility(View.INVISIBLE);*/
 
 	}
 
@@ -480,20 +476,21 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
+		/*switch (v.getId()) {
 		case R.id.show_left_fragment_btn:
 			mSlidingMenu.showMenu(true);
 			break;
 		case R.id.show_right_fragment_btn:
 			mSlidingMenu.showSecondaryMenu(true);
 			break;
+		//David remove
 		case R.id.ivTitleName:
 			if (isConnected())
 				showStatusQuickAction(v);
 			break;
 		default:
 			break;
-		}
+		}*/
 	}
 
 	private void showStatusQuickAction(View v) {
@@ -527,8 +524,8 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 						}
 						switch (actionId) {
 						case ID_CHAT:
-							mTitleStatusView
-									.setImageResource(R.drawable.status_qme);
+//							mTitleStatusView
+//									.setImageResource(R.drawable.status_qme);
 							PreferenceUtils.setPrefString(MessageTabActivity.this,
 									PreferenceConstants.STATUS_MODE,
 									PreferenceConstants.CHAT);
@@ -537,8 +534,8 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 									getString(R.string.status_chat));
 							break;
 						case ID_AVAILABLE:
-							mTitleStatusView
-									.setImageResource(R.drawable.status_online);
+//							mTitleStatusView
+//									.setImageResource(R.drawable.status_online);
 							PreferenceUtils.setPrefString(MessageTabActivity.this,
 									PreferenceConstants.STATUS_MODE,
 									PreferenceConstants.AVAILABLE);
@@ -547,8 +544,8 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 									getString(R.string.status_available));
 							break;
 						case ID_AWAY:
-							mTitleStatusView
-									.setImageResource(R.drawable.status_leave);
+//							mTitleStatusView
+//									.setImageResource(R.drawable.status_leave);
 							PreferenceUtils.setPrefString(MessageTabActivity.this,
 									PreferenceConstants.STATUS_MODE,
 									PreferenceConstants.AWAY);
@@ -557,8 +554,8 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 									getString(R.string.status_away));
 							break;
 						case ID_XA:
-							mTitleStatusView
-									.setImageResource(R.drawable.status_invisible);
+//							mTitleStatusView
+//									.setImageResource(R.drawable.status_invisible);
 							PreferenceUtils.setPrefString(MessageTabActivity.this,
 									PreferenceConstants.STATUS_MODE,
 									PreferenceConstants.XA);
@@ -567,8 +564,8 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 									getString(R.string.status_xa));
 							break;
 						case ID_DND:
-							mTitleStatusView
-									.setImageResource(R.drawable.status_shield);
+//							mTitleStatusView
+//									.setImageResource(R.drawable.status_shield);
 							PreferenceUtils.setPrefString(MessageTabActivity.this,
 									PreferenceConstants.STATUS_MODE,
 									PreferenceConstants.DND);
@@ -580,9 +577,9 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 							break;
 						}
 						mXxService.setStatusFromConfig();
-						SettingsFragment fragment = (SettingsFragment) getSupportFragmentManager()
-								.findFragmentById(R.id.main_right_fragment);
-						fragment.readData();
+//						SettingsFragment fragment = (SettingsFragment) getSupportFragmentManager()
+//								.findFragmentById(R.id.main_right_fragment);
+//						fragment.readData();
 					}
 				});
 		quickAction.show(v);
@@ -718,7 +715,7 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 	}
 
 	private void setStatusImage(boolean isConnected) {
-		if (!isConnected) {
+		/*if (!isConnected) {
 			mTitleStatusView.setVisibility(View.GONE);
 			return;
 		}
@@ -730,12 +727,12 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 		} else {
 			mTitleStatusView.setVisibility(View.VISIBLE);
 			mTitleStatusView.setImageResource(statusId);
-		}
+		}*/
 	}
 
 	@Override
 	public void connectionStatusChanged(int connectedState, String reason) {
-		switch (connectedState) {
+		/*switch (connectedState) {
 		case XmppService.CONNECTED:
 			mTitleNameView.setText(XMPPHelper.splitJidAndServer(PreferenceUtils
 					.getPrefString(MessageTabActivity.this,
@@ -758,7 +755,7 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 
 		default:
 			break;
-		}
+		}*/
 	}
 
 	@Override

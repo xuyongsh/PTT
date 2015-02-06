@@ -87,7 +87,8 @@ public class RecentChatFragment extends Fragment implements OnClickListener {
 	}
 
 	private void initView(View view) {
-		mTitleView = (TextView) view.findViewById(R.id.ivTitleName);
+		//David remove
+//		mTitleView = (TextView) view.findViewById(R.id.ivTitleName);
 		mTitleView.setText(R.string.recent_chat_fragment_title);
 		mTitleAddView = (ImageView) view
 				.findViewById(R.id.ivTitleBtnRightImage);

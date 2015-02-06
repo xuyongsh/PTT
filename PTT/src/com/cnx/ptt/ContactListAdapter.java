@@ -62,7 +62,7 @@ public class ContactListAdapter extends BaseAdapter {
 		String item_name = this.getList().get(position).getName();
 		viewHolder = new ViewHolder(); 
 		
-		if(this.isEnabled(position))
+		/*if(this.isEnabled(position))
 		{
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.contact_item, null);
 			viewHolder.setItemTv((TextView) convertView.findViewById(R.id.contact_person_name));
@@ -70,11 +70,11 @@ public class ContactListAdapter extends BaseAdapter {
 		}
 		else
 		{
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.contact_index_item, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_contact_tab, null);
 			viewHolder.setIndexTv((TextView) convertView.findViewById(R.id.index_name));
 			viewHolder.getIndexTv().setText(item_name);
 		}
-		
+		*/
 		return convertView;
 	}
 	

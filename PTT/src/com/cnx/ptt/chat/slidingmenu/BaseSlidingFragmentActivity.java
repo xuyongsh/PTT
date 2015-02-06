@@ -1,22 +1,75 @@
 package com.cnx.ptt.chat.slidingmenu;
 
-import com.cnx.ptt.activity.BaseActivity;
-import com.cnx.ptt.chat.BaseChatActivity;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
+import com.cnx.ptt.chat.BaseChatActivity;
+
 
 
 public class BaseSlidingFragmentActivity extends BaseChatActivity implements SlidingActivityBase {
 
-	private SlidingActivityHelper mHelper;
+	@Override
+	public void setBehindContentView(View view, LayoutParams layoutParams) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	/* (non-Javadoc)
+	@Override
+	public void setBehindContentView(View view) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setBehindContentView(int layoutResID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public SlidingMenu getSlidingMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void toggle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showContent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showMenu() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showSecondaryMenu() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSlidingActionBarEnabled(boolean slidingActionBarEnabled) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*private SlidingActivityHelper mHelper;
+
+	 (non-Javadoc)
 	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
-	 */
+	 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,18 +77,18 @@ public class BaseSlidingFragmentActivity extends BaseChatActivity implements Sli
 		mHelper.onCreate(savedInstanceState);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see android.app.Activity#onPostCreate(android.os.Bundle)
-	 */
+	 
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mHelper.onPostCreate(savedInstanceState);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see android.app.Activity#findViewById(int)
-	 */
+	 
 	@Override
 	public View findViewById(int id) {
 		View v = super.findViewById(id);
@@ -44,111 +97,111 @@ public class BaseSlidingFragmentActivity extends BaseChatActivity implements Sli
 		return mHelper.findViewById(id);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
-	 */
+	 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		mHelper.onSaveInstanceState(outState);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see android.app.Activity#setContentView(int)
-	 */
+	 
 	@Override
 	public void setContentView(int id) {
 		setContentView(getLayoutInflater().inflate(id, null));
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see android.app.Activity#setContentView(android.view.View)
-	 */
+	 
 	@Override
 	public void setContentView(View v) {
 		setContentView(v, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see android.app.Activity#setContentView(android.view.View, android.view.ViewGroup.LayoutParams)
-	 */
+	 
 	@Override
 	public void setContentView(View v, LayoutParams params) {
 		super.setContentView(v, params);
 		mHelper.registerAboveContentView(v, params);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#setBehindContentView(int)
-	 */
+	 
 	public void setBehindContentView(int id) {
 		setBehindContentView(getLayoutInflater().inflate(id, null));
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#setBehindContentView(android.view.View)
-	 */
+	 
 	public void setBehindContentView(View v) {
 		setBehindContentView(v, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#setBehindContentView(android.view.View, android.view.ViewGroup.LayoutParams)
-	 */
+	 
 	public void setBehindContentView(View v, LayoutParams params) {
 		mHelper.setBehindContentView(v, params);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#getSlidingMenu()
-	 */
+	 
 	public SlidingMenu getSlidingMenu() {
 		return mHelper.getSlidingMenu();
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#toggle()
-	 */
+	 
 	public void toggle() {
 		mHelper.toggle();
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#showAbove()
-	 */
+	 
 	public void showContent() {
 		mHelper.showContent();
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#showBehind()
-	 */
+	 
 	public void showMenu() {
 		mHelper.showMenu();
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#showSecondaryMenu()
-	 */
+	 
 	public void showSecondaryMenu() {
 		mHelper.showSecondaryMenu();
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see com.slidingmenu.lib.app.SlidingActivityBase#setSlidingActionBarEnabled(boolean)
-	 */
+	 
 	public void setSlidingActionBarEnabled(boolean b) {
 		mHelper.setSlidingActionBarEnabled(b);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see android.app.Activity#onKeyUp(int, android.view.KeyEvent)
-	 */
+	 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		boolean b = mHelper.onKeyUp(keyCode, event);
 		if (b) return b;
 		return super.onKeyUp(keyCode, event);
-	}
+	}*/
 
 }

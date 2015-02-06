@@ -34,6 +34,7 @@ public class XmppBroadcastReceiver extends BroadcastReceiver {
 					PreferenceConstants.PASSWORD, ""))
 					&& PreferenceUtils.getPrefBoolean(context,
 							PreferenceConstants.AUTO_START, true)) {
+				L.d("System work, starting service.");
 				Intent i = new Intent(context, XmppService.class);
 				i.setAction(BOOT_COMPLETED_ACTION);
 				context.startService(i);

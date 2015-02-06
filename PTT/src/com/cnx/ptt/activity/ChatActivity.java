@@ -78,8 +78,8 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 	private boolean mIsFaceShow = false;// 是否显示表情
 	private Button mSendMsgBtn;// 发送消息button
 	private ImageButton mFaceSwitchBtn;// 切换键盘和表情的button
-	private TextView mTitleNameView;// 标题栏
-	private ImageView mTitleStatusView;
+//	private TextView mTitleNameView;// 标题栏
+//	private ImageView mTitleStatusView;
 	private EditText mChatEditText;// 消息输入框
 	private LinearLayout mFaceRoot;// 表情父容器
 	private WindowManager.LayoutParams mWindowNanagerParams;
@@ -183,9 +183,9 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 			String status_message = cursor.getString(MSG_IDX);
 			
 			L.d("contact status changed: " + status_mode + " " + status_message);
-			mTitleNameView.setText(XMPPHelper.splitJidAndServer(getIntent()
-					.getStringExtra(INTENT_EXTRA_USERNAME)));
-			int statusId = StatusMode.values()[status_mode].getDrawableId();
+//			mTitleNameView.setText(XMPPHelper.splitJidAndServer(getIntent()
+//					.getStringExtra(INTENT_EXTRA_USERNAME)));
+			/*int statusId = StatusMode.values()[status_mode].getDrawableId();
 			
 			if (statusId != -1) {// 如果对应离线状态
 				// Drawable icon = getResources().getDrawable(statusId);
@@ -196,7 +196,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 				mTitleStatusView.setVisibility(View.VISIBLE);
 			} else {
 				mTitleStatusView.setVisibility(View.GONE);
-			}
+			}*/
 		}
 		cursor.close();
 	}
@@ -288,8 +288,8 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 		mFaceRoot = (LinearLayout) findViewById(R.id.face_ll);
 		mFaceViewPager = (ViewPager) findViewById(R.id.face_pager);
 		mChatEditText.setOnTouchListener(this);
-		mTitleNameView = (TextView) findViewById(R.id.ivTitleName);
-		mTitleStatusView = (ImageView) findViewById(R.id.ivTitleStatus);
+//		mTitleNameView = (TextView) findViewById(R.id.ivTitleName);
+//		mTitleStatusView = (ImageView) findViewById(R.id.ivTitleStatus);
 		mChatEditText.setOnKeyListener(new OnKeyListener() {
 
 			@Override

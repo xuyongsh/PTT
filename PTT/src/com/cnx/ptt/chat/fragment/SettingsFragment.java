@@ -83,7 +83,8 @@ public class SettingsFragment extends Fragment implements OnClickListener,
 		mExitConfirmBtn.setText(R.string.exit);
 		mExitCancleBtn.setOnClickListener(this);
 		mExitConfirmBtn.setOnClickListener(this);
-		mTitleNameView = (TextView) view.findViewById(R.id.ivTitleName);
+		//David remove
+//		mTitleNameView = (TextView) view.findViewById(R.id.ivTitleName);
 		mTitleNameView.setText(R.string.settings_fragment_title);
 		mAccountSettingView = view.findViewById(R.id.accountSetting);
 		mAccountSettingView.setOnClickListener(this);

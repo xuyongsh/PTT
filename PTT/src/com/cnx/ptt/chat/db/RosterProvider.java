@@ -2,6 +2,8 @@ package com.cnx.ptt.chat.db;
 
 import java.util.ArrayList;
 
+import org.jivesoftware.smack.packet.Presence;
+
 import com.cnx.ptt.utils.L;
 
 import android.content.ContentProvider;
@@ -123,7 +125,7 @@ public class RosterProvider extends ContentProvider {
 		}
 
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-
+		
 		long rowId = db.insert(TABLE_ROSTER, RosterConstants.JID, values);
 
 		if (rowId < 0) {
@@ -244,7 +246,7 @@ public class RosterProvider extends ContentProvider {
 	private static void infoLog(String data) {
 		L.i(TAG, data);
 	}
-
+	
 	private static class RosterDatabaseHelper extends SQLiteOpenHelper {
 
 		private static final String DATABASE_NAME = "roster.db";
@@ -273,6 +275,24 @@ public class RosterProvider extends ContentProvider {
 					+ " (" + RosterConstants.ALIAS + ")");
 			db.execSQL("CREATE INDEX idx_roster_status ON " + TABLE_ROSTER
 					+ " (" + RosterConstants.STATUS_MODE + ")");
+			
+			insertServerJID(db);
+		}
+		public static void insertServerJID(SQLiteDatabase db) {
+
+			final ContentValues values = new ContentValues();
+
+			values.put(RosterConstants.JID, "sg-imgweb-p.concentrix.com");
+			values.put(RosterConstants.ALIAS, "PTT Admin");
+			values.put(RosterConstants.STATUS_MODE, 4);
+			values.put(RosterConstants.STATUS_MESSAGE, "Online");
+			values.put(RosterConstants.GROUP, "");
+			
+			long rowId = db.insert(TABLE_ROSTER, RosterConstants.JID, values);
+
+			if (rowId < 0) {
+				throw new SQLException("Failed to insert row into " + values.get(RosterConstants.JID));
+			}
 		}
 
 		@Override

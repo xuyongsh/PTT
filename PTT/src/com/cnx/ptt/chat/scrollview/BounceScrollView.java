@@ -1,5 +1,7 @@
 package com.cnx.ptt.chat.scrollview;
 
+import com.cnx.ptt.utils.L;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -86,7 +88,7 @@ public class BounceScrollView extends ScrollView {
 					normal.set(inner.getLeft(), inner.getTop(),
 							inner.getRight(), inner.getBottom());
 				}
-//				Log.e("jj", "矩形：" + inner.getLeft() + "," + inner.getTop()
+//				L.e("jj", "矩形：" + inner.getLeft() + "," + inner.getTop()
 //						+ "," + inner.getRight() + "," + inner.getBottom());
 				// 移动布局
 				inner.layout(inner.getLeft(), inner.getTop() - deltaY / 2,
@@ -112,7 +114,7 @@ public class BounceScrollView extends ScrollView {
 		// 设置回到正常的布局位置
 		inner.layout(normal.left, normal.top, normal.right, normal.bottom);
 
-//		Log.e("jj", "回归：" + normal.left + "," + normal.top + "," + normal.right
+//		L.e("jj", "回归：" + normal.left + "," + normal.top + "," + normal.right
 //				+ "," + normal.bottom);
 
 		normal.setEmpty();
@@ -134,7 +136,7 @@ public class BounceScrollView extends ScrollView {
 	public boolean isNeedMove() {
 		int offset = inner.getMeasuredHeight() - getHeight();
 		int scrollY = getScrollY();
-//		Log.e("jj", "scrolly=" + scrollY);
+//		L.e("jj", "scrolly=" + scrollY);
 		// 0是顶部，后面那个是底部
 		if (scrollY == 0 || scrollY == offset) {
 			return true;

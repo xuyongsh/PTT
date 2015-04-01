@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.cnx.ptt.R;
+import com.cnx.ptt.utils.L;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;
@@ -70,7 +71,7 @@ public class BitmapDecodeHandler extends Handler {
 						R.id.decode_bmp_succeeded, rawResult);
 				message.sendToTarget();
 			}
-			Log.d(TAG, "Found barcode in " + (end - start) + " ms");
+			L.d(TAG, "Found barcode in " + (end - start) + " ms");
 		} else {
 			if (handler != null) {
 				Message message = Message.obtain(handler, R.id.decode_bmp_failed);

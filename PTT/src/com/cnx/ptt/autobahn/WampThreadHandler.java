@@ -5,11 +5,12 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.cnx.ptt.DefaultConfig;
+import com.cnx.ptt.Constants;
 import com.cnx.ptt.R;
 import com.cnx.ptt.chat.ChatEventOSMessage;
 import com.cnx.ptt.chat.OneOneChatEvent;
 import com.cnx.ptt.chat.OneOneChatEventHandler;
+import com.cnx.ptt.utils.L;
 
 import de.tavendo.autobahn.WampConnection;
 
@@ -27,7 +28,7 @@ public class WampThreadHandler extends Handler {
 	private OneOneChatEvent ooc;
 	private OneOneChatEventHandler ooch;
 	private String topic;
-	private String event_prefix = DefaultConfig.WAMP_EVENT_HTTP_URI+"/";
+	private String event_prefix = Constants.WAMP_EVENT_HTTP_URI+"/";
 
 	public WampThreadHandler(WampConnection c) {
 		mConnection = c;
@@ -47,12 +48,12 @@ public class WampThreadHandler extends Handler {
 		case R.id.wamp_publish_ooc:
 			this.gettopic(msg.obj);
 			publish_ooc(topic, ooc);
-			Log.d(TAG, "PublishTopic");
+			L.d(TAG, "PublishTopic");
 			break;
 		case R.id.wamp_subscribe_ooc:
 			this.gettopic_subscribe(msg.obj);
 			this.subscribe_ooc(topic, ooc);
-			Log.d(TAG, "SubcribeTopic");
+			L.d(TAG, "SubcribeTopic");
 			break;
 		case R.id.wamp_rpc_ooc_unread:
 			//TODO: start a rpc to load all unread connect or reconnect

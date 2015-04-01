@@ -17,6 +17,7 @@ package com.cnx.ptt.chat.pulltorefresh;
 
 import com.cnx.ptt.chat.pulltorefresh.PullToRefreshBase.Mode;
 import com.cnx.ptt.chat.pulltorefresh.PullToRefreshBase.State;
+import com.cnx.ptt.utils.L;
 
 import android.annotation.TargetApi;
 import android.util.Log;
@@ -130,7 +131,7 @@ public final class OverscrollHelper {
 				final int newScrollValue = (deltaValue + scrollValue);
 
 				if (PullToRefreshBase.DEBUG) {
-					Log.d(LOG_TAG, "OverScroll. DeltaX: " + deltaX + ", ScrollX: " + scrollX + ", DeltaY: " + deltaY
+					L.d(LOG_TAG, "OverScroll. DeltaX: " + deltaX + ", ScrollX: " + scrollX + ", DeltaY: " + deltaY
 							+ ", ScrollY: " + scrollY + ", NewY: " + newScrollValue + ", ScrollRange: " + scrollRange
 							+ ", CurrentScroll: " + currentScrollValue);
 				}

@@ -13,10 +13,10 @@
         android:duplicateParentState="true"
         android:paddingBottom="6.0dip"
         android:paddingTop="6.0dip"
-        android:tag="back" >
+        android:tag="back" android:background="#fff0f3f6">
 
-        android:background="#fff0f3f6"
-        <Button
+        <Button 
+        
             android:id="@+id/recent_del_btn"
             android:layout_width="64.0dip"
             android:layout_height="34.0dip"
@@ -42,9 +42,9 @@
         android:focusable="true"
         android:paddingBottom="6.0dip"
         android:paddingTop="6.0dip"
-        android:tag="front" >
+        android:tag="front" 
          android:duplicateParentState="true"
-        android:visibility="gone"
+        android:visibility="gone"> 
 
         <ImageView
             android:id="@+id/icon"
@@ -88,10 +88,9 @@
             android:includeFontPadding="false"
             android:padding="0.0dip"
             android:singleLine="true"
-            android:text="way"
+            android:text="cnx"
             android:textColor="@drawable/contact_list_item_buddy_name_text_color"
             android:textSize="15.0sp" />
-            android:layout_toLeftOf="@id/shader"
 
         <TextView
             android:id="@+id/recent_list_item_msg"

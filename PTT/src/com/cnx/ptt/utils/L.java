@@ -9,7 +9,7 @@ import android.util.Log;
  */
 public class L {
 	// debug switch
-	public static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 	private static String TAG = "cnx.ptt.LogUtils";
 	public static void i(String msg) {
 		if (DEBUG)
@@ -38,6 +38,8 @@ public class L {
 		if (DEBUG)
 			Log.e(TAG, msg);
 	}
+	
+	
 	public static void d(String msg) {
 		if (DEBUG)
 			Log.d(TAG, msg);
@@ -63,7 +65,20 @@ public class L {
 			Log.w(TAG, msg);
 		}
 	}
-
+	public static void w(Class<?> _class,String msg){
+		if (DEBUG)
+			Log.w(_class.getName(), msg);
+	}
+	public static void w(String TAG, String msg, Throwable re) {
+		if (DEBUG) {
+			Log.w(TAG, msg, re);
+		}
+	}
+	public static void w(String TAG, Throwable tr){
+		if(DEBUG){
+			Log.w(TAG, tr);
+		}
+	}
 	public static void println() {
 		if (DEBUG) {
 			System.out.println();

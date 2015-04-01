@@ -67,7 +67,7 @@ public class CustomHttpClient {
             
             UrlEncodedFormEntity urlEncoded = new UrlEncodedFormEntity(params,
                     CHARSET_GB2312);
-            Log.i(TAG, url);
+            L.i(TAG, url);
             HttpPost httpPost = new HttpPost(url);
             httpPost.setEntity(urlEncoded);
             DefaultHttpClient client = getHttpClient(context);

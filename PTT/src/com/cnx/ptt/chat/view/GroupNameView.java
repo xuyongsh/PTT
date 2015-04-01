@@ -3,6 +3,7 @@ package com.cnx.ptt.chat.view;
 import java.util.List;
 
 import com.cnx.ptt.R;
+import com.cnx.ptt.utils.L;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -70,14 +71,14 @@ public class GroupNameView extends LinearLayout implements OnItemSelectedListene
 	}
 
 	void setInputVisibility(boolean vis) {
-		Log.d("GroupNameView", "setInputVisibility: " + vis);
+		L.d("GroupNameView", "setInputVisibility: " + vis);
 		mNewGroupInput.setVisibility(vis ? View.VISIBLE : View.GONE);
 		mNewGroupInput.setEnabled(vis);
 	}
 
 	public void onItemSelected(AdapterView<?> view, View arg1, int arg2,
 			long arg3) {
-		Log.d("GroupNameView", "onItemSelected: " + view.getSelectedItem());
+		L.d("GroupNameView", "onItemSelected: " + view.getSelectedItem());
 		setInputVisibility(view.getSelectedItem().toString().equals(mAddGroupString));
 	}
 

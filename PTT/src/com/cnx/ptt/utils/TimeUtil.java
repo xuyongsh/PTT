@@ -8,7 +8,7 @@ import android.annotation.SuppressLint;
 /**
  * 时间工具类
  * 
- * @author way
+ * 
  * 
  */
 @SuppressLint("SimpleDateFormat")

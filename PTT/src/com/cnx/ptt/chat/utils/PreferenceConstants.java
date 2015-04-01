@@ -1,11 +1,13 @@
 package com.cnx.ptt.chat.utils;
 
+import com.cnx.ptt.http.Url;
+
 public class PreferenceConstants {
 	
-//	public static final String GMAIL_SERVER = "124.205.228.186";
-	public static final String GMAIL_SERVER = "talk.google.com";
+	public static final String DEFAULT_SERVER = Url.XMPP_HOST;
 	public final static String ISNEEDLOG = "isneedlog";
 	public final static String REPORT_CRASH = "reportcrash";
+	public final static String AUTOSAVEPWD = "autosavepwd";
 	public final static String ACCOUNT = "account";
 	public final static String PASSWORD = "password";
 	public final static String Server = "server";

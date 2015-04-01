@@ -17,6 +17,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 
 import com.cnx.ptt.R;
 import com.cnx.ptt.activity.BaseActivity.UserSession;
@@ -55,7 +56,7 @@ public class XmppService extends BaseService implements EventHandler, BackPressH
 	// 自动重连 start
 	private static final int RECONNECT_AFTER = 5;
 	private static final int RECONNECT_MAXIMUM = 10 * 60;// 最大重连时间间隔
-	private static final String RECONNECT_ALARM = "com.way.xx.RECONNECT_ALARM";
+	private static final String RECONNECT_ALARM = "com.cnx.xx.RECONNECT_ALARM";
 	// private boolean mIsNeedReConnection = false; // 是否需要重连
 	private int mConnectedState = DISCONNECTED; // 是否已经连接
 	private int mReconnectTimeout = RECONNECT_AFTER;
@@ -185,8 +186,6 @@ public class XmppService extends BaseService implements EventHandler, BackPressH
 					if (mSmackable.login(account, password)) {
 						// 登陆成功
 						postConnectionScuessed();
-						//将用户信息保存到session
-						UserSession.user = new User(198, account, password);
 					} else {
 						// 登陆失败
 						postConnectionFailed(LOGIN_FAILED);
@@ -478,7 +477,7 @@ public class XmppService extends BaseService implements EventHandler, BackPressH
 				if (!isAppOnForeground()) {
 					L.i("app run in background...");
 					// if (isAuthenticated())
-					updateServiceNotification(getString(R.string.run_bg_ticker));
+//					updateServiceNotification(getString(R.string.run_bg_ticker));
 					return;
 				} else {
 					stopForeground(true);

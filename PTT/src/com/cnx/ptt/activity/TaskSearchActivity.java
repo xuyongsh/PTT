@@ -67,7 +67,7 @@ public class TaskSearchActivity extends BaseActivity {
 			String urlString = Url.TASKMORNITOR_SEARCH_URL;
 			try {
 				result = HttpUtil.getByHttpClient(TaskSearchActivity.this, urlString, 
-						new BasicNameValuePair("userid", String.valueOf(UserSession.user.getUser_id())),
+						new BasicNameValuePair("email", String.valueOf(UserSession.user.getUser_id())),
 						new BasicNameValuePair("query", params[0]));
 			} catch (Exception e) {
 				L.d("TaskSearchActivity", e.getMessage());
@@ -128,7 +128,7 @@ public class TaskSearchActivity extends BaseActivity {
 			String result = null;
 			try {
 				result = HttpUtil.getByHttpClient(TaskSearchActivity.this,
-						urlString, new BasicNameValuePair("userid",
+						urlString, new BasicNameValuePair("email",
 								String.valueOf(UserSession.user.getUser_id())),
 						new BasicNameValuePair("taskid", params[0]),
 						new BasicNameValuePair("action", params[1]));

@@ -2,7 +2,10 @@ package com.cnx.ptt.activity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import com.cnx.ptt.Constants;
 import com.cnx.ptt.R;
 import com.cnx.ptt.adapter.ChatAdapter;
 import com.cnx.ptt.adapter.FaceAdapter;
@@ -16,14 +19,16 @@ import com.cnx.ptt.chat.service.XmppService;
 import com.cnx.ptt.chat.swipeback.SwipeBackActivity;
 import com.cnx.ptt.chat.utils.PreferenceConstants;
 import com.cnx.ptt.chat.utils.PreferenceUtils;
-import com.cnx.ptt.chat.view.CirclePageIndicator;
+//import com.cnx.ptt.chat.view.CirclePageIndicator;
 import com.cnx.ptt.chat.xlistview.MsgListView;
 import com.cnx.ptt.chat.xlistview.MsgListView.IXListViewListener;
+import com.cnx.ptt.utils.BroadcastHelper;
 import com.cnx.ptt.utils.L;
 import com.cnx.ptt.utils.T;
 import com.cnx.ptt.utils.XMPPHelper;
 import com.cnx.ptt.utils.StatusMode;
 
+import android.R.layout;
 import android.content.AsyncQueryHandler;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -82,7 +87,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 //	private ImageView mTitleStatusView;
 	private EditText mChatEditText;// 消息输入框
 	private LinearLayout mFaceRoot;// 表情父容器
-	private WindowManager.LayoutParams mWindowNanagerParams;
+	private WindowManager.LayoutParams mWindowManagerParams;
 	private InputMethodManager mInputMethodManager;
 	private List<String> mFaceMapKeys;// 表情对应的字符串数组
 	private String mWithJabberID = null;// 当前聊天用户的ID
@@ -148,10 +153,8 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 		initView();// 初始化view
 		initFacePage();// 初始化表情
 		setChatWindowAdapter();// 初始化对话数据
-		getContentResolver().registerContentObserver(
-				RosterProvider.CONTENT_URI, true, mContactObserver);// 开始监听联系人数据库
+		getContentResolver().registerContentObserver(RosterProvider.CONTENT_URI, true, mContactObserver);// 开始监听联系人数据库
 	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -275,8 +278,8 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 
 	private void initView() {
 		mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-		mWindowNanagerParams = getWindow().getAttributes();
-
+		mWindowManagerParams = getWindow().getAttributes();
+		
 		mMsgListView = (MsgListView) findViewById(R.id.msg_listView);
 		// 触摸ListView隐藏表情和输入法
 		mMsgListView.setOnTouchListener(this);
@@ -285,8 +288,8 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 		mSendMsgBtn = (Button) findViewById(R.id.send);
 		mFaceSwitchBtn = (ImageButton) findViewById(R.id.face_switch_btn);
 		mChatEditText = (EditText) findViewById(R.id.input);
-		mFaceRoot = (LinearLayout) findViewById(R.id.face_ll);
-		mFaceViewPager = (ViewPager) findViewById(R.id.face_pager);
+		mFaceRoot = (LinearLayout) findViewById(R.id.face_ll);//实例化装载表情容器的 线性布局
+		mFaceViewPager = (ViewPager) findViewById(R.id.face_pager);//实例化加载表情的容器， viewpager
 		mChatEditText.setOnTouchListener(this);
 //		mTitleNameView = (TextView) findViewById(R.id.ivTitleName);
 //		mTitleStatusView = (ImageView) findViewById(R.id.ivTitleStatus);
@@ -294,9 +297,9 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// TODO Auto-generated method stub
+				
 				if (keyCode == KeyEvent.KEYCODE_BACK) {
-					if (mWindowNanagerParams.softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
+					if (mWindowManagerParams.softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
 							|| mIsFaceShow) {
 						mFaceRoot.setVisibility(View.GONE);
 						mIsFaceShow = false;
@@ -351,8 +354,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 		switch (v.getId()) {
 		case R.id.face_switch_btn:
 			if (!mIsFaceShow) {
-				mInputMethodManager.hideSoftInputFromWindow(
-						mChatEditText.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(mChatEditText.getWindowToken(), 0);
 				try {
 					Thread.sleep(80);// 解决此时会黑一下屏幕的问题
 				} catch (InterruptedException e) {
@@ -364,8 +366,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 			} else {
 				mFaceRoot.setVisibility(View.GONE);
 				mInputMethodManager.showSoftInput(mChatEditText, 0);
-				mFaceSwitchBtn
-						.setImageResource(R.drawable.qzone_edit_face_drawable);
+				mFaceSwitchBtn.setImageResource(R.drawable.qzone_edit_face_drawable);
 				mIsFaceShow = false;
 			}
 			break;
@@ -414,20 +415,22 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 		}
 		return false;
 	}
-
+	/**
+	 * 初始化表情页面
+	 */
 	private void initFacePage() {
-		// TODO Auto-generated method stub
-		List<View> lv = new ArrayList<View>();
-		for (int i = 0; i < XXApp.NUM_PAGE; ++i)
-			lv.add(getGridView(i));
-		FacePageAdeapter adapter = new FacePageAdeapter(lv);
+		List<View> lv = new ArrayList<View>();//创建一个存放每页facepage 的list, 这个list里面可能有几个页面， 每个页面存放的是4行7列的表情
+		//for (int i = 0; i < XXApp.NUM_PAGE; ++i)
+		lv.add(getGridView(0));//将第一页表情放到list 里， 当前只设置了一页
+		FacePageAdeapter adapter = new FacePageAdeapter(lv);//
 		mFaceViewPager.setAdapter(adapter);
 		mFaceViewPager.setCurrentItem(mCurrentPage);
-		CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
-		indicator.setViewPager(mFaceViewPager);
+//		CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
+//		indicator.setViewPager(mFaceViewPager);
 		adapter.notifyDataSetChanged();
 		mFaceRoot.setVisibility(View.GONE);
-		indicator.setOnPageChangeListener(new OnPageChangeListener() {
+
+		/*indicator.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageSelected(int arg0) {
@@ -435,7 +438,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 			}
 
 			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
+			public void onPageScrolled(int arg0, float arg1, int position) {
 				// do nothing
 			}
 
@@ -443,36 +446,41 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 			public void onPageScrollStateChanged(int arg0) {
 				// do nothing
 			}
-		});
+		});*/
 
 	}
-
+	/**
+	 * 整个表情页面的关键方法
+	 * 得到一个4行7列的一个表情页面
+	 * 
+	 * @param i
+	 * @return
+	 */
 	private GridView getGridView(int i) {
-		// TODO Auto-generated method stub
+		
 		GridView gv = new GridView(this);
-		gv.setNumColumns(7);
+		gv.setNumColumns(7);//设置7列
 		gv.setSelector(new ColorDrawable(Color.TRANSPARENT));// 屏蔽GridView默认点击效果
 		gv.setBackgroundColor(Color.TRANSPARENT);
 		gv.setCacheColorHint(Color.TRANSPARENT);
 		gv.setHorizontalSpacing(1);
 		gv.setVerticalSpacing(1);
-		gv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT));
+		gv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		gv.setGravity(Gravity.CENTER);
 		gv.setAdapter(new FaceAdapter(this, i));
 		gv.setOnTouchListener(forbidenScroll());
 		gv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				if (arg2 == XXApp.NUM) {// 删除键的位置
-					int selection = mChatEditText.getSelectionStart();
-					String text = mChatEditText.getText().toString();
+			public void onItemClick(AdapterView<?> layout, View view, int position,
+					long rowid ) {
+				
+				if (position == XXApp.NUM) {// 删除键的位置
+					int selection = mChatEditText.getSelectionStart();//得到光标的位置
+					String text = mChatEditText.getText().toString();//得到输入框中文字
 					if (selection > 0) {
-						String text2 = text.substring(selection - 1);
-						if ("]".equals(text2)) {
+						String text2 = text.substring(selection - 1);//得到最后最后一个字符
+						if ("]".equals(text2)) {//判断最后一个字符串是否是], 如果是] 进入该判断
 							int start = text.lastIndexOf("[");
 							int end = selection;
 							mChatEditText.getText().delete(start, end);
@@ -482,7 +490,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 								.delete(selection - 1, selection);
 					}
 				} else {
-					int count = mCurrentPage * XXApp.NUM + arg2;
+					int count = mCurrentPage * XXApp.NUM + position;
 					// 注释的部分，在EditText中显示字符串
 					// String ori = msgEt.getText().toString();
 					// int index = msgEt.getSelectionStart();
@@ -492,9 +500,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 					// msgEt.setSelection(index + keys.get(count).length());
 
 					// 下面这部分，在EditText中显示表情
-					Bitmap bitmap = BitmapFactory.decodeResource(
-							getResources(), (Integer) XXApp.getInstance()
-									.getFaceMap().values().toArray()[count]);
+					Bitmap bitmap = BitmapFactory.decodeResource(getResources(), (Integer) XXApp.getInstance().getFaceMap().values().toArray()[count]);
 					if (bitmap != null) {
 						int rawHeigh = bitmap.getHeight();
 						int rawWidth = bitmap.getHeight();
@@ -512,17 +518,16 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 						// matrix.postSkew(0.1f, 0.1f);
 						// 将图片大小压缩
 						// 压缩后图片的宽和高以及kB大小均会变化
-						Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-								rawWidth, rawHeigh, matrix, true);
-						ImageSpan imageSpan = new ImageSpan(ChatActivity.this,
-								newBitmap);
-						String emojiStr = mFaceMapKeys.get(count);
+						Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, rawWidth, rawHeigh, matrix, true);
+						ImageSpan imageSpan = new ImageSpan(ChatActivity.this, newBitmap);
+						//emojistr = "[angry]"
+						String emojiStr = mFaceMapKeys.get(count);//获取到对应grid中表情的key字符串
 						SpannableString spannableString = new SpannableString(
 								emojiStr);
 						spannableString.setSpan(imageSpan,
 								emojiStr.indexOf('['),
 								emojiStr.indexOf(']') + 1,
-								Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+								Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//用imageSpan 替代指定的文字
 						mChatEditText.append(spannableString);
 					} else {
 						String ori = mChatEditText.getText().toString();
@@ -530,8 +535,7 @@ public class ChatActivity extends SwipeBackActivity implements OnTouchListener,
 						StringBuilder stringBuilder = new StringBuilder(ori);
 						stringBuilder.insert(index, mFaceMapKeys.get(count));
 						mChatEditText.setText(stringBuilder.toString());
-						mChatEditText.setSelection(index
-								+ mFaceMapKeys.get(count).length());
+						mChatEditText.setSelection(index + mFaceMapKeys.get(count).length());
 					}
 				}
 			}

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.cnx.ptt.utils.L;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 
@@ -49,7 +50,7 @@ public class DecodeThread extends Thread {
 
 		 hints.put(DecodeHintType.NEED_RESULT_POINT_CALLBACK,
 				 viewfinderResultPointCallback);
-		Log.i("DecodeThread", "Hints: " + hints);
+		 L.i("DecodeThread", "Hints: " + hints);
 	}
 
 	public Handler getHandler() {

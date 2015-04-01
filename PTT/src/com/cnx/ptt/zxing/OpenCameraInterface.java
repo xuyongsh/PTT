@@ -1,5 +1,7 @@
 package com.cnx.ptt.zxing;
 
+import com.cnx.ptt.utils.L;
+
 import android.hardware.Camera;
 import android.util.Log;
 
@@ -10,7 +12,7 @@ public final class OpenCameraInterface {
 	public static Camera open(int cameraId) {
 		int numCameras = Camera.getNumberOfCameras();
 	    if (numCameras == 0) {
-	      Log.w(TAG, "No cameras!");
+	    	L.w(TAG, "No cameras!");
 	      return null;
 	    }
 
@@ -33,14 +35,14 @@ public final class OpenCameraInterface {
 
 	    Camera camera;
 	    if (cameraId < numCameras) {
-	      Log.i(TAG, "Opening camera #" + cameraId);
+	    	L.i(TAG, "Opening camera #" + cameraId);
 	      camera = Camera.open(cameraId);
 	    } else {
 	      if (explicitRequest) {
-	        Log.w(TAG, "Requested camera does not exist: " + cameraId);
+	    	  L.w(TAG, "Requested camera does not exist: " + cameraId);
 	        camera = null;
 	      } else {
-	        Log.i(TAG, "No camera facing back; returning camera #0");
+	    	  L.i(TAG, "No camera facing back; returning camera #0");
 	        camera = Camera.open(0);
 	      }
 	    }

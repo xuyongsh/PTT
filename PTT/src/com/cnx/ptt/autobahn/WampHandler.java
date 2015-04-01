@@ -2,7 +2,8 @@ package com.cnx.ptt.autobahn;
 
 import android.util.Log;
 
-import com.cnx.ptt.DefaultConfig;
+import com.cnx.ptt.Constants;
+import com.cnx.ptt.utils.L;
 
 import de.tavendo.autobahn.Wamp;
 import de.tavendo.autobahn.WampConnection;
@@ -31,7 +32,7 @@ public class WampHandler implements Wamp.ConnectionHandler {
 
 	@Override
 	public void onOpen() {
-		Log.d(TAG, "Status: Connected to" + thread.wsuri);
+		L.d(TAG, "Status: Connected to" + thread.wsuri);
 		// mConnection.prefix(DefaultConfig.WAMP_EVENT_PREFIX,
 		// DefaultConfig.WAMP_EVENT_HTTP_URI);
 		// Message m = Message.obtain(thread.getHandler(),
@@ -39,7 +40,7 @@ public class WampHandler implements Wamp.ConnectionHandler {
 		// m.sendToTarget();
 		// TODO: Build global data layer, and update UI in data layer
 		// Subscribe
-		mConnection.subscribe(DefaultConfig.TEST_EVENT, Event1.class,
+		mConnection.subscribe(Constants.TEST_EVENT, Event1.class,
 				new Wamp.EventHandler() {
 
 					@Override
@@ -49,14 +50,14 @@ public class WampHandler implements Wamp.ConnectionHandler {
 						// we specified previously
 						Event1 evt = (Event1) event;
 
-						Log.d(TAG, "event received" + evt.msg + evt.counter);
+						L.d(TAG, "event received" + evt.msg + evt.counter);
 					}
 				});
 	}
 
 	@Override
 	public void onClose(int code, String reason) {
-		Log.d(TAG, "Connection lost.");
+		L.d(TAG, "Connection lost.");
 	}
 
 }

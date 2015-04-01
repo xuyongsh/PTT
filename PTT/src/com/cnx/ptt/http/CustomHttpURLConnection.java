@@ -5,6 +5,8 @@ import android.util.Log;
 
 import org.apache.http.NameValuePair;
 
+import com.cnx.ptt.utils.L;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,12 +48,12 @@ public class CustomHttpURLConnection {
             return result;
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
-            Log.e(TAG, "getFromWebByHttpUrlCOnnection:" + e.getMessage());
+        	L.e(TAG, "getFromWebByHttpUrlCOnnection:" + e.getMessage());
             e.printStackTrace();
             return null;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            Log.e(TAG, "getFromWebByHttpUrlCOnnection:" + e.getMessage());
+        	L.e(TAG, "getFromWebByHttpUrlCOnnection:" + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -90,7 +92,7 @@ public class CustomHttpURLConnection {
             }
             return result;
         } catch (IOException ex) {
-            Log.e(TAG, "PostFromWebByHttpURLConnection+ ex.getMessage()");
+        	L.e(TAG, "PostFromWebByHttpURLConnection+ ex.getMessage()");
             ex.printStackTrace();
             return null;
         }

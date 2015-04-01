@@ -5,6 +5,15 @@
     android:orientation="vertical"
     android:paddingTop="5dp" >
 
+    <com.cnx.ptt.chat.xlistview.MsgListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/my_line_img"
+            android:cacheColorHint="@android:color/transparent"
+            android:fastScrollEnabled="true"
+            android:layout_marginTop="-3dp"
+            />
     <ListView
         android:id="@+id/task_mornitor_list"
         android:layout_width="fill_parent"

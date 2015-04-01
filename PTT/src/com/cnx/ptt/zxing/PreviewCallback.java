@@ -1,5 +1,7 @@
 package com.cnx.ptt.zxing;
 
+import com.cnx.ptt.utils.L;
+
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -33,7 +35,7 @@ final class PreviewCallback implements Camera.PreviewCallback {
 	      message.sendToTarget();
 	      previewHandler = null;
 	    } else {
-	      Log.d(TAG, "Got preview callback, but no handler or resolution available");
+	    	L.d(TAG, "Got preview callback, but no handler or resolution available");
 	    }
 	  }
 

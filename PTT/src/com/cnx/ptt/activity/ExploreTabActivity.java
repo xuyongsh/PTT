@@ -17,8 +17,8 @@ import com.cnx.ptt.TrackTimeActivity;
 
 public class ExploreTabActivity extends BaseActivity{
 	private ListView lv_explore_list;
-	String[] exploreText = {"Track Time", "Time Sheet Today", "Task Monitor"};
-	int[] exploreIcons = {R.drawable.ic_action_alarms, R.drawable.ic_action_go_to_today, R.drawable.ic_action_important};
+	String[] exploreText = {"Task Monitor"};
+	int[] exploreIcons = {R.drawable.ic_action_important};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +34,15 @@ public class ExploreTabActivity extends BaseActivity{
 				Intent intent;
 				switch (position) {
 				
-				case 1:
-					intent = new Intent(ExploreTabActivity.this, TrackTimeActivity.class);
-					break;
+				
 				case 2:
 					intent = new Intent(ExploreTabActivity.this, TaskMonitorActivity.class);
 					break;
 				default:
-					intent = new Intent(ExploreTabActivity.this, TrackTimeActivity.class);
+					intent = new Intent(ExploreTabActivity.this, TaskMonitorActivity.class);
 					break;
 				}
-				startActivity(intent);
+				startActivity(intent); 
 				
 			}
 		});

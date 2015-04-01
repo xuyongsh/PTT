@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cnx.ptt.R;
 import com.cnx.ptt.autobahn.WampActivityAbstract;
+import com.cnx.ptt.utils.L;
 
 import de.tavendo.autobahn.Wamp;
 
@@ -27,7 +28,7 @@ public class OneOneChatEventHandler implements Wamp.EventHandler {
 		Message m = Message.obtain(this.getActivity().get_handler(),
 				R.id.displaymessage_new_txt_message, ooc.m_text_message);
 		m.sendToTarget();
-		Log.d("OneOneChatEventHandler", ooc.m_text_message);
+		L.d("OneOneChatEventHandler", ooc.m_text_message);
 	}
 
 	private WampActivityAbstract getActivity() {

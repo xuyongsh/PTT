@@ -72,12 +72,12 @@ public class MsgHeader extends LinearLayout {
 			if (mState == STATE_REFRESHING) {
 			}
 			mHintTextView.setVisibility(View.VISIBLE);
-			mHintTextView.setText("显示更多消息");
+//			mHintTextView.setText("显示更多消息");
 			break;
 		case STATE_READY:
 			if (mState != STATE_READY) {
 				mHintTextView.setVisibility(View.VISIBLE);
-				mHintTextView.setText("释放即可显示");
+//				mHintTextView.setText("释放即可显示");
 			}
 			break;
 		case STATE_REFRESHING:

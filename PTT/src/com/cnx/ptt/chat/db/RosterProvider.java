@@ -23,7 +23,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class RosterProvider extends ContentProvider {
-
+ 
 	public static final String AUTHORITY = "com.cnx.ptt.chat.provider.Roster";
 											
 	public static final String TABLE_ROSTER = "roster";
@@ -52,7 +52,7 @@ public class RosterProvider extends ContentProvider {
 
 	private Runnable mNotifyChange = new Runnable() {
 		public void run() {
-			Log.d(TAG, "notifying change");
+			L.d(TAG, "notifying change");
 			getContext().getContentResolver().notifyChange(CONTENT_URI, null);
 			getContext().getContentResolver().notifyChange(GROUPS_URI, null);
 		}

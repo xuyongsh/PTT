@@ -3,6 +3,8 @@ package com.cnx.ptt.http;
 
 import org.apache.http.NameValuePair;
 
+import com.cnx.ptt.utils.L;
+
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,7 +49,7 @@ public class HttpUtil {
         try {
             return NetWorkHelper.isWifiDataEnable(context);
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+        	L.e(TAG, e.getMessage());
             e.printStackTrace();
             return false;
         }

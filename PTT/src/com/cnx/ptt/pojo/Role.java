@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.cnx.ptt.DefaultConfig;
+import com.cnx.ptt.Constants;
 
 public final class Role {
 	public static final Context Context = null;

@@ -1,50 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <LinearLayout
-        android:id="@+id/login_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:id="@+id/login_status_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/login_progress_signing_in"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
+    android:layout_height="fill_parent"
+    android:background="#ffffff" >
 
     <LinearLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:orientation="vertical" >
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
             android:src="@drawable/ic_login_header_background" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal" 
-            android:background="#ffffff" >
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -63,9 +41,9 @@
                 android:drawableRight="@drawable/ic_edit_clear"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
-                android:text="xinhui.wang@concentrix.com"
                 android:paddingRight="20dp"
                 android:singleLine="true"
+                android:text="xinhui.wang@concentrix.com"
                 android:textColor="#999999"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -73,13 +51,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
-            android:background="#44000000" />
+            android:background="#2486e1" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:background="#ffffff"  >
+            android:orientation="horizontal" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -98,29 +75,35 @@
                 android:drawableRight="@drawable/ic_edit_clear"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
-                android:text="12345qwer"
                 android:paddingRight="20dp"
                 android:singleLine="true"
+                android:text="12345qwer"
                 android:textColor="#999999"
                 android:textSize="15sp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="#2486e1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#AEE8DC"
             android:orientation="vertical" >
 
-            <CheckBox
+            <!--
+                  CheckBox
                 android:id="@+id/cb_rememberme"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="40dp"
                 android:text="Save password"
-                android:textColor="#999999" />
+                android:textColor="#999999" /
+            -->
 
             <Button
                 android:id="@+id/bt_login"
@@ -128,13 +111,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="60dp"
                 android:background="@drawable/btn_login_selector"
                 android:text="Login"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
-            <Button
+            <!--
+                  Button
                 android:id="@+id/bt_forget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -145,7 +129,9 @@
                 android:clickable="true"
                 android:text="Forget"
                 android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textSize="20sp" /
+            -->
+
             <TextView
                 android:id="@+id/login_copyright"
                 android:layout_width="fill_parent"
@@ -158,4 +144,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</merge>
+</FrameLayout>

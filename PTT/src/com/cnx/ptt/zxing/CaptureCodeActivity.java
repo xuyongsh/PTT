@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.cnx.ptt.R;
+import com.cnx.ptt.utils.L;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
@@ -216,7 +217,7 @@ public class CaptureCodeActivity extends Activity implements
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		if (holder == null) {
-			Log.e(TAG,
+			L.e(TAG,
 					"*** WARNING *** surfaceCreated() gave us a null surface!");
 		}
 		if (!hasSurface) {
@@ -228,13 +229,13 @@ public class CaptureCodeActivity extends Activity implements
 
 	private void initCamera(SurfaceHolder surfaceHolder) {
 
-		Log.i(TAG, "Start initCamera");
+		L.i(TAG, "Start initCamera");
 
 		if (surfaceHolder == null) {
 			throw new IllegalStateException("No SurfaceHolder provided");
 		}
 		if (cameraManager.isOpen()) {
-			Log.w(TAG,
+			L.w(TAG,
 					"initCamera() while already open -- late SurfaceView callback?");
 			return;
 		}
@@ -251,12 +252,12 @@ public class CaptureCodeActivity extends Activity implements
 
 			decodeOrStoreSavedBitmap(null, null);
 		} catch (IOException ioe) {
-			Log.w(TAG, ioe);
+			L.w(TAG, ioe);
 			displayFrameworkBugMessageAndExit();
 		} catch (RuntimeException e) {
 			// Barcode Scanner has seen crashes in the wild of this variety:
 			// java.?lang.?RuntimeException: Fail to connect to camera service
-			Log.w(TAG, "Unexpected error initializing camera", e);
+			L.w(TAG, "Unexpected error initializing camera", e);
 			displayFrameworkBugMessageAndExit();
 		}
 
@@ -343,7 +344,7 @@ public class CaptureCodeActivity extends Activity implements
 
 		this.getIntent().putExtra("SCAN_RESULT", rawResult.getText());
 		this.setResult(RESULT_OK, getIntent());
-		Log.i(TAG,
+		L.i(TAG,
 				rawResult.getBarcodeFormat().toString() + ":"
 						+ rawResult.getText());
 		this.finish();
@@ -429,7 +430,7 @@ public class CaptureCodeActivity extends Activity implements
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.i(TAG, "Image load result");
+		L.i(TAG, "Image load result");
 		if (requestCode == AT_TAG_LI) {
 			if (resultCode == RESULT_OK) {
 				if (data != null) {

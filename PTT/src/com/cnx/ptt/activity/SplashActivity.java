@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cnx.ptt.R;
 import com.cnx.ptt.http.NetWorkHelper;
@@ -34,10 +35,10 @@ public class SplashActivity extends BaseActivity {
 		setContentView(R.layout.activity_splash);
 		tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
 		//显示版本信息
-		tv_splash_version.setText("version "+getVersion());
+		tv_splash_version.setText("version: "+getVersion());
 		//启动页面动画效果
-		AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);
-		aa.setDuration(1000);
+		AlphaAnimation aa = new AlphaAnimation(0.1f, 1.0f);
+		aa.setDuration(3000);
 		
 		findViewById(R.id.rl_root_splash).startAnimation(aa);
 //		tv_update_info = (TextView) findViewById(R.id.tv_update_info);
@@ -51,7 +52,7 @@ public class SplashActivity extends BaseActivity {
 				enterLogin();
 			}
 
-		}, 2000);
+		}, 3000);
 		
 	}
 	/**
@@ -77,5 +78,11 @@ public class SplashActivity extends BaseActivity {
 			e.printStackTrace();
 			return "";
 		}
+	}
+	@Override
+	public void onBackPressed() {
+		this.finish();
+		System.exit(0);
+		super.onBackPressed();
 	}
 }

@@ -1,6 +1,7 @@
 package com.cnx.ptt;
 
 import com.cnx.ptt.activity.DisplayMessageActivity;
+import com.cnx.ptt.utils.L;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -42,11 +43,11 @@ public class DisplayMessageHandler extends Handler {
 	
 	private void NewMessage(String text){
 		//this.activity.addTextMessage(text, false);
-		Log.d(TAG, "New message coming:"+text);
+		L.d(TAG, "New message coming:"+text);
 	}
 	
 	private void SendMessage(String text){
 		//this.activity.addTextMessage(text, true);
-		Log.d(TAG, "New message send"+text);
+		L.d(TAG, "New message send"+text);
 	}
 }

@@ -61,6 +61,7 @@ import com.cnx.ptt.utils.T;
 public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 		OnClickListener, IConnectionStatusCallback, EventHandler,
 		FragmentCallBack {
+	
 	private static final int ID_CHAT = 0;
 	private static final int ID_AVAILABLE = 1;
 	private static final int ID_AWAY = 2;
@@ -151,22 +152,18 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 
 	@Override
 	protected void onResume() {
-		System.out.println("onResume =============bind");
 		super.onResume();
 		bindXMPPService();
 		//监听内容提供者(数据库)变化
-		System.out.println("onResume =============bindafter");
 		getContentResolver().registerContentObserver(RosterProvider.CONTENT_URI, true, mRosterObserver);
 		//设置状态
 //		setStatusImage(isConnected());
 		mRosterAdapter.requery();
-		System.out.println("onResume =============s");
 		XmppBroadcastReceiver.mListeners.add(this);
 		if (NetUtil.getNetworkState(this) == NetUtil.NETWORN_NONE)
 			mNetErrorView.setVisibility(View.VISIBLE);
 		else
 			mNetErrorView.setVisibility(View.GONE);
-		System.out.println("onResume =============end");
 	}
 
 	@Override
@@ -199,7 +196,7 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 	}
 
 	private void bindXMPPService() {
-		L.i(LoginActivity.class, "[SERVICE] Unbind");
+		L.i(LoginActivity.class, "[SERVICE] bind");
 		bindService(new Intent(MessageTabActivity.this, XmppService.class),
 				mServiceConnection, Context.BIND_AUTO_CREATE
 						+ Context.BIND_DEBUG_UNBIND);
@@ -799,13 +796,13 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 		@Override
 		protected String[] doInBackground(Void... params) {
 			// Simulates a background job.
-			if (!isConnected()) {// 如果没有连接重新连接
+			/*if (!isConnected()) {// 如果没有连接重新连接
 				String usr = PreferenceUtils.getPrefString(MessageTabActivity.this,
 						PreferenceConstants.ACCOUNT, "");
 				String password = PreferenceUtils.getPrefString(
 						MessageTabActivity.this, PreferenceConstants.PASSWORD, "");
 				mXxService.Login(usr, password);
-			}
+			}*/
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
@@ -821,7 +818,7 @@ public class MessageTabActivity extends BaseSlidingFragmentActivity implements
 			mPullRefreshScrollView.onRefreshComplete();
 			// mPullRefreshScrollView.getLoadingLayoutProxy().setLastUpdatedLabel(
 			// "最近更新：刚刚");
-			T.showShort(MessageTabActivity.this, "刷新成功!");
+			T.showShort(MessageTabActivity.this, "Refresh successful");
 			super.onPostExecute(result);
 		}
 	}

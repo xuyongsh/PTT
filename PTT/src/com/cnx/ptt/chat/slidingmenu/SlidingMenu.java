@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 
 import com.cnx.ptt.R;
 import com.cnx.ptt.chat.slidingmenu.CustomViewAbove.OnPageChangeListener;
+import com.cnx.ptt.utils.L;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -963,7 +964,7 @@ public class SlidingMenu extends RelativeLayout {
 		int topPadding = insets.top;
 		int bottomPadding = insets.bottom;
 		if (!mActionbarOverlay) {
-			Log.v(TAG, "setting padding!");
+			L.v(TAG, "setting padding!");
 			setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
 		}
 		return true;
@@ -981,7 +982,7 @@ public class SlidingMenu extends RelativeLayout {
 		if (layerType != getContent().getLayerType()) {
 			mHandler.post(new Runnable() {
 				public void run() {
-					Log.v(TAG, "changing layerType. hardware? " + (layerType == View.LAYER_TYPE_HARDWARE));
+					L.v(TAG, "changing layerType. hardware? " + (layerType == View.LAYER_TYPE_HARDWARE));
 					getContent().setLayerType(layerType, null);
 					getMenu().setLayerType(layerType, null);
 					if (getSecondaryMenu() != null) {

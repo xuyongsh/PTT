@@ -16,8 +16,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+        <View  android:background="#ffbbbbbb" android:layout_width="fill_parent" android:layout_height="1.0px" />
         <TabWidget
-            android:background="#33000000"
+            android:showDividers="none"
+            android:background="#ffffff"
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />

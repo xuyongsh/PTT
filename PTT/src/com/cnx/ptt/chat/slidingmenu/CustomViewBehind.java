@@ -2,6 +2,7 @@ package com.cnx.ptt.chat.slidingmenu;
 
 import com.cnx.ptt.R;
 import com.cnx.ptt.chat.slidingmenu.SlidingMenu.CanvasTransformer;
+import com.cnx.ptt.utils.L;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -241,7 +242,7 @@ public class CustomViewBehind extends ViewGroup {
 			}
 		}
 		if (vis == View.INVISIBLE)
-			Log.v(TAG, "behind INVISIBLE");
+			L.v(TAG, "behind INVISIBLE");
 		setVisibility(vis);
 	}
 

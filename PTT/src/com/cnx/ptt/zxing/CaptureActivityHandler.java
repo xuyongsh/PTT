@@ -18,6 +18,7 @@ import android.provider.Browser;
 import android.util.Log;
 
 import com.cnx.ptt.R;
+import com.cnx.ptt.utils.L;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
@@ -101,7 +102,7 @@ public class CaptureActivityHandler extends Handler {
 			String browserPackageName = null;
 			if (resolveInfo != null && resolveInfo.activityInfo != null) {
 				browserPackageName = resolveInfo.activityInfo.packageName;
-				Log.d(TAG, "Using browser in package " + browserPackageName);
+				L.d(TAG, "Using browser in package " + browserPackageName);
 			}
 
 			// Needed for default Android browser / Chrome only apparently
@@ -116,7 +117,7 @@ public class CaptureActivityHandler extends Handler {
 			try {
 				activity.startActivity(intent);
 			} catch (ActivityNotFoundException ignored) {
-				Log.w(TAG, "Can't find anything to handle VIEW of URI " + url);
+				L.w(TAG, "Can't find anything to handle VIEW of URI " + url);
 			}
 			break;
 		case R.id.decode_bmp_succeeded:

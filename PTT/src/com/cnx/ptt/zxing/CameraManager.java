@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.cnx.ptt.utils.L;
 import com.google.zxing.PlanarYUVLuminanceSource;
 
 public class CameraManager {
@@ -93,9 +94,9 @@ public class CameraManager {
 			configManager.setDesiredCameraParameters(theCamera, false);
 		} catch (RuntimeException re) {
 			// Driver failed
-			Log.w(TAG,
+			L.w(TAG,
 					"Camera rejected parameters. Setting only minimal safe-mode parameters");
-			Log.i(TAG, "Resetting to saved camera params: "
+			L.i(TAG, "Resetting to saved camera params: "
 					+ parametersFlattened);
 			// Reset:
 			if (parametersFlattened != null) {
@@ -106,7 +107,7 @@ public class CameraManager {
 					configManager.setDesiredCameraParameters(theCamera, true);
 				} catch (RuntimeException re2) {
 					// Well, darn. Give up
-					Log.w(TAG,
+					L.w(TAG,
 							"Camera rejected even safe-mode parameters! No configuration");
 				}
 			}
@@ -127,7 +128,7 @@ public class CameraManager {
 			int topOffset = (screenResolution.y - height) / 2;
 			framingRect = new Rect(leftOffset, topOffset, leftOffset + width,
 					topOffset + height);
-			Log.d(TAG, "Calculated manual framing rect: " + framingRect);
+			L.d(TAG, "Calculated manual framing rect: " + framingRect);
 			setFramingRectInPreview(null);
 		} else {
 			requestedFramingRectWidth = width;
@@ -293,7 +294,7 @@ public class CameraManager {
 			int topOffset = (screenResolution.y - height) / 2;
 			framingRect = new Rect(leftOffset, topOffset, leftOffset + width,
 					topOffset + height);
-			Log.d(TAG, "Calculated framing rect: " + framingRect);
+			L.d(TAG, "Calculated framing rect: " + framingRect);
 		}
 		return framingRect;
 	}

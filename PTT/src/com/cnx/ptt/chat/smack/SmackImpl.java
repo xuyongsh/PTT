@@ -133,17 +133,16 @@ public class SmackImpl implements Smack {
 
 	public SmackImpl(XmppService service) {
 		String customServer = PreferenceUtils.getPrefString(service,
-				"119.81.125.167", "119.81.125.167");
+				PreferenceConstants.DEFAULT_SERVER, PreferenceConstants.DEFAULT_SERVER);
 		int port = PreferenceUtils.getPrefInt(service,
 				PreferenceConstants.PORT, PreferenceConstants.DEFAULT_PORT_INT);
 		String server = PreferenceUtils.getPrefString(service,
-				PreferenceConstants.Server, PreferenceConstants.GMAIL_SERVER);
+				PreferenceConstants.Server, PreferenceConstants.DEFAULT_SERVER);
 		boolean smackdebug = PreferenceUtils.getPrefBoolean(service,
 				PreferenceConstants.SMACKDEBUG, false);
 		boolean requireSsl = PreferenceUtils.getPrefBoolean(service,
 				PreferenceConstants.REQUIRE_TLS, false);
-		if (customServer.length() > 0
-				|| port != PreferenceConstants.DEFAULT_PORT_INT)
+		if (customServer.length() > 0 || port != PreferenceConstants.DEFAULT_PORT_INT)
 			this.mXMPPConfig = new ConnectionConfiguration(customServer, port,
 					server);
 		else
@@ -153,6 +152,7 @@ public class SmackImpl implements Smack {
 		this.mXMPPConfig.setSendPresence(false);
 		this.mXMPPConfig.setCompressionEnabled(false); // disable for now
 		this.mXMPPConfig.setDebuggerEnabled(smackdebug);
+		this.mXMPPConfig.setSASLAuthenticationEnabled(false);
 		if (requireSsl)
 			this.mXMPPConfig
 					.setSecurityMode(ConnectionConfiguration.SecurityMode.required);
@@ -350,7 +350,7 @@ public class SmackImpl implements Smack {
 						Message msg = (Message) packet;
 						String chatMessage = msg.getBody();
 
-						Log.d("SmackableImp",
+						L.d("SmackableImp",
 								"message "
 										+ chatMessage
 										+ " could not be sent (ID:"
@@ -839,7 +839,6 @@ public class SmackImpl implements Smack {
 
 	@Override
 	public void sendMessage(String toJID, String message) {
-		// TODO Auto-generated method stub
 		final Message newMessage = new Message(toJID, Message.Type.chat);
 		newMessage.setBody(message);
 		newMessage.addExtension(new DeliveryReceiptRequest());
@@ -865,7 +864,7 @@ public class SmackImpl implements Smack {
 		Ping ping = new Ping();
 		ping.setType(Type.GET);
 		ping.setTo(PreferenceUtils.getPrefString(mService,
-				PreferenceConstants.Server, PreferenceConstants.GMAIL_SERVER));
+				PreferenceConstants.Server, PreferenceConstants.DEFAULT_SERVER));
 		mPingID = ping.getPacketID();
 		mPingTimestamp = System.currentTimeMillis();
 		L.d("Ping: sending ping " + mPingID);

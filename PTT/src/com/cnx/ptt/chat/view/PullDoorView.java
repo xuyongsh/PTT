@@ -1,5 +1,7 @@
 package com.cnx.ptt.chat.view;
 
+import com.cnx.ptt.utils.L;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -18,7 +20,7 @@ import android.widget.Scroller;
 /**
  * 往上推动开门效果
  * 
- * @author way
+ * 
  * 
  */
 public class PullDoorView extends RelativeLayout {
@@ -141,7 +143,7 @@ public class PullDoorView extends RelativeLayout {
 
 		if (mScroller.computeScrollOffset()) {
 			scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-			Log.i("scroller", "getCurrX()= " + mScroller.getCurrX()
+			L.i("scroller", "getCurrX()= " + mScroller.getCurrX()
 					+ "     getCurrY()=" + mScroller.getCurrY()
 					+ "  getFinalY() =  " + mScroller.getFinalY());
 			// 不要忘记更新界面

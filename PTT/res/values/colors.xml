@@ -87,6 +87,6 @@
     <color name="qzone_feeditem_nor">#fffafafa</color>
 
     <drawable name="trans">@color/color_hei_8</drawable>
-
+ 	<color name="color_tab_title">#4876FF</color>
     <item name="preview_btn_bg_press" type="drawable">#ff000000</item>
 </resources>

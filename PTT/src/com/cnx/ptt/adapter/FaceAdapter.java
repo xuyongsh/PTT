@@ -22,14 +22,16 @@ public class FaceAdapter extends BaseAdapter {
 	private List<Integer> faceList = new ArrayList<Integer>();
 
 	public FaceAdapter(Context context, int currentPage) {
-		// TODO Auto-generated constructor stub
+		
 		this.inflater = LayoutInflater.from(context);
 		this.currentPage = currentPage;
-		mFaceMap = XXApp.getInstance().getFaceMap();
+		mFaceMap = XXApp.getInstance().getFaceMap();//得到所有表情map集合, 结构："[angry]":12345, "[cry]":12345
+		
 		initData();
 	}
 
 	private void initData() {
+		//将 value 添加到faceList 中
 		for(Map.Entry<String, Integer> entry:mFaceMap.entrySet()){
 			faceList.add(entry.getValue());
 		}
@@ -53,23 +55,22 @@ public class FaceAdapter extends BaseAdapter {
 	@SuppressWarnings("deprecation")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		ViewHolder viewHolder;
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.c_face, null, false);
-			viewHolder.faceIV = (ImageView) convertView
-					.findViewById(R.id.face_iv);
+			viewHolder.faceIV = (ImageView) convertView.findViewById(R.id.face_iv);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		if (position == XXApp.NUM) {
+			//如果当前位置是最后一个，那么把这个图标设置为删除按钮
 			viewHolder.faceIV.setImageResource(R.drawable.emotion_del_selector);
 			viewHolder.faceIV.setBackgroundDrawable(null);
 		} else {
 			int count = XXApp.NUM * currentPage + position;
-			if (count < 107) {
+			if (count < 18) {
 				viewHolder.faceIV.setImageResource(faceList.get(count));
 			} else {
 				viewHolder.faceIV.setImageDrawable(null);

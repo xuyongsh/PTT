@@ -5,7 +5,7 @@ import java.util.concurrent.CountDownLatch;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.cnx.ptt.DefaultConfig;
+import com.cnx.ptt.Constants;
 
 import de.tavendo.autobahn.Wamp.ConnectionHandler;
 import de.tavendo.autobahn.WampConnection;
@@ -24,7 +24,7 @@ public class WampThread extends Thread {
 	private ConnectionHandler wamphandler;
 	private Handler wthandler;
 	private final CountDownLatch handlerInitLatch;
-	final String wsuri = DefaultConfig.WS_URI;
+	final String wsuri = Constants.WS_URI;
 	private final WampConnection mConnection;
 
 	private WampThread() {

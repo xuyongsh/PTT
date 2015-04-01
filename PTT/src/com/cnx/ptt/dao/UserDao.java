@@ -135,7 +135,7 @@ public class UserDao {
 				user_id = cursor.getInt(0);
 				user_email = cursor.getString(1);
 				user_pwd = cursor.getString(2);
-				userList.add(new User(user_id, user_email, user_pwd));
+				userList.add(new User(user_email, user_pwd));
 			}
 		}
 		cursor.close();

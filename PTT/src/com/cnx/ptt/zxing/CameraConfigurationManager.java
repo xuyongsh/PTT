@@ -1,5 +1,6 @@
 package com.cnx.ptt.zxing;
 
+import com.cnx.ptt.utils.L;
 import com.google.zxing.client.android.camera.CameraConfigurationUtils;
 
 import android.content.Context;
@@ -32,10 +33,10 @@ public class CameraConfigurationManager {
 		Point theScreenResolution = new Point();
 		display.getSize(theScreenResolution);
 		screenResolution = theScreenResolution;
-		Log.i(TAG, "Screen resolution: " + screenResolution);
+		L.i(TAG, "Screen resolution: " + screenResolution);
 		cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(
 				parameters, screenResolution);
-		Log.i(TAG, "Camera resolution: " + cameraResolution);
+		L.i(TAG, "Camera resolution: " + cameraResolution);
 
 	}
 
@@ -43,15 +44,15 @@ public class CameraConfigurationManager {
 		Camera.Parameters parameters = camera.getParameters();
 
 		if (parameters == null) {
-			Log.w(TAG,
+			L.w(TAG,
 					"Device error: no camera parameters are available. Proceeding without configuration.");
 			return;
 		}
 
-		Log.i(TAG, "Initial camera parameters: " + parameters.flatten());
+		L.i(TAG, "Initial camera parameters: " + parameters.flatten());
 
 		if (safeMode) {
-			Log.w(TAG,
+			L.w(TAG,
 					"In camera config safe mode -- most settings will not be honored");
 		}
 
@@ -90,7 +91,7 @@ public class CameraConfigurationManager {
 		Camera.Size afterSize = afterParameters.getPreviewSize();
 		if (afterSize != null
 				&& (cameraResolution.x != afterSize.width || cameraResolution.y != afterSize.height)) {
-			Log.w(TAG, "Camera said it supported preview size "
+			L.w(TAG, "Camera said it supported preview size "
 					+ cameraResolution.x + 'x' + cameraResolution.y
 					+ ", but after setting it, preview size is "
 					+ afterSize.width + 'x' + afterSize.height);

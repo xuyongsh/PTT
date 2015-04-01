@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.cnx.ptt.utils.L;
 import com.cnx.ptt.zxing.CaptureCodeActivity;
 
 public class TrackTimeActivity extends Activity {
@@ -97,7 +98,7 @@ public class TrackTimeActivity extends Activity {
 						.findViewById(R.id.track_time_task_id);
 				tv.setText("Tracking on Task "
 						+ data.getStringExtra("SCAN_RESULT"));
-				Log.i("TT", "RESULT_OK");
+				L.i("TT", "RESULT_OK");
 				
 				start_tracking();
 				

@@ -147,8 +147,8 @@ public class TaskListAdapter extends BaseAdapter{
 			String result = null;
 			try {
 				result = HttpUtil.getByHttpClient(mContext,
-						urlString, new BasicNameValuePair("userid",
-								String.valueOf(UserSession.user.getUser_id())),
+						urlString, new BasicNameValuePair("email",
+								String.valueOf(UserSession.user.getUser_email())),
 						new BasicNameValuePair("taskid", params[0]),
 						new BasicNameValuePair("action", params[1]));
 			} catch (Exception e) {

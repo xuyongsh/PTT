@@ -20,9 +20,8 @@ public class User {
 		super();
 	}
 
-	public User(int user_id, String user_email,  String user_pwd) {
+	public User(String user_email,  String user_pwd) {
 		super();
-		this.user_id = user_id;
 		this.user_email = user_email;
 		this.user_pwd = user_pwd;
 	}

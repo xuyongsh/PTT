@@ -1,14 +1,10 @@
 package com.cnx.ptt.activity;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.view.View;
+import android.os.Bundle;
 
 import com.cnx.ptt.http.HttpUtil;
 import com.cnx.ptt.pojo.User;
@@ -18,6 +14,10 @@ public class BaseActivity extends Activity {
 	public SharedPreferences sp;
 	
 	public Dialog progressDialog;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 	 /**
      * check the network is available
      * 
@@ -26,8 +26,7 @@ public class BaseActivity extends Activity {
     public boolean hasNetWork() {
         return HttpUtil.isNetworkAvailable(this);
     }
-    
-    
+   
     /**
      * Display progress Dialog
      * 
@@ -38,7 +37,6 @@ public class BaseActivity extends Activity {
 
             if (progressDialog == null) {
                 progressDialog = DialogUtil.createLoadingDialog(this);
-
             }
             progressDialog.show();
         } catch (Exception e) {
@@ -80,18 +78,14 @@ public class BaseActivity extends Activity {
 				} else {
 
 					s += " " + item;
-
 				}
-
 			}
 
 			System.out.println(s);
-
 		}
-
 	}
     public static class UserSession {
 		public static User user;
 	}
-  
+   
 }

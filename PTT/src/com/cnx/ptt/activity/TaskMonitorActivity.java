@@ -1,6 +1,6 @@
 package com.cnx.ptt.activity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +22,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.Toast;
 
 import com.cnx.ptt.Constants;
 import com.cnx.ptt.R;
 import com.cnx.ptt.adapter.TaskListAdapter;
 import com.cnx.ptt.chat.xlistview.MsgListView;
+import com.cnx.ptt.chat.xlistview.MsgListView.IXListViewListener;
 import com.cnx.ptt.http.HttpUtil;
 import com.cnx.ptt.http.Url;
-import com.cnx.ptt.http.json.FollowTaskJson;
 import com.cnx.ptt.http.json.TaskListItemJson;
 import com.cnx.ptt.pojo.TaskListItem;
 import com.cnx.ptt.utils.L;
@@ -40,50 +42,46 @@ import com.cnx.ptt.utils.L;
  * @author IBM_ADMIN
  * 
  */
-public class TaskMonitorActivity extends BaseActivity {
-	
+public class TaskMonitorActivity extends BaseActivity implements IXListViewListener{
 	private MsgListView listView;
-	private ArrayList<TaskListItem> item_list = null;
+	private List<TaskListItem> item_list = null;
 	private TaskListAdapter taskListAdapter;
+	private View task_list_null;
+	private Handler handler = new Handler();
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_monitor);
-		listView =  (MsgListView) findViewById(R.id.task_mornitor_list);
-		ActionBar actionBar = getActionBar();
-		actionBar.setHomeButtonEnabled(true);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
-		TaskListAsynTask task = new TaskListAsynTask();
-		task.execute();
+		initView(); 
 		
-		listView.setAdapter(taskListAdapter);
-		listView.setOnItemClickListener(itemClickListener);
+		initData();
 		
 		registerBroadcast();//注册轮询广播
 	}
 	/**
-	 * listview item 点击事件
+	 * 异步请求获取tasklist 数据
 	 */
-	private OnItemClickListener itemClickListener = new OnItemClickListener() {
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view,
-				int position, long id) {
-			Object obj = view.getTag();
-			if (obj != null) {
-				String itemId = obj.toString();
-				Intent intent = new Intent(TaskMonitorActivity.this, DisplayTaskActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putString("itemid", itemId);
-				intent.putExtras(bundle);
-				startActivity(intent);
-				// finish();
-			}
-		}
-	};
+	private void initData() {
+		TaskListAsynTask task = new TaskListAsynTask();
+		task.execute();
+	}
+	/**
+	 * 初始化view
+	 */
+	private void initView() {
+		listView = (MsgListView) findViewById(R.id.task_mornitor_list);
+		listView.setPullLoadEnable(false);// 开启加载更多
+		listView.setPullRefreshEnable(true);// 开启下拉刷新
+		listView.setXListViewListener(this);// 添加加载更多和下拉刷新的监听，，，，然后实现这个接口
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		task_list_null = findViewById(R.id.warning_task_list_null);
+		
+	}
 	/**
 	 * 注册轮询广播
 	 */
@@ -97,18 +95,88 @@ public class TaskMonitorActivity extends BaseActivity {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			System.out.println("-------------pollingtask is run-----");
-			taskListAdapter.notifyDataSetChanged();
+			if(intent.getAction().equals(Constants.POLLING_FOLLOW_TASK)){
+				initData();
+				L.i("---------- polling receiver------");
+			}
 		}
 	};
-	@Override
+	 @Override
     protected void onDestroy() {
-		super.onDestroy();
+    	super.onDestroy();
     	unregisterReceiver(pollingReceiver);
     	pollingReceiver = null;
     }
-	
-	
+	/**
+	 * AsyncTask - get user followed task list
+	 * 
+	 * @author David xu
+	 * 
+	 */
+	private class TaskListAsynTask extends
+			AsyncTask<Void, Void, List<TaskListItem>> {
+		@Override
+		protected void onPreExecute() {
+			showProgressDialog();
+		}
+		@Override
+		protected List<TaskListItem> doInBackground(Void... params) {
+
+			String result = null;
+			String urlString = Url.TASKMORNITOR_URL;
+			try {
+				result = HttpUtil.getByHttpClient(
+						TaskMonitorActivity.this,
+						urlString,
+						new BasicNameValuePair("email", String
+								.valueOf(UserSession.user.getUser_email())));
+			} catch (Exception e) {
+				L.i("TaskMonitorActivity:result", e.getMessage());
+				e.printStackTrace();
+			}
+
+			try {
+				item_list = TaskListItemJson.instance(TaskMonitorActivity.this).readJsonTasklistItem(result);
+
+			} catch (Exception e) {
+				L.i("TaskMonitorActivity:item_list", e.getMessage());
+				e.printStackTrace();
+			}
+			return item_list;
+		}
+
+		@Override
+		protected void onPostExecute(List<TaskListItem> result) {
+			
+			dismissProgressDialog();
+			
+			taskListAdapter = new TaskListAdapter(TaskMonitorActivity.this, result, false);
+			if(result.size() > 0){
+				task_list_null.setVisibility(View.GONE);
+			}else {
+				task_list_null.setVisibility(View.VISIBLE);
+			}
+			listView.setAdapter(taskListAdapter);
+			
+			listView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					Object obj = view.getTag();
+					if (obj != null) {
+						String itemId = obj.toString();
+						Intent intent = new Intent(TaskMonitorActivity.this, DisplayTaskActivity.class);
+						Bundle bundle = new Bundle();
+						bundle.putString("itemid", itemId);
+						intent.putExtras(bundle);
+						startActivity(intent);
+						// finish();
+					}
+				}
+			});
+		}
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -148,123 +216,23 @@ public class TaskMonitorActivity extends BaseActivity {
 		});
 		return true;
 	}
-
-	/**
-	 * AsyncTask - get user followed task list
-	 * 
-	 * @author David xu
-	 * 
-	 */
-	private class TaskListAsynTask extends
-			AsyncTask<Void, Void, ArrayList<TaskListItem>> {
-
-		@Override
-		protected ArrayList<TaskListItem> doInBackground(Void... params) {
-
-			String result = null;
-			String urlString = Url.TASKMORNITOR_URL;
-			try {
-				result = HttpUtil.getByHttpClient(
-						TaskMonitorActivity.this,
-						urlString,
-						new BasicNameValuePair("email", String
-								.valueOf(UserSession.user.getUser_email())));
-			} catch (Exception e) {
-				L.i("TaskMonitorActivity:result", e.getMessage());
-				e.printStackTrace();
-			}
-
-			try {
-				item_list = TaskListItemJson.instance(TaskMonitorActivity.this)
-						.readJsonTasklistItem(result);
-
-			} catch (Exception e) {
-				L.i("TaskMonitorActivity:item_list", e.getMessage());
-				e.printStackTrace();
-			}
-			return item_list;
-		}
-
-		@Override
-		protected void onPostExecute(ArrayList<TaskListItem> result) {
+	@Override
+	public void onRefresh() {
+		
+		Runnable r = new Runnable() {
 			
-			taskListAdapter = new TaskListAdapter(TaskMonitorActivity.this, result, false);
-			
-
-			/*
-			 * listView item 长点击事件
-			 * listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-				@Override
-				public boolean onItemLongClick(AdapterView<?> parent,
-						View view, int position, long id) {
-					final TaskListItem item = (TaskListItem) listView
-							.getItemAtPosition(position);
-					L.i("TaskMonitorActivity:listView.setOnItemLongClickListene",
-							item.getT_id().toString());
-					AlertDialog.Builder builder = new Builder(
-							TaskMonitorActivity.this);
-					builder.setTitle("Note:")
-							.setMessage("Do you want to unfollow this task?")
-							.setNegativeButton("Cancel", null)
-							.setPositiveButton("Unfollow",
-									new OnClickListener() {
-
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											dialog.dismiss();
-											followTask unfollow = new followTask();
-											unfollow.execute(item.getT_id()
-													.toString(), "unfollow");
-										}
-									}).setCancelable(true).show();
-					return true;
-				}
-			});*/
-		}
+			@Override
+			public void run() {
+				initData();
+				listView.stopRefresh();//让下拉刷新的图片消失
+			}
+		};
+		handler.postDelayed(r , 3000);
+		
 	}
-
-	private class followTask extends AsyncTask<String, Void, Boolean> {
-		Boolean isFollowed = true;
-
-		@Override
-		protected Boolean doInBackground(String... params) {
-			String urlString = Url.TASKMORNITOR_FOLLOWED_TASK;
-			String result = null;
-			try {
-				result = HttpUtil.getByHttpClient(
-						TaskMonitorActivity.this,
-						urlString,
-						new BasicNameValuePair("email", String
-								.valueOf(UserSession.user.getUser_email())),
-						new BasicNameValuePair("taskid", params[0]),
-						new BasicNameValuePair("action", params[1]));
-			} catch (Exception e) {
-				L.i("TaskMonitorActivity:followTask", e.getMessage());
-				e.printStackTrace();
-			}
-
-			try {
-				isFollowed = FollowTaskJson.instance(TaskMonitorActivity.this)
-						.readJsonFollowTask(result);
-
-			} catch (Exception e) {
-				L.i("TaskMonitorActivity:item_list", e.getMessage());
-				e.printStackTrace();
-			}
-			return isFollowed;
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			if (result) {
-				showProgressDialog();
-				TaskListAsynTask task = new TaskListAsynTask();
-				task.execute();
-			}
-		}
-
+	@Override
+	public void onLoadMore() {
+		Toast.makeText(this, "onLoadMore", 0).show();
+		
 	}
 }

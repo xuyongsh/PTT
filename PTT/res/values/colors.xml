@@ -89,4 +89,7 @@
     <drawable name="trans">@color/color_hei_8</drawable>
  	<color name="color_tab_title">#4876FF</color>
     <item name="preview_btn_bg_press" type="drawable">#ff000000</item>
+    
+    <color name="yellow_warning">#FFFF99</color>
+    <color name="yellow_font_color">#FF6600</color>
 </resources>

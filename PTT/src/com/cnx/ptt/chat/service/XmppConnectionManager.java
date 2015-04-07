@@ -1,4 +1,4 @@
-package com.cnx.ptt.xmpp;
+package com.cnx.ptt.chat.service;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;

@@ -14,8 +14,8 @@ public class Constants {
 	public static final String USER_ID = "s_userid";
 	public static final String USER_NAME="s_username";
 	public static final String SESSIONID = "s_sessionid";
-	//¬÷—Øº‰∏Ù£¨ 10∑÷÷”
-	public static final Long POLLING_PERIOD = (long) 3000;// 1000*60*10 = 600000  ;   ≤‚ ‘£∫3000
+	//¬÷—Øº‰∏Ù£¨ 5∑÷÷”
+	public static final Long POLLING_PERIOD = (long) 60000;// 1000*30*10 = 300000  ;   ≤‚ ‘£∫60000
 	
 	//∑¢ÀÕ¬÷—Øπ„≤•
 	public static final String POLLING_FOLLOW_TASK = "com_cnx_ptt_polling_follow_task";

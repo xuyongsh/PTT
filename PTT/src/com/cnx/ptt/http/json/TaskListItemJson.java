@@ -39,12 +39,14 @@ public class TaskListItemJson extends JsonPacket {
 			list = new ArrayList<TaskListItem>();
 
 			for (int i = 0; i < jsonObject.length(); i++) {
-
-				JSONObject oj = jsonObject.getJSONObject("" + i);
-				list.add(new TaskListItem(oj.getInt("taskid"), oj
-						.getString("reqnum"), oj.getString("title"), oj
-						.getString("subdate"), oj.getInt("priority"), oj
-						.getInt("isfollowed")));
+				JSONObject oj = jsonObject.getJSONObject("" + i);;
+				
+				if(oj != null){
+					list.add(new TaskListItem(oj.getInt("taskid"), oj
+							.getString("reqnum"), oj.getString("title"), oj
+							.getString("subdate"), oj.getInt("priority"), oj
+							.getInt("isfollowed")));
+				}
 			}
 			return list;
 		} catch (Exception e) {

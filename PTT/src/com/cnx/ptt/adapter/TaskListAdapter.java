@@ -1,15 +1,13 @@
 package com.cnx.ptt.adapter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 
 import com.cnx.ptt.R;
 import com.cnx.ptt.activity.BaseActivity.UserSession;
-import com.cnx.ptt.activity.TaskMonitorActivity;
 import com.cnx.ptt.http.HttpUtil;
 import com.cnx.ptt.http.Url;
 import com.cnx.ptt.http.json.FollowTaskJson;
@@ -35,12 +32,12 @@ public class TaskListAdapter extends BaseAdapter{
 									R.drawable.ic_taskitem_priority_3, R.drawable.ic_taskitem_priority_4};
 	private Integer[] followIcon = {R.drawable.ic_follow_remove,  R.drawable.ic_follow_add};
 	private LayoutInflater mInflater;  
-    private ArrayList<TaskListItem> taskList;
+    private List<TaskListItem> taskList;
     private boolean isFollow = true;
     private Context mContext;
     private Dialog pd;
     
-    public TaskListAdapter(Context context, ArrayList<TaskListItem> list, boolean _isFollow){
+    public TaskListAdapter(Context context, List<TaskListItem> list, boolean _isFollow){
     	mInflater = LayoutInflater.from(context);
     	taskList = list;
     	mContext = context;

@@ -274,4 +274,19 @@
     <string name="press_again_backrun">Exit</string>
     <string name="settings_fragment_title">Settings</string>
     <string name="recent_chat_fragment_title">" "</string>
+    
+    <string name="task_list_null">No task followed in your monitor</string>
+    <string name="task_work_number">WR999999PC</string>
+    <string name="task_shortdesc_title">Title:</string>
+    <string name="task_shortdesc">[FUNCTION UPDATE] integrat printattachments </string>
+    <string name="task_project_title">Project:</string>
+    <string name="task_project">PTT Development - General</string>
+    <string name="task_job_id_title">Job ID:</string>
+    <string name="task_job_id">999999</string>
+    <string name="task_priority_title">Priority:</string>
+    <string name="task_priority">3</string>
+    <string name="task_duedate_title">Duedate:</string>
+    <string name="task_duedate">2015-03-27</string>
+    
+    
 </resources>

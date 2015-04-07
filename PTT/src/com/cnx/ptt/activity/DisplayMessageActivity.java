@@ -22,9 +22,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cnx.ptt.R;
+import com.cnx.ptt.chat.service.XmppConnectionManager;
 import com.cnx.ptt.pojo.ChatMsg;
 import com.cnx.ptt.utils.TimeRender;
-import com.cnx.ptt.xmpp.XmppConnectionManager;
 
 public class DisplayMessageActivity extends BaseActivity {
 

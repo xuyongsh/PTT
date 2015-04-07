@@ -13,10 +13,8 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.cnx.ptt.R;
 import com.cnx.ptt.activity.BaseActivity.UserSession;
@@ -28,24 +26,28 @@ import com.cnx.ptt.pojo.User;
 import com.cnx.ptt.utils.DialogUtil;
 import com.cnx.ptt.utils.L;
 import com.cnx.ptt.utils.T;
-
+/**
+ * TODO: 存在的未解决的问题： 点击登录按钮以后， 跳转到新的页面之前，如果服务器返回相应快， loading dialog一闪就消失，
+ *  是因为要跳转的页面未加载进来，速度太慢 ，线程睡眠不好用， 根源在新页面初始化很慢！！！
+ * @author IBM_ADMIN
+ *
+ */
 public class LoginActivity extends FragmentActivity implements IConnectionStatusCallback{
 
 	private String TAG = "LoginActivity";
 	private EditText et_email;
 	private EditText et_password;
 	private LinearLayout login_form;
-	
-	// define email, password
 	private String mEmail;
 	private String mPassword;
 	private boolean mRememberMe;
 	//XMPP login action
 	public static final String LOGIN_ACTION = "com.cnx.ptt.action.LOGIN";
 	//定义xmpp service 
-	XmppService xmppService;
+	private XmppService xmppService;
 	//定义login dialog
 	private Dialog mLoginDialog;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +74,8 @@ public class LoginActivity extends FragmentActivity implements IConnectionStatus
 
 	@Override
 	protected void onDestroy() {
-		unbindXMPPService();
 		super.onDestroy();
+		unbindXMPPService();
 		if (mLoginOutTimeProcess != null) {
 			mLoginOutTimeProcess.stop();
 			mLoginOutTimeProcess = null;
@@ -110,26 +112,31 @@ public class LoginActivity extends FragmentActivity implements IConnectionStatus
 	};
 	
 	/**
-	 * 连接状态
+	 * 连接状态发生改变所要处理的方法
 	 */
 	
 	@Override
 	public void connectionStatusChanged(int connectedState, String reason) {
-//		if (mLoginDialog != null && mLoginDialog.isShowing()){
-//			mLoginDialog.dismiss();
-//		}
-		
+		if (mLoginDialog != null && mLoginDialog.isShowing()){
+			mLoginDialog.dismiss();
+		}
+			
+			
+		if (mLoginOutTimeProcess != null && mLoginOutTimeProcess.running) {
+			mLoginOutTimeProcess.stop();
+			mLoginOutTimeProcess = null;
+		}
 		if (connectedState == XmppService.CONNECTED) {
 			//save to sharedpereference ....
 			save2Preferences();
-			
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
 		}else if (connectedState == XmppService.DISCONNECTED){
-			T.showLong(LoginActivity.this, "Login failed!" + reason);
+			T.showLong(LoginActivity.this, "Login failed! " + reason);
 		}
+		
 	}
-//	private CheckBox cb_rememberme;
+
 	private void save2Preferences() {
 		boolean isAutoSavePassword = true;
 //		boolean isUseTls = mUseTlsCK.isChecked();
@@ -154,31 +161,23 @@ public class LoginActivity extends FragmentActivity implements IConnectionStatus
 		// 初始化用户名密码控件
 		et_email = (EditText) findViewById(R.id.et_email);
 		et_password = (EditText) findViewById(R.id.et_password);
-		//cb_rememberme = (CheckBox) findViewById(R.id.cb_rememberme);
+		//实例化 dialog
+		mLoginDialog = DialogUtil.getLoginDialog(this);
+		mLoginOutTimeProcess = new ConnectionOutTimeProcess();
 		login_form = (LinearLayout) findViewById(R.id.login_form);
+		
 		boolean isAutoSavePassword = PreferenceUtils.getPrefBoolean(this, PreferenceConstants.AUTOSAVEPWD, false);
 		if(isAutoSavePassword){
 			et_email.setText(PreferenceUtils.getPrefString(this, PreferenceConstants.ACCOUNT, ""));
 			et_password.setText(PreferenceUtils.getPrefString(this, PreferenceConstants.PASSWORD, ""));
-			//cb_rememberme.setChecked(true);
 		}
-		//实例化 dialog
-		mLoginDialog = DialogUtil.getLoginDialog(this);
 		//实例化button
 		findViewById(R.id.bt_login).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				login_form.setVisibility(View.INVISIBLE);
-				mLoginDialog.show();
 				attemptLogin();
 			}
 		});
-		/*findViewById(R.id.bt_forget).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				forgetPWD();
-			}
-		});*/
 	}
 
 	/**
@@ -188,7 +187,6 @@ public class LoginActivity extends FragmentActivity implements IConnectionStatus
 		// get the values at the time of the login attempt.
 		mEmail = et_email.getText().toString().trim();
 		mPassword = et_password.getText().toString().trim();
-//		mRememberMe = cb_rememberme.isChecked();
 		boolean cancel = false;
 		View focusView = null;
 
@@ -218,11 +216,15 @@ public class LoginActivity extends FragmentActivity implements IConnectionStatus
 			// form field with an error.
 			focusView.requestFocus();
 		} else {
-			// Show a progress spinner, and kick off a background task to
-			// perform the user login attempt.
+			//login_form.setVisibility(View.INVISIBLE);
+			if (mLoginOutTimeProcess != null && !mLoginOutTimeProcess.running){
+				mLoginOutTimeProcess.start();
+			}
+			if (mLoginDialog != null && !mLoginDialog.isShowing()){
+				mLoginDialog.show();
+			}
 			if(xmppService != null){
-				String account = splitEmail(mEmail);
-				xmppService.Login(account, mPassword);
+				xmppService.Login(splitEmail(mEmail), mPassword);
 			}
 		}
 	}
@@ -234,13 +236,6 @@ public class LoginActivity extends FragmentActivity implements IConnectionStatus
 		
 		return userName;
 	}
-	/**
-	 * forget password function
-	 */
-	private void forgetPWD() {
-		Toast.makeText(this, "Hi, here is PTT forget password function!", 1)
-				.show();
-	}
 
 	private ConnectionOutTimeProcess mLoginOutTimeProcess;
 	private Handler mHandler = new Handler() {
@@ -250,11 +245,11 @@ public class LoginActivity extends FragmentActivity implements IConnectionStatus
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case LOGIN_OUT_TIME:
-				if (mLoginOutTimeProcess != null
-						&& mLoginOutTimeProcess.running)
+				if (mLoginOutTimeProcess != null && mLoginOutTimeProcess.running)
 					mLoginOutTimeProcess.stop();
-//				if (mLoginDialog != null && mLoginDialog.isShowing())
-//					mLoginDialog.dismiss();
+				if (mLoginDialog != null && mLoginDialog.isShowing()){
+					mLoginDialog.dismiss();
+				}
 				T.showShort(LoginActivity.this, R.string.timeout_try_again);
 				break;
 

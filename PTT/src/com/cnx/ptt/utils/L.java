@@ -9,7 +9,7 @@ import android.util.Log;
  */
 public class L {
 	// debug switch
-	private static boolean DEBUG = false;
+	private static boolean DEBUG = true;
 	private static String TAG = "cnx.ptt.LogUtils";
 	public static void i(String msg) {
 		if (DEBUG)
